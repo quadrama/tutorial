@@ -169,17 +169,16 @@ What's the value of `s` now?
 ## RStudio
 
 - An integrated development environment (IDE) for R
-- Cabapble workbench for data analysis
+- Capable workbench for data analysis
 
-![](rstudio.png)
+![](rstudio-300x260.png)
 
-## RStudio -- 4 Panes
+### RStudio -- 4 Panes ([Screenshot](rstudio.png))
 
 - Console: Where you enter R code and get the result immediately
 - Environment: Shows the objects currently in memory
 - Plots: Shows plots
-- Help: Shows documentation for functions
-- Editor: Allows editing R code and inspecting tables
+- Editor/Code: Allows editing R code and inspecting tables
 
 (some have multiple tabs)
 
