@@ -1,9 +1,21 @@
 ---
 title: "QuaDramA Tutorial"
 subtitle: Heidelberg University
-author: "Nils Reiter"
+author: "Nils Reiter, nils.reiter@ims.uni-stuttgart.de"
 date: "18.06.2018"
 output:
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: pygments
+    smart: true
+    self_contained: false
+    transition: slide
+    css: styles.css
+    reveal_plugins: ["notes", "zoom"]
+  slidy_presentation:
+    font_adjustment: -1
+    highlight: pygments
+    smart: true
   ioslides_presentation:
     transition: faster
 ---
@@ -24,7 +36,6 @@ knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 
 - [R](https://cran.r-project.org)
 - [RStudio](https://www.rstudio.com)
-
 - Once RStudio is running:\
   type `install.packages("devtools")` in the **Console**
 
@@ -72,7 +83,7 @@ downloaded 2.7 MB
   - Variables
   - Functions
 
-## R Basics -- Objects and Types {.smaller}
+## R Basics -- Objects and Types 
 
 - Objects live in the computer memory (or on disk)
 - Objects represent the things we want to analyse (e.g., dramatic texts, words, or numbers)
@@ -187,7 +198,7 @@ What's the value of `s` now?
 - CSV files are then analyzed in R
 
 
-## Setup {.smaller}
+## Setup 
 
 Loading the package
 ```{r}
@@ -201,12 +212,14 @@ Install preprocessed data
 3. Download this file: [github.com/quadrama/data_gdc/archive/master.zip](https://github.com/quadrama/data_gdc/archive/master.zip) and unpack it into the previously opened folder
 4. Verify: There should be a directory `gdc` with a sub folder `csv`. The `csv` folder contains a lot of files.
 
-## Verification {.smaller}
+## Verification 
 
 ```{r}
 allIds <- loadAllInstalledIds()    # stores a character vector of all play ids
 allIds      # prints out the character vector
 ```
+
+If you see something similar to this, you're good to go!
 
 ## Step 1: Select a Play
 
@@ -225,3 +238,66 @@ myId <- "gdc:tx4z.0"  # Don Carlos
 ```
 
 For the following analysis steps, everyone gets different results!
+
+## Loading the text
+
+```{r}
+text <- loadSegmentedText(myId)
+```
+
+The variable `text` now refers to a table with `r ncol(text)` columns and `r nrow(text)` rows.
+
+- Columns have the following names: `r colnames(text)` 
+- Rows don't have names -- they represent the spoken words in the play
+  - Each word is on one row (i.e., the characters in the play utter `r nrow(text)` words)
+- You don't have to work with the table directly
+
+## Statistics about characters 
+
+- Function: `figureStatistics(...)` to get simple character statistics. 
+  - Entering `?figureStatistics` shows documentation
+```{r}
+fstat <- figureStatistics(text)
+```
+- Rows: The characters of the play
+- Columns: Extracted properties
+  - `corpus`, `drama`: meta data to identify the play
+  - `length`: The length of the play in tokens
+  - `figure`: An identifier for the character
+  - `tokens`: Number of tokens spoken by this character
+  - `types`: Number of *different* tokens spoken by this character
+  - `utterances`: Number of utterances by this character
+  - `utteranceLengthMean`, `utteranceLengthSd`: Mean and standard deviation of the utterance length
+  - `firstBegin`, `lastEnd`: The character offset of the first and last utterance
+  
+## Visualising character statistics
+
+```{r,fig.height=3}
+# 1. Select the properties you want to visualise!
+mat <- as.matrix(fstat[,c("tokens","utterances")])  # create the matrix
+# 2. Add the character names to the matrix
+rownames(mat) <- fstat$figure                      
+# 3. Plot!
+barplot(mat, beside=TRUE)    # create a bar plot
+```
+
+## Visualising character statistics
+
+### 2nd attempt
+
+- The problem is that the plot values that are in different ranges
+- A common fix is to divide every number by the maximum (in the category)
+  - This way, all values are between 0 and 1
+
+```{r,fig.height=3}
+mat[,2] <- mat[,2] / max(mat[,2])
+mat[,1] <- mat[,1] / max(mat[,1])
+
+barplot(mat, beside=TRUE)
+```
+
+## Vignettes
+
+- More on [Character statistics](https://github.com/quadrama/DramaAnalysis/wiki/Figure-Statistics)
+- [Configuration Matrix](https://github.com/quadrama/DramaAnalysis/wiki/Configuration-Matrices)
+- [Word Field Analysis](https://github.com/quadrama/DramaAnalysis/wiki/Word-Field-Analysis)
