@@ -13,16 +13,17 @@
 }
 
 .reveal h1 {
-  font-size:18pt;
+  font-size:20pt;
   text-align:left;
 }
 
 .reveal h2 {
-  font-size:16pt;
+  font-size:18pt;
   text-align:left;
 }
 
 .reveal h3 {
+  margin-top:2em;
   font-size:1em;
   text-align:left;
 }
