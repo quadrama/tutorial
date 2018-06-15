@@ -8,10 +8,9 @@ output:
     theme: white
     highlight: pygments
     smart: true
-    self_contained: false
+    self_contained: true
     transition: slide
     css: styles.css
-    reveal_plugins: ["notes", "zoom"]
   slidy_presentation:
     font_adjustment: -1
     highlight: pygments
@@ -78,8 +77,7 @@ downloaded 2.7 MB
   - Current stable release: 3.5
   - [Website](https://www.r-project.org/)
 - Three important concepts we need to talk about
-  - Objects
-  - Types
+  - Objects and types
   - Variables
   - Functions
 
@@ -246,7 +244,8 @@ text <- loadSegmentedText(myId)
 
 The variable `text` now refers to a table with `r ncol(text)` columns and `r nrow(text)` rows.
 
-- Columns have the following names: `r colnames(text)` 
+- Columns have the following names
+  - `r colnames(text)`
 - Rows don't have names -- they represent the spoken words in the play
   - Each word is on one row (i.e., the characters in the play utter `r nrow(text)` words)
 - You don't have to work with the table directly
@@ -271,32 +270,34 @@ fstat <- figureStatistics(text)
   
 ## Visualising character statistics
 
-```{r,fig.height=3}
-# 1. Select the properties you want to visualise!
-mat <- as.matrix(fstat[,c("tokens","utterances")])  # create the matrix
-# 2. Add the character names to the matrix
-rownames(mat) <- fstat$figure                      
-# 3. Plot!
-barplot(mat, beside=TRUE)    # create a bar plot
+- The `$`-operator selects one column
+  - `fstat$tokens` gives you a list of the token numbers of the characters
+     (in the order of the table)
+
+```{r,fig.height=4}
+par(mar=c(10,4,1,1))     # set plot margins
+barplot(fstat$tokens,    # the values to be plotted
+        names.arg = fstat$figure,   # labels on x-axis
+        beside=TRUE,     # don't plot bar on top of each other
+        las=2)         # rotate x axis labels by 90 degrees
+
 ```
 
-## Visualising character statistics
-
-### 2nd attempt
-
-- The problem is that the plot values that are in different ranges
-- A common fix is to divide every number by the maximum (in the category)
-  - This way, all values are between 0 and 1
-
-```{r,fig.height=3}
-mat[,2] <- mat[,2] / max(mat[,2])
-mat[,1] <- mat[,1] / max(mat[,1])
-
-barplot(mat, beside=TRUE)
-```
 
 ## Vignettes
 
-- More on [Character statistics](https://github.com/quadrama/DramaAnalysis/wiki/Figure-Statistics)
-- [Configuration Matrix](https://github.com/quadrama/DramaAnalysis/wiki/Configuration-Matrices)
-- [Word Field Analysis](https://github.com/quadrama/DramaAnalysis/wiki/Word-Field-Analysis)
+- Vignettes are howtos that explain certain areas of an R package
+- Currently, `DramaAnalysis` offers three vignettes
+  - More on [Character statistics](https://github.com/quadrama/DramaAnalysis/wiki/Figure-Statistics)
+  - [Configuration Matrix](https://github.com/quadrama/DramaAnalysis/wiki/Configuration-Matrices)
+  - [Word Field Analysis](https://github.com/quadrama/DramaAnalysis/wiki/Word-Field-Analysis)
+- Select one and try to apply the howto on your text!
+
+### Advice
+
+- Don't be afraid: It's much harder to really break your computer than you think
+- `?functionName` gives you the documentation for a function
+- If you are stuck: Please ask
+- Be aware that all this is research software
+  - It contains bugs and implementation errors
+  - It is not directed at end users
