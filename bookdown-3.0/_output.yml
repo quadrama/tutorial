@@ -1,0 +1,17 @@
+bookdown::gitbook:
+  lib_dir: assets
+  split_by: chapter
+  config:
+    toolbar:
+      position: static
+    download: ["pdf", "epub"]
+    toc:
+      collapse: section
+      scroll_highlight: yes
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default

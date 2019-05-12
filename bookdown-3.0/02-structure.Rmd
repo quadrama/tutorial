@@ -1,0 +1,166 @@
+# (PART) Structure Analysis {-}
+
+
+
+
+We're assuming here that we have loaded some texts using `loadDrama()`, and that this text is stored as a `QDDrama`-object in the variable `text`. For demo purposes, we will use the two plays that are included in the R-package, Lessing's *Emilia Galotti* and *Miss Sara Sampson*. Both have been preprocessed by the [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline.
+
+```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+# Load Miß Sara Sampson
+data(rjmw.0)
+
+text <- combine(rksp.0, rjmw.0)
+
+```
+
+# Who's talking how much?
+
+First, we calculate summary statistics over all characters.
+
+```{r}
+charStats <- characterStatistics(text)
+
+charStats
+```
+
+This already gives us a lot of information about the characters. In particular, the function `characterStatistics()` returns a table (of the types `QDCharacterStatistics`, `QDHasCharacter` and `data.frame`) with information about:
+
+- the number of tokens a character speaks (`tokens`),
+- the number of different tokens a character speaks (`types`),
+- the number of utterances (`utterances`),
+- the average length of the utterances (`utteranceLengthMean`),
+- their standard deviation (`utteranceLengthSd`),
+- the character position of the start of the first utterance (`firstBegin`), and
+- the character position of the end of the last utterance (`lastEnd`).
+
+The function `characterStatistics()` provides a number of options to control its exact behaviour. Entering `?characterStatistics` in the R console opens the documentation for the function with a description of all the options. We'll describe some frequently used options here as well:
+
+- Punctuation: By default, all punctuation marks are counted as tokens. This behaviour can be changed by setting `filterPunctuation=TRUE`.
+
+- Normalization: The values in the table above are all absolute values. When comparing to other texts, one is often interested in normalized values. If the option `normalize` is set to `TRUE`, all values will be normalised (if applicable).
+
+- Segmentation: By default, the function extracts values for the entire play. With the option `segment`, it is possible to extract statistics by act or scene, as shown in the example below. Except for the additional column `Act`, the columns in the table are the same as before.
+
+```{r}
+characterStatistics(rksp.0, 
+                    segment="Act")
+```
+
+Of course, the values in the above table can be directly plotted:
+
+```{r}
+charStats <- characterStatistics(text, normalize=FALSE)
+
+par(mar=c(9,3,2,2)) # increase plot margins, so that the labels can be plotted
+
+barplot(charStats$tokens,  # these are the values to be plotted
+        names.arg = charStats$character, # the labels on the x-axis
+        las=2 # rotate the labels on both axes
+) 
+```
+
+## Character names instead of identifiers {#format}
+
+By default, all our functions identify characters using technical ids, which may or may not be human-readable. Even if they are, it's usually a good idea to replace them with nice to read labels before publication. We therefore provide the function `format()`, which can be applied to any table that contains a column with character ids (i.e., any object of type `QDHasCharacter`).
+
+```{r}
+charStats <- characterStatistics(text, normalize=FALSE)
+
+charStats <- format(charStats, text) # Replace ids with names
+
+par(mar=c(9,3,2,2)) # increase plot margins, so that the labels can be plotted
+
+barplot(charStats$tokens,  # these are the values to be plotted
+        names.arg = charStats$character, # the labels on the x-axis
+        las=2 # rotate the labels on both axes
+)
+```
+
+As can be seen above `format()` requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function `loadDrama()`). 
+
+## Stacked bar plot
+
+The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the `QDCharacterStatistics` directly into the `barplot()` function. In combination with the `margrittr` pipes, we can call it like this (enter `?barplot.QDCharacterStatistics` for details on the special barplot function):
+
+
+```{r results="hide"}
+characterStatistics(text, normalize=FALSE) %>%
+  format(text) %>%
+  barplot(names.arg=c("Miss Sara Sampson", "Emilia Galotti"))
+
+```
+
+By default, the `barplot.QDCharacterStatistics()` function visualises the number of tokens spoken by the characters (and ranks the characters accordingly). This can be changed by supplying the option `column`, and specifying another value. 
+
+```{r results="hide"}
+characterStatistics(text, normalize=FALSE) %>%
+  format(text) %>%
+  barplot(names.arg=c("Miss Sara Sampson", "Emilia Galotti"), 
+          column = "utteranceLengthMean") # show mean utterance length
+
+```
+
+This picture looks quite different! Other interesting columns to experiment with are `types` and `utteranceLengthSd`.
+
+
+# Who's talking how often?
+
+So far, we have counted words for characters. Now we will turn to utterances, and their properties.
+
+First, we will use the function `utteranceStatistics()` to extract quantitative information about utterances:
+
+```{r results="hide"}
+utteranceStatistics(rksp.0)
+```
+
+```{r echo=FALSE}
+utteranceStatistics(rksp.0)[1:10,]
+```
+
+This creates a table that is very long, which is why we only show the first 10 rows here. The table contains one row for each utterance, and information about the speaker of the utterance, its length (measured in tokens) and its starting position (character position). We can now inspect the variance in utterance length:
+
+```{r}
+ustat <- utteranceStatistics(rksp.0) %>%
+  format(rksp.0)   # use names instead of character ids (see above)
+
+par(mar=c(9,4,2,2)) # increase margin
+
+boxplot(utteranceLength ~ character, # what do we want to correlate 
+        data=ustat, 
+        las = 2 # rotate axis labels
+      )
+```
+
+This uses the regular `boxplot()` function, enter `?boxplot` for documentation. `utteranceLength ~ character` is called a formula in R and (in this case) expresses that we want to look at the column `utteranceLength`, grouped by the column `character`. The boxplot is a useful way to grasp the dispersion of a set of values (in this case: the lengths of all utterances by a character).
+
+## When are characters talking?
+
+While the above displays the *length* of utterances, we can also display the position of utterances (remember the column `utteranceBegin`?). The following snippet visualizes when characters are talking, this time for Lessings Miss Sara Sampson:
+
+```{r}
+par(mar=c(2,7,2,2))
+
+utteranceStatistics(rjmw.0) %>%
+  format(rjmw.0) %>%    # character names instead of ids
+  plot()                # calling plot.QDUtteranceStatistics()
+
+```
+
+Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function `format()` to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type `QDHasCharacter`. Secondly, the call to the function `plot()` gets rerouted to the function `plot.QDUtteranceStatistics()`, because the object we supply as argument is of the type `QDUtteranceStatistics`. Information about this function can be retrieved by entering `?plot.QDUtteranceStatistics`. 
+
+## Adding act boundaries
+
+Now it would be useful to include information on act/scene boundaries in this plot. This can be done by supplying the original drama object as a second argument to the `plot()` function:
+
+```{r}
+par(mar=c(2,8,2,2))
+utteranceStatistics(rksp.0) %>%
+  format(rksp.0) %>%
+  plot(rksp.0) # adding the `QDDrama` object here creates the act boundaries.
+```
+
+Please note that the information contained in this plot is very similar to the information in configuration matrices.
+

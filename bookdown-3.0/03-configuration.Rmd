@@ -1,0 +1,276 @@
+# Configuration
+
+*This section does not refer to the configuration of the R-package, but to the literary analysis concept configuration matrix [@Pfister:1988aa].*
+
+## Matrices
+
+Configuration matrices can be extracted with the function `configuration()`. As usual, entering `?configuration` provies more detailed information about the options the function provides.
+
+```{r}
+configuration(rksp.0)
+```
+
+This creates a basic configuration matrix, but instead of just containing the presence or absence of a figure, it contains the number of spoken tokens for each act for each character. This information is in fact similar to what we can extract with `characterStatistics(rksp.0, segment="Act")`, but in a different form and structure. The above table contains a lot of information that can be visualised.
+
+We first need to extract the numeric content from the above table. This can easily be done with the function `as.matrix()` (this will, in detail, be rerouted to the function `as.matrix.QDConfiguration()`, which knows what part of the table needs to be in the matrix). A matrix containing only numbers can easily be plotted using the regular `barplot()` function, as shown below.
+
+```{r}
+c <- configuration(rksp.0)
+
+mat <- as.matrix(c)
+
+par(mar=c(2,2,2,10))
+
+barplot(mat, 
+        legend.text = c$character,  # legend text
+        args.legend = list(x=ncol(mat)+3,      # legend x position
+                           y=max(colSums(mat)) # legend y pos
+                        ), 
+        col=qd.colors)
+```
+
+### Filtering unimportant characters {#filter}
+
+This is informative, but doesn't look very nice and some colors are difficult to associate with characters because colors are repeating. We will therefore use the function `filter()`, which is very similar to `format()`: It can be applied to any object of the type `QDHasCharacter` and removes rows according to certain criteria. In this case, we filter every character except the five most talkative ones. As usual, see `?filter.QDHasCharacter` to see other options.  
+
+```{r}
+c <- configuration(rksp.0) %>%
+  filter(rksp.0, threshold = 5) %>%
+  format(rksp.0)
+
+mat <- as.matrix(c)
+
+par(mar=c(2,2,2,10))
+
+barplot(mat, 
+        names.arg = as.roman(1:ncol(mat)),   # roman act numbers
+        legend.text = c$character,  # legend text
+        args.legend = list(x=ncol(mat)+3,   # legend x position
+                           y=max(colSums(mat)) # legend y pos
+                        ), 
+        col=qd.colors)
+```
+
+Of course, the speech of characters that do not speak often is now removed, leaving only a portion of each act covered in the plot.
+
+### Normalization
+
+Since each act has a different length, it is often useful to normalize each block, according to the total number of spoken tokens. This way, we can display the relative active presence of each character in each act. In combination with the filtering we did before, however, we need to be careful: If the scale with the filtered matrix, a certain portion of the character speech gets lost. The following snippet shows how to scale using the original matrix, but still only include the top eight characters into the matrix.
+
+```{r}
+
+c <- configuration(rksp.0)   # getting the full configuration (with all characters)
+mat_orig <- as.matrix(c)     # extracting the matrix
+
+c_filtered <- c %>% filter(rksp.0, threshold=8) # filtering, so that only the top 8 characters remain
+mat_filtered <- as.matrix(c_filtered)  # extracting the filtered matrix
+
+# scaling, using values from the unfiltered matrix
+mat <- scale(mat_filtered, 
+             center=FALSE, 
+             scale=colSums(mat_orig)) 
+
+# plot, as above
+par(mar=c(2,3,2,10))
+barplot(mat, 
+        names.arg = as.roman(1:ncol(mat)),  # roman act numbers
+        # legend
+        legend.text=c_filtered$character,            # set legend text
+        args.legend = list(x=ncol(mat)+3,      # legend x position
+                           y=max(colSums(mat)) # legend y pos
+                        ),
+        # visual
+        las=1,        # rotate labels on y axis
+        col=qd.colors # provide colors
+)
+```
+
+## Copresence
+
+Configuration matrices are also often used to get an overview of who is copresent on stage. This can also be achieved using the function `configuration()`. First, we create a configuration matrix that only represents presence or absence of a figure (and we switch to scenes). Obviously, the resulting matrix has many more columns, we include only the first 10 below.
+
+```{r results='hide'}
+configuration(rksp.0, onlyPresence = TRUE, segment="Scene")
+``` 
+
+```{r echo=FALSE}
+configuration(rksp.0, onlyPresence = TRUE, segment="Scene")[,1:10]
+```
+
+Creating a co-occurrence matrix is a simple matter of matrix multiplication, and we already know how to create a matrix. 
+
+```{r}
+# extract the configuration
+c <- configuration(rksp.0, onlyPresence = TRUE, segment="Scene") 
+
+# extract a matrix
+mat <- as.matrix(c)
+
+# multiply the matrix with its inverse
+# this creates the copresence matrix
+copresence <- mat %*% t(mat) 
+
+# add character names
+rownames(copresence) <- c$character
+colnames(copresence) <- c$character
+
+copresence
+```
+
+The resulting copresence matrix shows the number of scenes in which two characters are both present. The diagonal shows the number of scenes in which a character is present in total (because each character is always copresent with itself, so to speak).
+
+There are multiple ways to visualise this copresence. One option is a heat map, as shown below.
+
+### As Heatmap
+
+The copresence can be visualised in a simple heat map. We first focus on the lower triangle and also remove the diagonal values. The actual plotting is a bit more complicated in this case, because we are just using the values in the copresence matrix as pixel intensities in the plot. Also, the axes need to be suppressed first, and can be added later with the proper names of the characters. If needed the code can also be used to include labels into the heat map.
+
+```{r}
+c <- configuration(rksp.0, onlyPresence = TRUE, segment="Scene") %>%
+  filter(rksp.0, threshold = 7) %>%
+  format(rksp.0)
+
+# extract a matrix
+mat <- as.matrix(c)
+
+# multiply the matrix with its inverse
+# this creates the copresence matrix
+copresence <- mat %*% t(mat) 
+
+# add character names
+rownames(copresence) <- c$character
+colnames(copresence) <- c$character
+
+# since it's a square matrix, we don't need the bottom right triangle
+# and diagonales.
+copresence[lower.tri(copresence,diag=TRUE)] <- NA
+
+par(mar=c(10,10,1,1)) # plot margins
+image(copresence, 
+      col = rgb(256,111,184, alpha=(seq(0,255)),
+                maxColorValue = 256),
+      xaxt= "n",  # no x axis
+      yaxt= "n",  # no y axis
+      frame=TRUE  # print a frame around the heatmap
+      )
+
+# include values as labels
+text(y=(rep(1:ncol(copresence), each=nrow(copresence))-1)/(nrow(copresence)-1),
+     x=(1:nrow(copresence)-1)/(nrow(copresence)-1),
+     labels=as.vector(copresence))
+
+# add the x axis
+axis(1, at = seq(0,1,length.out = length(c$character)), labels = c$character, las=3)
+# add the y axis
+axis(2, at = seq(0,1,length.out = length(c$character)), labels = c$character, las=1)
+```
+
+Apparently, Marinelli and the prince have the most shared scenes. Marinelli also shares a scene with most other figures (sum of the vertical bar: `r 3+2+4+4+3`).
+
+### As Network
+
+The same information can also be visualized as a copresence network. For this, we employ the R-package `igraph`. A nice introduction to `igraph` can be found in [@Arnold:2015aa], particularly for literary networks.
+
+Technically, the matrix we created before is an [adjacency matrix](https://en.wikipedia.org/wiki/Adjacency_matrix). It is therefore simple to convert it to a graph, and igraph offers the function `graph_from_adjacency_matrix()` for this.
+
+```{r}
+c <- configuration(rksp.0, onlyPresence = TRUE, segment="Scene") %>%
+  filter(rksp.0, threshold = 7) %>%
+  format(rksp.0)
+
+# extract a matrix
+mat <- as.matrix(c)
+
+# multiply the matrix with its inverse
+# this creates the copresence matrix
+copresence <- mat %*% t(mat) 
+
+# add character names
+rownames(copresence) <- c$character
+colnames(copresence) <- c$character
+
+# convert the adjacency matrix to a graph object
+g <- igraph::graph_from_adjacency_matrix(copresence, 
+                                 weighted=TRUE,     # weighted graph
+                                 mode="undirected", # no direction
+                                 diag=FALSE         # no looping edges
+                                )
+```
+
+Now the variable `g` holds the graph object. There are different things we can do with the graph. First, we can visualise it. `igraph` uses the same mechanism of R that we have used before for plotting, specifying a `plot()` function that can plot graph objects.
+
+```{r}
+
+# Now we plot
+plot(g, 
+     layout=layout_with_gem,       # how to lay out the graph
+     main="Copresence Network: Emilia Galotti",  # title
+     vertex.label.cex=0.8,         # label size
+     vertex.label.color="black",   # font color
+     vertex.color=qd.colors[6],    # vertex color
+     vertex.frame.color=NA,        # no vertex border
+     edge.width=E(g)$weight        # scale edges according to their weight
+)  
+```
+
+### Network properties
+
+`igraph` offers a number of function to extract graph properties. We will show them below without explanation. The documentation of each function can be found [here](https://igraph.org/r/doc/).
+
+#### Density
+
+Function: [`graph.density()`](https://igraph.org/r/doc/edge_density.html)
+
+```{r}
+graph.density(g)
+```
+
+#### Average nearest neighbor degree
+
+Function: [`knn()`](https://igraph.org/r/doc/knn.html)
+
+```{r}
+knn(g)
+```
+
+#### Edge connectivity
+
+Function: [`edge_connectivity()`](https://igraph.org/r/doc/edge_connectivity.html)
+
+```{r}
+edge_connectivity(g)
+```
+
+### Graph Export
+
+
+As a final step, one might want to further work on the graph using [Gephi](https://gephi.org), or other tools. In order to do so, one can export the graph into an appropriate file:
+```{r eval=FALSE}
+igraph::write_graph(g, 
+                    "rksp.0.graphml",    # specify the file name
+                    format="graphml"     # specify the file format
+)
+```
+
+This results in a file called [`rksp.0.graphml`](rksp.0.graphml), that starts similarly as this:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="e_weight" for="edge" attr.name="weight" attr.type="double"/>
+  <graph id="G" edgedefault="undirected">
+    <node id="n0">
+      <data key="v_name">DER KAMMERDIENER</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">DER PRINZ</data>
+    </node>
+    ...
+```
+
+This file can be opened with Gephi.
+

@@ -1,0 +1,37 @@
+---
+title: "DramaAnalysis"
+author: "Nils Reiter"
+documentclass: book
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+bibliography: [bibliography.bib]
+biblio-style: apalike
+---
+
+```{r setup, include=FALSE}
+source("packrat/init.R")
+
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+require(DramaAnalysis)
+require(data.table)
+require(magrittr)
+require(igraph)
+
+v <- packageVersion("DramaAnalysis")
+```
+
+# Preface {-}
+
+*This book is in alpha stadium and not ready. In pertains to the (currently unreleased version 3.0 of the DramaAnalysis package. Use at your own risk.*
+
+# Introduction
+
+In this book, we will introduce an interesting
+method.
+
+## Technical basics
+
+### Pipelining with `margrittr`
+
+### Classes
