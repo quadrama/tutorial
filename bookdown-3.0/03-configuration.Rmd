@@ -167,7 +167,7 @@ axis(2, at = seq(0,1,length.out = length(c$character)), labels = c$character, la
 
 Apparently, Marinelli and the prince have the most shared scenes. Marinelli also shares a scene with most other figures (sum of the vertical bar: `r 3+2+4+4+3`).
 
-### As Network
+### As Network {#network}
 
 The same information can also be visualized as a copresence network. For this, we employ the R-package `igraph`. A nice introduction to `igraph` can be found in [@Arnold:2015aa], particularly for literary networks.
 

@@ -32,6 +32,6 @@ method.
 
 ## Technical basics
 
-### Pipelining with `margrittr`
-
 ### Classes
+
+### Pipelining with `margrittr`

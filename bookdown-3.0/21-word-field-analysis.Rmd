@@ -1,0 +1,264 @@
+# Word Field Analysis
+
+What we consider a word field here may differ from specific uses in linguistics. In this context, a word field is a list of words that belong to a common theme / topic / semantic group. Multiple word fields can be assembled to create a dictionary. On a technical level, what we describe in the following works for arbitrary lists of words. A semantic relation between the words is technically not required. Thus, the following pieces of code can be used with arbitrary word lists.
+
+For **demo purposes** (this is really a toy example), we will define the word field of `Love` as containing the words `Liebe` (love) and `Herz` (heart). 
+In R, we can put them in a character vector, and we use lemmas:
+
+```{r}
+wf_love <- c("liebe", "herz")
+```
+
+We will test this word field on Emilia Galotti, which should be about love. 
+
+```{r}
+data("rksp.0")
+```
+
+## Single word field
+
+The core of the word field analysis is collecting statistics about a dictionary. Therefore, we use the function called `dictionaryStatisticsSingle()` (single, because we only want to analyse a single word field):
+
+```{r}
+dictionaryStatisticsSingle(
+  rksp.0,              # the text we want to process
+  wordfield=wf_love    # the word field
+)
+
+```
+
+What this table shows us the number of times the characters in the play use words that appear in this list. By default, these are absolute numbers.
+
+We can visualise these counts in a simple bar chart:
+
+```{r fig.height=3}
+
+# retrieve counts and replace character ids by names
+dstat <- dictionaryStatisticsSingle(rksp.0, wordfield = wf_love) %>% 
+  format(rksp.0)
+
+# remove figures not using these words at all
+dstat <- dstat[dstat$x>0,]
+
+# create a bar plot
+barplot(dstat$x,                      # what to plot
+        names.arg = dstat$character,  # x axis labels
+        las=2                         # turn axis labels
+)
+```
+
+Apparently, the prince and Marinelli are mentioning these words a lot more than the other characters. 
+
+When comparing characters, it often (but not always) makes sense to normalize the counts according to the total number of spoken words by a character. This can be enabled by setting the argument `normalizeByFigure=TRUE`. This will divide the number of words in this field by the total number of words a character speaks.
+
+```{r}
+dstat <- dictionaryStatisticsSingle(rksp.0, wordfield=wf_love,
+  normalizeByFigure = TRUE   # apply normalization
+) %>% format(rksp.0)         # reformat character names
+
+# remove figures not using these words at all
+dstat <- dstat[dstat$x>0,]
+
+barplot(dstat$x, 
+        names.arg = dstat$character, 
+        las=2            
+)
+```
+
+
+## Multiple Word Fields
+
+The function `dictionaryStatistics()` can be used to analyse multiple dictionaries at once. To this end, dictionaries are represented as lists of character vectors. The (named) outer list contains the keywords, the vectors are just words associated with the keyword.
+
+New dictionaries can be easily created like this:
+```{r}
+wf <- list(Liebe=c("liebe","herz","schmerz"), Hass=c("hass","hassen"))
+```
+
+This dictionary contains the two entries `Liebe` (love) and `Hass` (hate), with 3 respective 2 entries. Dictionaries can be created in code, like shown above. In addition, the function `loadFields()` can be used to download dictionary content from a URL or a directory. By default, the function loads [this dictionary](https://github.com/quadrama/metadata/tree/master/fields/) from GitHub (that we used in publications), for the keywords `Liebe` and `Familie` (family). Since version 2.3.0, this dictionary is included in the package as `base_dictionary` and can be used right away (without internet connection). It is also the default dictionary used by `dictionaryStatistics()`. 
+
+The function `loadFields()` offers parameters to load from different URLs via http or to load from plain text files that are stored locally. The latter can be achieved by specifying the directory as `baseurl`. Entries for each keyword should then be stored in a file named like the keyword, and ending with `txt` (by default, can be overwritten). See `?loadFields` for details. Some of the options can also be specified through `dictionaryStatistics()`, as exemplified below.
+
+The following examples use the `base_dictionary`, i.e., a specific version of the fields we have been using in QuaDramA. 
+
+
+```{r, eval=TRUE}
+
+dstat <- dictionaryStatistics(
+  rksp.0,  # the text
+  fieldnames = # fields we want to measure (from base_dictionary)
+    c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
+  normalizeByFigure = TRUE,   # normalization by figure
+  normalizeByField = TRUE     # normalization by field
+)
+dstat
+```
+
+The variable `dstat` now contains multiple columns, one for each word field. We have been using the option `normalizeByFigure` before. When comparing multiple fields, it often happens that they have a different size (i.e., different number of words). In this case, it makes sense to *also* normalize with the number of words in the word field. This is achieved by `normalizeByField=TRUE`. This makes the numbers very small, but they should be used in comparison anyway.
+
+### Bar plot by character
+
+It is now straightforward to show the distribution of fields for a single character:
+
+```{r}
+mat <- as.matrix(dstat)
+
+barplot(mat[9,],     # we select Emilia's line
+        main="Emilia's speech",
+        names.arg=colnames(mat)
+)
+```
+
+
+### Bar plot by field
+
+Conversely, we can also show who uses words of a certain field how often:
+
+```{r}
+
+dstat <- dictionaryStatistics(
+  rksp.0,  # the text
+  fieldnames = # fields we want to measure (from base_dictionary)
+    c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
+  normalizeByFigure = TRUE,   # normalization by figure
+  normalizeByField = TRUE     # normalization by field
+) %>% 
+  format(rksp.0)
+  
+mat <- as.matrix(dstat)
+
+par(mar=c(9,4,1,1))
+
+barplot(mat[,1],                  # Select the row for 'love'
+        main="Use of love words", # title for plot
+        beside = TRUE,            # not stacked
+        names.arg = dstat$character,   # x axis labels
+        las=2                     # rotation for labels
+)
+```
+
+## Dictionary Based Distance
+
+Technically, the output of `dictionaryStatistics()` is a  `data.frame`. This is suitable for most uses. In some cases, however, it's more suited to work with a matrix that only contains the raw numbers (i.e., number of family words). Calculating character distance based on dictionaries, for instance. For these cases, the package provides an S3 method that extracts the numeric part of the data.frame and creates a matrix. We have used this function `as.matrix()` already above.
+
+The matrix doesn't have row names by default. The snippet below can be used to add row names.
+
+```{r}
+
+ds <- dictionaryStatistics(rksp.0, 
+                            fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
+                            normalizeByFigure=TRUE)
+m <- as.matrix(ds)
+rownames(m) <- ds$character
+m
+```
+
+
+Every character is now represented with five numbers, which can be interpreted as a vector in five-dimensional space. This means, we can easily apply distance metrics supplied by the function `dist()` (from the default package `stats`). By default, `dist()` calculates [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance). 
+
+```{r}
+cdist <- dist(m)
+# output not shown
+```
+
+The resulting data structure is similar to the one in the weighted configuration matrix, which means everything from [Section 5.2.2](#network) can be applied here.
+In particular, we can convert these distances into a network:
+
+```{r}
+require(igraph)
+g <- graph_from_adjacency_matrix(as.matrix(cdist), 
+                                 weighted=TRUE,     # weighted graph
+                                 mode="undirected", # no direction
+                                 diag=FALSE         # no looping edges
+                                )
+```
+
+This network can of course be visualised again.
+
+```{r}
+# Now we plot
+plot.igraph(g, 
+            layout=layout_with_fr,       # how to lay out the graph
+            main="Dictionary distance network",  # title
+            vertex.label.cex=0.6,         # label size
+            vertex.label.color="black",   # font color
+            vertex.color=qd.colors[5],    # vertex color
+            vertex.frame.color=NA,        # no vertex border
+            edge.width=E(g)$weight*100    # scale edges according to their weight 
+                                          # (since the distances are so small, we multiply)
+            )  
+```
+
+Although this network is similar to the one shown in [Section 5.2.2](#network) (both undirected and weighted), it displays a totally different kind of information. The networks based on copresence connect characters that appear together on stage, while this network connects characters with similar thematic profile in their speech (within the limits of being able to detect thematic profiles via word fields).
+
+## Development over the course of the play
+
+Finally, the function `dictionaryStatistics()` can be used to track word field for segments of the play. To do that, we use the parameter `segment`, and set it to either "Act" or "Scene".
+
+### Individual characters
+
+We can now plot the theme progress over the course of the play. This can be done for specific characters, as shown below. 
+
+
+```{r}
+dsl <- dictionaryStatistics(rksp.0, 
+                            fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
+                            normalizeByFigure=TRUE,
+                            segment="Act")
+
+mat <- as.matrix(dsl[dsl$character=="marinelli",])
+
+matplot(mat, type="l", col="black")
+legend(x="topleft",legend=colnames(mat), lty=1:ncol(dsl))
+
+```
+
+
+Depending on the use case, it might be easier to interpret if the numbers are cumulatively added up. The snippet below shows how this works.
+
+```{r}
+dsl <- dictionaryStatistics(rksp.0, 
+                            fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
+                            normalizeByFigure=TRUE,
+                            segment="Act") 
+
+mat <- as.matrix(dsl[dsl$character=="marinelli",])
+
+mat <- apply(mat,2,cumsum)
+
+matplot(mat, type="l", col="black")
+
+# Add act lines
+abline(v=1:nrow(mat))
+
+legend(x="topleft", legend=colnames(mat), lty=1:5)
+
+```
+
+### Comparing characters
+
+Simultaneously to the setting above, we now want to compare the development of several characters for a single word field. This unfortunately requires some reshuffling of the data, using the function `reshape` (from the `stats` package).
+
+```{r}
+dsl <- dictionaryStatistics(rksp.0, 
+                            fieldnames=c("Liebe"),
+                            normalizeByFigure=TRUE,
+                            segment="Act") %>% 
+  filter(rksp.0,
+         threshold = 6) %>%
+  format(rksp.0)
+
+dsl <- reshape(dsl, direction = "wide",  # the table becomes wider
+               timevar = "Number.Act",   # the column that specifies multiple readings
+               times = "Liebe",          # the number to distribute
+               idvar=c("corpus","drama","character")   # what identifies a character
+)
+
+mat <- as.matrix.data.frame(dsl[,4:ncol(dsl)])
+rownames(mat) <- dsl$character
+mat <- apply(mat,1,cumsum)
+
+matplot(mat, type="l", lty = 1:ncol(mat), col="black", main="Liebe")
+legend(x="topleft", legend=colnames(mat), lty=1:ncol(mat))
+
+```
