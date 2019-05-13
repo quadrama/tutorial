@@ -241,7 +241,7 @@ mat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(c)
                            <span class="dt">y=</span><span class="kw">max</span>(<span class="kw">colSums</span>(mat)) <span class="co"># legend y pos</span>
                         ), 
         <span class="dt">col=</span>qd.colors)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div id="filter" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Filtering unimportant characters</h3>
 <p>This is informative, but doesn’t look very nice and some colors are difficult to associate with characters because colors are repeating. We will therefore use the function <code>filter()</code>, which is very similar to <code>format()</code>: It can be applied to any object of the type <code>QDHasCharacter</code> and removes rows according to certain criteria. In this case, we filter every character except the five most talkative ones. As usual, see <code>?filter.QDHasCharacter</code> to see other options.</p>
@@ -260,7 +260,7 @@ mat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(c)
                            <span class="dt">y=</span><span class="kw">max</span>(<span class="kw">colSums</span>(mat)) <span class="co"># legend y pos</span>
                         ), 
         <span class="dt">col=</span>qd.colors)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Of course, the speech of characters that do not speak often is now removed, leaving only a portion of each act covered in the plot.</p>
 </div>
 <div id="normalization" class="section level3">
@@ -290,7 +290,7 @@ mat &lt;-<span class="st"> </span><span class="kw">scale</span>(mat_filtered,
         <span class="dt">las=</span><span class="dv">1</span>,        <span class="co"># rotate labels on y axis</span>
         <span class="dt">col=</span>qd.colors <span class="co"># provide colors</span>
 )</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
 <div id="copresence" class="section level2">
@@ -425,7 +425,7 @@ copresence[<span class="kw">lower.tri</span>(copresence,<span class="dt">diag=</
 <span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> <span class="kw">length</span>(c<span class="op">$</span>character)), <span class="dt">labels =</span> c<span class="op">$</span>character, <span class="dt">las=</span><span class="dv">3</span>)
 <span class="co"># add the y axis</span>
 <span class="kw">axis</span>(<span class="dv">2</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> <span class="kw">length</span>(c<span class="op">$</span>character)), <span class="dt">labels =</span> c<span class="op">$</span>character, <span class="dt">las=</span><span class="dv">1</span>)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Apparently, Marinelli and the prince have the most shared scenes. Marinelli also shares a scene with most other figures (sum of the vertical bar: 16).</p>
 </div>
 <div id="network" class="section level3">
@@ -464,7 +464,7 @@ g &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw"
      <span class="dt">vertex.frame.color=</span><span class="ot">NA</span>,        <span class="co"># no vertex border</span>
      <span class="dt">edge.width=</span><span class="kw">E</span>(g)<span class="op">$</span>weight        <span class="co"># scale edges according to their weight</span>
 )  </code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
 <div id="network-properties" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Network properties</h3>

@@ -208,6 +208,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="whos-talking-how-much" class="section level1">
 <h1><span class="header-section-number">3</span> Who’s talking how much?</h1>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="DramaAnalysis_files/figure-html/unnamed-chunk-3-1.png" alt="Relevant classes and functions in this chaper" width="90%" />
+<p class="caption">
+Figure 3.1: Relevant classes and functions in this chaper
+</p>
+</div>
 <p>First, we calculate summary statistics over all characters.</p>
 <pre class="sourceCode r"><code class="sourceCode r">charStats &lt;-<span class="st"> </span><span class="kw">characterStatistics</span>(text)
 
@@ -347,7 +353,7 @@ charStats</code></pre>
         <span class="dt">names.arg =</span> charStats<span class="op">$</span>character, <span class="co"># the labels on the x-axis</span>
         <span class="dt">las=</span><span class="dv">2</span> <span class="co"># rotate the labels on both axes</span>
 ) </code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div id="format" class="section level2">
 <h2><span class="header-section-number">3.1</span> Character names instead of identifiers</h2>
 <p>By default, all our functions identify characters using technical ids, which may or may not be human-readable. Even if they are, it’s usually a good idea to replace them with nice to read labels before publication. We therefore provide the function <code>format()</code>, which can be applied to any table that contains a column with character ids (i.e., any object of type <code>QDHasCharacter</code>).</p>
@@ -361,7 +367,7 @@ charStats &lt;-<span class="st"> </span><span class="kw">format</span>(charStats
         <span class="dt">names.arg =</span> charStats<span class="op">$</span>character, <span class="co"># the labels on the x-axis</span>
         <span class="dt">las=</span><span class="dv">2</span> <span class="co"># rotate the labels on both axes</span>
 )</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>As can be seen above <code>format()</code> requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function <code>loadDrama()</code>).</p>
 </div>
 <div id="stacked-bar-plot" class="section level2">
@@ -370,13 +376,13 @@ charStats &lt;-<span class="st"> </span><span class="kw">format</span>(charStats
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">characterStatistics</span>(text, <span class="dt">normalize=</span><span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">format</span>(text) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">barplot</span>(<span class="dt">names.arg=</span><span class="kw">c</span>(<span class="st">&quot;Miss Sara Sampson&quot;</span>, <span class="st">&quot;Emilia Galotti&quot;</span>))</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>By default, the <code>barplot.QDCharacterStatistics()</code> function visualises the number of tokens spoken by the characters (and ranks the characters accordingly). This can be changed by supplying the option <code>column</code>, and specifying another value.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">characterStatistics</span>(text, <span class="dt">normalize=</span><span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">format</span>(text) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">barplot</span>(<span class="dt">names.arg=</span><span class="kw">c</span>(<span class="st">&quot;Miss Sara Sampson&quot;</span>, <span class="st">&quot;Emilia Galotti&quot;</span>), 
           <span class="dt">column =</span> <span class="st">&quot;utteranceLengthMean&quot;</span>) <span class="co"># show mean utterance length</span></code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>This picture looks quite different! Other interesting columns to experiment with are <code>types</code> and <code>utteranceLengthSd</code>.</p>
 </div>
 </div>
