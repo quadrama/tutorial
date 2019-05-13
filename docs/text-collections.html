@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Advanced Text Analysis | DramaAnalysis</title>
-  <meta name="description" content="9 Advanced Text Analysis | DramaAnalysis" />
+  <title>7 Text Collections | DramaAnalysis</title>
+  <meta name="description" content="7 Text Collections | DramaAnalysis" />
   <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Advanced Text Analysis | DramaAnalysis" />
+  <meta property="og:title" content="7 Text Collections | DramaAnalysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Advanced Text Analysis | DramaAnalysis" />
+  <meta name="twitter:title" content="7 Text Collections | DramaAnalysis" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="word-field-analysis.html">
-<link rel="next" href="resterampe.html">
+<link rel="prev" href="character-exchange.html">
+<link rel="next" href="word-field-analysis.html">
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -206,54 +206,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="advanced-text-analysis" class="section level1">
-<h1><span class="header-section-number">9</span> Advanced Text Analysis</h1>
-<div id="when-are-characters-mentioned" class="section level2">
-<h2><span class="header-section-number">9.1</span> When are characters mentioned?</h2>
-<p>When characters are speaking on stage, they are actively present. But they can also be passively present, if other characters refer to them. Both levels of presence can be extracted with the <code>presence()</code> function:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load Emilia Galotti</span>
-<span class="kw">data</span>(rksp<span class="fl">.0</span>)
+<div id="text-collections" class="section level1">
+<h1><span class="header-section-number">7</span> Text Collections</h1>
+<p>So far, we have mostly processed single texts. In this chapter, we will cover the important things to know when processing collections of texts – be it genres or the works of an author.</p>
+<p>The following code can only be reproduced if the GerDraCor data set and the collection repository have been installed. This can be done with the following code (assuming an internet connection).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">installData</span>(<span class="st">&quot;gdc&quot;</span>)</code></pre>
+<pre><code>## Pulling new data from https://github.com/quadrama/data_gdc.git.</code></pre>
+<pre><code>## Already up-to-date</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">installCollectionData</span>()</code></pre>
+<pre><code>## Warning in utils::unzip(tf, exdir = dataDirectory): Fehler 1 während des
+## Extrahierens aus Zipfile</code></pre>
+<pre><code>## Warning in file.rename(from = file.path(repoDirectory, &quot;collections&quot;), to =
+## getOption(&quot;qd.collectionDirectory&quot;)): kann Datei &#39;/Users/reiterns/QuaDramA/
+## Data2/metadata-master/collections&#39; nicht in &#39;/Users/reiterns/QuaDramA/
+## Data2/collections&#39; umbenennen. Grund &#39;No such file or directory&#39;</code></pre>
+<div id="defining-collections" class="section level2">
+<h2><span class="header-section-number">7.1</span> Defining collections</h2>
+<p>Before processing, it’s necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load ids that are comedies and tragedies</span>
+ids.tragedy &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">loadSet</span>(<span class="kw">c</span>(<span class="st">&quot;trauerspiel&quot;</span>, <span class="st">&quot;tragödie&quot;</span>, <span class="st">&quot;tragoedie&quot;</span>)))
+ids.comedy &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">loadSet</span>(<span class="kw">c</span>(<span class="st">&quot;lustspiel&quot;</span>, <span class="st">&quot;komödie&quot;</span>, <span class="st">&quot;komoedie&quot;</span>)))
 
-pres &lt;-<span class="st"> </span><span class="kw">presence</span>(rksp<span class="fl">.0</span>)
-pres</code></pre>
-<pre><code>##    corpus  drama        character scenes actives passives    presence
-## 1    test rksp.0           angelo     43       2        1  0.02325581
-## 2    test rksp.0          appiani     43       5       14 -0.20930233
-## 3    test rksp.0         battista     43       4        6 -0.04651163
-## 4    test rksp.0     camillo_rota     43       1        2 -0.02325581
-## 5    test rksp.0  claudia_galotti     43      13       14 -0.02325581
-## 6    test rksp.0            conti     43       1        3 -0.04651163
-## 7    test rksp.0 der_kammerdiener     43       1        2 -0.02325581
-## 8    test rksp.0        der_prinz     43      14       21 -0.16279070
-## 9    test rksp.0           emilia     43       7       21 -0.32558140
-## 10   test rksp.0        marinelli     43      19       21 -0.04651163
-## 11   test rksp.0          odoardo     43      12       11  0.02325581
-## 12   test rksp.0           orsina     43       6       10 -0.09302326
-## 13   test rksp.0            pirro     43       4        5 -0.02325581</code></pre>
-<p>As we can see, each character has a few numbers associated: The column <code>actives</code> shows the number of scenes in which the character is actively present. This is equivalent to the information in the configuration matrix. The column <code>passives</code> shows the number of scenes in which a character is mentioned. By default, this excludes the scenes in which they are present themselves (this behaviour can be changed by adding the parameter <code>passiveOnlyWhenNotActive = TRUE</code> to the call of the <code>presence</code> function).</p>
-<p>A simple visualisation that shows the characters active and passive presence in one plot can be generated like this: The first line (<code>plot()</code>) is responsible for the plotting of the symbols, the second line (<code>text()</code>) adds the character names or ids numbers.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x=</span>pres<span class="op">$</span>active<span class="op">/</span>pres<span class="op">$</span>scenes, 
-     <span class="dt">y=</span>pres<span class="op">$</span>passive<span class="op">/</span>pres<span class="op">$</span>scenes, 
-     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), 
-     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), 
-     <span class="dt">xlab=</span><span class="st">&quot;Active&quot;</span>, 
-     <span class="dt">ylab=</span><span class="st">&quot;Passive&quot;</span>,
-     <span class="dt">main=</span><span class="st">&quot;Character Presence&quot;</span>)
-<span class="kw">text</span>(<span class="dt">x=</span>pres<span class="op">$</span>actives<span class="op">/</span>pres<span class="op">$</span>scenes, 
-     <span class="dt">y=</span>pres<span class="op">$</span>passives<span class="op">/</span>pres<span class="op">$</span>scenes, 
-     <span class="dt">labels=</span><span class="kw">substr</span>(pres<span class="op">$</span>character,<span class="dv">0</span>,<span class="dv">20</span>), 
-     <span class="dt">pos=</span><span class="dv">3</span>)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<span class="co"># make sure we&#39;re using the GerDraCor corpus</span>
+ids.tragedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;tg:&quot;</span>, <span class="st">&quot;gdc:&quot;</span>, ids.tragedy, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)
+ids.comedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;tg:&quot;</span>, <span class="st">&quot;gdc:&quot;</span>, ids.comedy, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre>
+</div>
+<div id="loading-multiple-plays" class="section level2">
+<h2><span class="header-section-number">7.2</span> Loading multiple plays</h2>
+<p>Loading multiple plays at once is straightforward, and not different from loading a single one.</p>
 
 </div>
+</div>
+
+
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="word-field-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="resterampe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="character-exchange.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-field-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

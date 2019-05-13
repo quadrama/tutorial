@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-05-12" />
+<meta name="date" content="2019-05-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="configuration.html">
-<link rel="next" href="word-field-analysis.html">
+<link rel="next" href="text-collections.html">
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pipelining-with-margrittr"><i class="fa fa-check"></i><b>1.1.2</b> Pipelining with <code>margrittr</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-preparations.html"><a href="data-preparations.html"><i class="fa fa-check"></i><b>2</b> Data preparations</a></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.3</b> Sample data</a></li>
+</ul></li>
 <li class="part"><span><b>I Structure Analysis</b></span></li>
 <li class="chapter" data-level="3" data-path="whos-talking-how-much.html"><a href="whos-talking-how-much.html"><i class="fa fa-check"></i><b>3</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="3.1" data-path="whos-talking-how-much.html"><a href="whos-talking-how-much.html#format"><i class="fa fa-check"></i><b>3.1</b> Character names instead of identifiers</a></li>
@@ -154,26 +158,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.4" data-path="configuration.html"><a href="configuration.html#graph-export"><i class="fa fa-check"></i><b>5.2.4</b> Graph Export</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="character-exchange.html"><a href="character-exchange.html"><i class="fa fa-check"></i><b>6</b> Character Exchange</a></li>
+<li class="chapter" data-level="6" data-path="character-exchange.html"><a href="character-exchange.html"><i class="fa fa-check"></i><b>6</b> Character Exchange</a><ul>
+<li class="chapter" data-level="6.1" data-path="character-exchange.html"><a href="character-exchange.html#hamming-distance"><i class="fa fa-check"></i><b>6.1</b> Hamming Distance</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="character-exchange.html"><a href="character-exchange.html#normalizedhamming"><i class="fa fa-check"></i><b>6.1.1</b> NormalizedHamming</a></li>
+<li class="chapter" data-level="6.1.2" data-path="character-exchange.html"><a href="character-exchange.html#trilcke"><i class="fa fa-check"></i><b>6.1.2</b> Trilcke</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="text-collections.html"><a href="text-collections.html"><i class="fa fa-check"></i><b>7</b> Text Collections</a><ul>
+<li class="chapter" data-level="7.1" data-path="text-collections.html"><a href="text-collections.html#defining-collections"><i class="fa fa-check"></i><b>7.1</b> Defining collections</a></li>
+<li class="chapter" data-level="7.2" data-path="text-collections.html"><a href="text-collections.html#loading-multiple-plays"><i class="fa fa-check"></i><b>7.2</b> Loading multiple plays</a></li>
+</ul></li>
 <li class="part"><span><b>II Text Analysis</b></span></li>
-<li class="chapter" data-level="7" data-path="word-field-analysis.html"><a href="word-field-analysis.html"><i class="fa fa-check"></i><b>7</b> Word Field Analysis</a><ul>
-<li class="chapter" data-level="7.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#single-word-field"><i class="fa fa-check"></i><b>7.1</b> Single word field</a></li>
-<li class="chapter" data-level="7.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#multiple-word-fields"><i class="fa fa-check"></i><b>7.2</b> Multiple Word Fields</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#bar-plot-by-character"><i class="fa fa-check"></i><b>7.2.1</b> Bar plot by character</a></li>
-<li class="chapter" data-level="7.2.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#bar-plot-by-field"><i class="fa fa-check"></i><b>7.2.2</b> Bar plot by field</a></li>
+<li class="chapter" data-level="8" data-path="word-field-analysis.html"><a href="word-field-analysis.html"><i class="fa fa-check"></i><b>8</b> Word Field Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#single-word-field"><i class="fa fa-check"></i><b>8.1</b> Single word field</a></li>
+<li class="chapter" data-level="8.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#multiple-word-fields"><i class="fa fa-check"></i><b>8.2</b> Multiple Word Fields</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#bar-plot-by-character"><i class="fa fa-check"></i><b>8.2.1</b> Bar plot by character</a></li>
+<li class="chapter" data-level="8.2.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#bar-plot-by-field"><i class="fa fa-check"></i><b>8.2.2</b> Bar plot by field</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="word-field-analysis.html"><a href="word-field-analysis.html#dictionary-based-distance"><i class="fa fa-check"></i><b>7.3</b> Dictionary Based Distance</a></li>
-<li class="chapter" data-level="7.4" data-path="word-field-analysis.html"><a href="word-field-analysis.html#development-over-the-course-of-the-play"><i class="fa fa-check"></i><b>7.4</b> Development over the course of the play</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#individual-characters"><i class="fa fa-check"></i><b>7.4.1</b> Individual characters</a></li>
-<li class="chapter" data-level="7.4.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#comparing-characters"><i class="fa fa-check"></i><b>7.4.2</b> Comparing characters</a></li>
+<li class="chapter" data-level="8.3" data-path="word-field-analysis.html"><a href="word-field-analysis.html#dictionary-based-distance"><i class="fa fa-check"></i><b>8.3</b> Dictionary Based Distance</a></li>
+<li class="chapter" data-level="8.4" data-path="word-field-analysis.html"><a href="word-field-analysis.html#development-over-the-course-of-the-play"><i class="fa fa-check"></i><b>8.4</b> Development over the course of the play</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#individual-characters"><i class="fa fa-check"></i><b>8.4.1</b> Individual characters</a></li>
+<li class="chapter" data-level="8.4.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#comparing-characters"><i class="fa fa-check"></i><b>8.4.2</b> Comparing characters</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html"><i class="fa fa-check"></i><b>8</b> Advanced Text Analysis</a><ul>
-<li class="chapter" data-level="8.1" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html#when-are-characters-mentioned"><i class="fa fa-check"></i><b>8.1</b> When are characters mentioned?</a></li>
+<li class="chapter" data-level="9" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html"><i class="fa fa-check"></i><b>9</b> Advanced Text Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html#when-are-characters-mentioned"><i class="fa fa-check"></i><b>9.1</b> When are characters mentioned?</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>9</b> Resterampe</a><ul>
-<li class="chapter" data-level="9.0.1" data-path="resterampe.html"><a href="resterampe.html#character-meta-data"><i class="fa fa-check"></i><b>9.0.1</b> Character meta data</a></li>
-<li class="chapter" data-level="9.0.2" data-path="resterampe.html"><a href="resterampe.html#character-groups"><i class="fa fa-check"></i><b>9.0.2</b> Character groups</a></li>
+<li class="chapter" data-level="10" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>10</b> Resterampe</a><ul>
+<li class="chapter" data-level="10.0.1" data-path="resterampe.html"><a href="resterampe.html#character-meta-data"><i class="fa fa-check"></i><b>10.0.1</b> Character meta data</a></li>
+<li class="chapter" data-level="10.0.2" data-path="resterampe.html"><a href="resterampe.html#character-groups"><i class="fa fa-check"></i><b>10.0.2</b> Character groups</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -195,11 +208,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="character-exchange" class="section level1">
 <h1><span class="header-section-number">6</span> Character Exchange</h1>
+<p>Character exchange – entering and leaving the stage – often takes place at scene boundaries. We offer multiple ways to measure and visualize this exchange over the course of the play.</p>
+<div id="hamming-distance" class="section level2">
+<h2><span class="header-section-number">6.1</span> Hamming Distance</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/Hamming_distance">hamming distance</a> has been introduced in information theory by Richard Hamming <span class="citation">(Hamming 1950)</span>. Intuitively, the hamming distance expresses the number of characters that either enter or leave the stage. Its application to a dramatic text is straightforward, using the function <code>hamming()</code>. By default, the hamming distance is calculated over scene boundaries.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Hamming&quot;</span>)</code></pre>
+<pre><code>##  [1] 2 1 1 1 1 2 2 4 2 4 3 2 1 1 1 2 2 2 4 2 2 3 2 4 1 3 3 1 3 2 2 1 1 1 5
+## [36] 3 1 1 2 2 1 2</code></pre>
+<p>The return value of the function is just a vector of numbers, one less than the number of scenes in the play. Of course, this can be plotted:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Hamming&quot;</span>),
+     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
+     <span class="dt">ylab=</span><span class="st">&quot;Hamming distance&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;Scenes&quot;</span>)</code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Hamming distance, in its original definition as well as the <code>Hamming</code> variant in our function, returns absolute values. As usual, these values should be normalized, and the function <code>hamming()</code> provides two ways of doing that.</p>
+<div id="normalizedhamming" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> NormalizedHamming</h3>
+<p>Straightforwardly, one can normalise by the overall number of characters in the play. This value is only maximal, if at once scene boundary, one subset of characters enters the stage, and the entire other subset leaves the stage. As we can see below, this is not the case in our demo text.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;NormalizedHamming&quot;</span>)</code></pre>
+<pre><code>##  [1] 0.15384615 0.07692308 0.07692308 0.07692308 0.07692308 0.15384615
+##  [7] 0.15384615 0.30769231 0.15384615 0.30769231 0.23076923 0.15384615
+## [13] 0.07692308 0.07692308 0.07692308 0.15384615 0.15384615 0.15384615
+## [19] 0.30769231 0.15384615 0.15384615 0.23076923 0.15384615 0.30769231
+## [25] 0.07692308 0.23076923 0.23076923 0.07692308 0.23076923 0.15384615
+## [31] 0.15384615 0.07692308 0.07692308 0.07692308 0.38461538 0.23076923
+## [37] 0.07692308 0.07692308 0.15384615 0.15384615 0.07692308 0.15384615</code></pre>
+</div>
+<div id="trilcke" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Trilcke</h3>
+<p>One more possible normalization has been proposed by <span class="citation">Trilcke et al. (2017)</span>. Instead of normalizing with all characters in the play, the Trilcke variant only normalizes with the characters in the two adjacent scenes. Thus, if all characters leave the stage, and a new set of characters enter it, the distance is maximal. This however does not have to include <em>all</em> characters in the play.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Trilcke&quot;</span>)</code></pre>
+<pre><code>##  [1] 0.6666667 0.5000000 0.5000000 0.5000000 0.5000000 0.6666667 0.6666667
+##  [8] 1.0000000 0.6666667 1.0000000 0.7500000 0.6666667 0.5000000 0.3333333
+## [15] 0.3333333 0.5000000 0.5000000 0.6666667 1.0000000 0.6666667 0.6666667
+## [22] 0.7500000 0.5000000 0.8000000 0.3333333 0.7500000 0.7500000 0.3333333
+## [29] 0.7500000 0.6666667 0.6666667 0.3333333 0.3333333 0.3333333 1.0000000
+## [36] 1.0000000 0.5000000 0.5000000 0.6666667 0.6666667 0.5000000 0.5000000</code></pre>
+<p>The Trilcke variant is the default setting of the <code>hamming()</code>-function.</p>
 
 </div>
-
-
-
+</div>
 </div>
             </section>
 
@@ -207,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="configuration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="word-field-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="text-collections.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,1 +1,40 @@
-# Data preparations
+# Data
+
+Before analysing any data, it needs to be imported, and converted into the proper structure. In QuaDramA, we process dramatic texts in multiple stages, described below.
+
+## Origin: TEI-XML
+
+The base format that we use (and in which we put all our annotations) is an XML format known as [TEI](https://tei-c.org). This format is used by most researchers doing quantitatitve drama analysis. An excellent source for dramas in the proper format is [DraCor](https://github.com/dracor-org/), maintained by [Frank Fischer](https://www.hse.ru/en/org/persons/182492735).
+
+While we are using GerDraCor as a basis, we have added linguistic annotations to a number of plays, and integrated more plays (e.g., translations) into the corpus. This corpus can be found [here](https://github.com/quadrama/Corpus).
+
+## Preprocessed data
+
+As a first step, we process all dramatic texts using our [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. [This repository](https://github.com/quadrama/data_test) contains two plays in the format, which are also included in our R package.
+
+
+| File | Description |
+| ------------------- | ------------------------------------------------- |
+| *ID*.Metadata.csv   | Meta data for the play (author, title, language, ...) |
+| *ID*.Characters.csv | Characters of the play, with some character specific information |
+| *ID*.Entities.csv   | All discourse entities (including characters, but also all other coreference chains) |
+| *ID*.Mentions.csv   | Mentions associated with characters |
+| *ID*.StageDirections.csv | The stage directions of the play |
+| *ID*.UtterancesWithTokens.csv | All character utterances of the play |
+| *ID*.Segments.csv | Information about acts and scenes |
+: Different CSV files used in the analysis. *ID* is a placeholder for a unique identifier for the play
+
+
+## Sample data
+
+```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+# Load Miß Sara Sampson
+data(rjmw.0)
+
+text <- combine(rksp.0, rjmw.0)
+
+```
+

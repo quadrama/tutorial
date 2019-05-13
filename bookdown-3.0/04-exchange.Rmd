@@ -1,1 +1,49 @@
 # Character Exchange
+
+Character exchange -- entering and leaving the stage -- often takes place at scene boundaries. We offer multiple ways to measure and visualize this exchange over the course of the play.
+
+## Hamming Distance
+
+The [hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) has been introduced in information theory by Richard Hamming [@Hamming:1950aa]. Intuitively, the hamming distance expresses the number of characters that either enter or leave the stage. Its application to a dramatic text is straightforward, using the function `hamming()`. By default, the hamming distance is calculated over scene boundaries.
+
+```{r}
+
+hamming(rksp.0, variant="Hamming")
+
+```
+
+The return value of the function is just a vector of numbers, one less than the number of scenes in the play. Of course, this can be plotted:
+
+```{r}
+plot(hamming(rksp.0, variant="Hamming"),
+     type="l",
+     ylab="Hamming distance",
+     xlab="Scenes")
+```
+
+
+Hamming distance, in its original definition as well as the `Hamming` variant in our function, returns absolute values. As usual, these values should be normalized, and the function `hamming()` provides two ways of doing that.
+
+
+### NormalizedHamming
+
+Straightforwardly, one can normalise by the overall number of characters in the play. This value is only maximal, if at once scene boundary, one subset of characters enters the stage, and the entire other subset leaves the stage. As we can see below, this is not the case in our demo text.
+
+```{r}
+
+hamming(rksp.0, variant="NormalizedHamming")
+
+```
+
+### Trilcke
+
+One more possible normalization has been proposed by @Trilcke:2017ab. Instead of normalizing with all characters in the play, the Trilcke variant only normalizes with the characters in the two adjacent scenes. Thus, if all characters leave the stage, and a new set of characters enter it, the distance is maximal. This however does not have to include *all* characters in the play.
+
+```{r}
+
+hamming(rksp.0, variant="Trilcke")
+
+```
+
+The Trilcke variant is the default setting of the `hamming()`-function.
+

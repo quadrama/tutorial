@@ -5,16 +5,7 @@
 
 We're assuming here that we have loaded some texts using `loadDrama()`, and that this text is stored as a `QDDrama`-object in the variable `text`. For demo purposes, we will use the two plays that are included in the R-package, Lessing's *Emilia Galotti* and *Miss Sara Sampson*. Both have been preprocessed by the [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline.
 
-```{r}
-# Load Emilia Galotti
-data(rksp.0)
 
-# Load Miß Sara Sampson
-data(rjmw.0)
-
-text <- combine(rksp.0, rjmw.0)
-
-```
 
 # Who's talking how much?
 

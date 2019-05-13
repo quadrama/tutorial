@@ -1,0 +1,39 @@
+# Text Collections
+
+So far, we have mostly processed single texts. In this chapter, we will cover the important things to know when processing collections of texts -- be it genres or the works of an author. 
+
+The following code can only be reproduced if the GerDraCor data set and the collection repository have been installed. This can be done with the following code (assuming an internet connection).
+
+```{r}
+
+installData("gdc")
+installCollectionData()
+
+```
+
+## Defining collections
+
+Before processing, it's necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical). 
+
+```{r}
+
+# load ids that are comedies and tragedies
+ids.tragedy <- unique(loadSet(c("trauerspiel", "tragödie", "tragoedie")))
+ids.comedy <- unique(loadSet(c("lustspiel", "komödie", "komoedie")))
+
+# make sure we're using the GerDraCor corpus
+ids.tragedy <- sub("tg:", "gdc:", ids.tragedy, fixed = TRUE)
+ids.comedy <- sub("tg:", "gdc:", ids.comedy, fixed = TRUE)
+
+```
+
+## Loading multiple plays
+
+Loading multiple plays at once is straightforward, and not different from loading a single one.
+
+```{r}
+
+
+
+
+```

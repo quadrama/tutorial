@@ -23,7 +23,7 @@ v <- packageVersion("DramaAnalysis")
 
 # Preface {-}
 
-*This book is in alpha stadium and not ready. In pertains to the (currently unreleased version 3.0 of the DramaAnalysis package. Use at your own risk.*
+*This book is in alpha stadium and not ready. It pertains to the (currently unreleased) version 3.0 of the DramaAnalysis package. Use at your own risk.*
 
 # Introduction
 
