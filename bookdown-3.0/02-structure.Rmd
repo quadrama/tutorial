@@ -9,6 +9,42 @@ We're assuming here that we have loaded some texts using `loadDrama()`, and that
 
 # Who's talking how much?
 
+```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Relevant classes and functions in this chaper'}
+
+\begin{tikzpicture}[every node/.style={font=\scriptsize},
+  class/.style={draw,font=\ttfamily\scriptsize,align=center},
+  function/.style={font=\ttfamily\itshape\scriptsize},
+  plot/.style={font=\scriptsize},
+  external/.style={font=\scriptsize\scshape},
+  deprecated/.style={color=red},
+  new/.style={color=olive}
+]
+%\node at (0,6) [font=\large,anchor=west] {DramaAnalysis 3.0};
+
+\node (loadDrama) at (0,0) [function] {loadDrama()};
+\node (characterstatistics) at (2,-1) [function] {characterStatistics()};
+\node (plotqdcharacterstatistics) at (2,-3) [function] {plot.QDCharacterStatistics()};
+\node (filter) at (-2,-1.5) [function] {filter()};
+\node (format) at (-2,-2.5) [function] {format()};
+
+\node (qddrama) at (2,0) [class] {QDDrama};
+\node (qdcharacterstatistics) at (2,-2) [class] {QDCharacterStatistics\\QDHasCharacter};
+\node (plotstackedcharactermatrix) at (2,-4) [plot] {basic character plot};
+
+
+\draw [->] (loadDrama) -- (qddrama);
+\draw [->] (qddrama) -- (characterstatistics);
+\draw [->] (characterstatistics) -- (qdcharacterstatistics);
+\draw [->] (qdcharacterstatistics) -- (plotqdcharacterstatistics);
+\draw [->] (plotqdcharacterstatistics) -- (plotstackedcharactermatrix);
+
+\draw [<->] (qdcharacterstatistics) -- (filter);
+\draw [<->] (qdcharacterstatistics) -- (format);
+
+\end{tikzpicture}
+
+```
+
 First, we calculate summary statistics over all characters.
 
 ```{r}
