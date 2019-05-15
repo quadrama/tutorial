@@ -4,12 +4,12 @@ So far, we have mostly processed single texts. In this chapter, we will cover th
 
 The following code can only be reproduced if the GerDraCor data set and the collection repository have been installed. This can be done with the following code (assuming an internet connection).
 
-```{r}
-
-installData("gdc")
+```{r eval=FALSE}
+installData("qd")
 installCollectionData()
-
 ```
+
+Depending on whether you have done this before, this will either update the data or create it new. Consequently, the output of these functions looks differently.
 
 ## Defining collections
 
@@ -21,19 +21,26 @@ Before processing, it's necessary to define a collection of texts, by assembling
 ids.tragedy <- unique(loadSet(c("trauerspiel", "tragödie", "tragoedie")))
 ids.comedy <- unique(loadSet(c("lustspiel", "komödie", "komoedie")))
 
-# make sure we're using the GerDraCor corpus
-ids.tragedy <- sub("tg:", "gdc:", ids.tragedy, fixed = TRUE)
-ids.comedy <- sub("tg:", "gdc:", ids.comedy, fixed = TRUE)
+# make sure we're using the QuaDramA corpus
+ids.tragedy <- sub("tg:", "qd:", ids.tragedy, fixed = TRUE)
+ids.comedy <- sub("tg:", "qd:", ids.comedy, fixed = TRUE)
 
 ```
 
 ## Loading multiple plays
 
-Loading multiple plays at once is straightforward, and not different from loading a single one.
+Loading multiple plays at once is straightforward, and not different from loading a single one. We just use a vector of play ids as argument to the `loadDrama()` function.
+
+```{r message=FALSE, results="hide"}
+text.tragedies <-loadDrama(ids.tragedy)
+text.comedies  <- loadDrama(ids.comedy)
+```
+
+This may create a lot of output (suppressed here), telling you about specific plays that could not be loaded (we'll ignore this for the moment).
+
+First, we'll get an overview of the plays that we just loaded. The meta data for tragedies (and comedies) are in a straightforward table:
 
 ```{r}
-
-
-
-
+text.tragedies$meta
 ```
+

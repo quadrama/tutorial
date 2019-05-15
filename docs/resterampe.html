@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-05-13" />
+<meta name="date" content="2019-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -213,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We will now combine this information with additional meta data about characters, i.e., gender.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Proportion of male / female characters</span>
 <span class="kw">barplot</span>(<span class="kw">table</span>(text<span class="op">$</span>characters<span class="op">$</span>Gender),<span class="dt">col=</span>qd.colors)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="character-groups" class="section level3">
 <h3><span class="header-section-number">10.0.2</span> Character groups</h3>
@@ -233,7 +233,7 @@ ustat &lt;-<span class="st"> </span><span class="kw">merge</span>(ustat, charact
         <span class="dt">data=</span>ustat, 
         <span class="dt">las =</span> <span class="dv">1</span> <span class="co"># rotate axis labels</span>
       )</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <p>According to this picture, female characters speak slightly longer utterances in this play.</p>
 
 </div>
