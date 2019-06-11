@@ -3,13 +3,16 @@
 
 
 
+
+
+
+# Who's talking how much? {#who-how-much}
+
 We're assuming here that we have loaded some texts using `loadDrama()`, and that this text is stored as a `QDDrama`-object in the variable `text`. For demo purposes, we will use the two plays that are included in the R-package, Lessing's *Emilia Galotti* and *Miss Sara Sampson*. Both have been preprocessed by the [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline.
 
 
 
-# Who's talking how much?
-
-```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Relevant classes and functions in this chaper'}
+```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Relevant classes and functions in this chapter'}
 
 \begin{tikzpicture}[every node/.style={font=\scriptsize},
   class/.style={draw,font=\ttfamily\scriptsize,align=center},
@@ -23,7 +26,7 @@ We're assuming here that we have loaded some texts using `loadDrama()`, and that
 
 \node (loadDrama) at (0,0) [function] {loadDrama()};
 \node (characterstatistics) at (2,-1) [function] {characterStatistics()};
-\node (plotqdcharacterstatistics) at (2,-3) [function] {plot.QDCharacterStatistics()};
+\node (plotqdcharacterstatistics) at (2,-3) [function] {barplot.QDCharacterStatistics()};
 \node (filter) at (-2,-1.5) [function] {filter()};
 \node (format) at (-2,-2.5) [function] {format()};
 
@@ -48,9 +51,7 @@ We're assuming here that we have loaded some texts using `loadDrama()`, and that
 First, we calculate summary statistics over all characters.
 
 ```{r}
-charStats <- characterStatistics(text)
-
-charStats
+characterStatistics(text)
 ```
 
 This already gives us a lot of information about the characters. In particular, the function `characterStatistics()` returns a table (of the types `QDCharacterStatistics`, `QDHasCharacter` and `data.frame`) with information about:
@@ -110,7 +111,7 @@ As can be seen above `format()` requires two arguments: The table in which we wa
 
 ## Stacked bar plot
 
-The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the `QDCharacterStatistics` directly into the `barplot()` function. In combination with the `margrittr` pipes, we can call it like this (enter `?barplot.QDCharacterStatistics` for details on the special barplot function):
+The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the `QDCharacterStatistics` directly into the `barplot()` function. In combination with the `magrittr` pipes (see \@ref(magrittr)), we can call it like this (enter `?barplot.QDCharacterStatistics` for details on the special barplot function):
 
 
 ```{r results="hide"}
@@ -152,7 +153,7 @@ This creates a table that is very long, which is why we only show the first 10 r
 ```{r}
 ustat <- utteranceStatistics(rksp.0) %>%
   format(rksp.0)   # use names instead of character ids (see above)
-
+  
 par(mar=c(9,4,2,2)) # increase margin
 
 boxplot(utteranceLength ~ character, # what do we want to correlate 

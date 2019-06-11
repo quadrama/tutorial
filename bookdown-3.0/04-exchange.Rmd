@@ -47,3 +47,34 @@ hamming(rksp.0, variant="Trilcke")
 
 The Trilcke variant is the default setting of the `hamming()`-function.
 
+
+## Corpus Analysis
+
+
+
+```{r warning=FALSE}
+sturm_und_drang.ids <- c("qd:11f81.0", "qd:11g1d.0", "qd:11g9w.0", 
+                         "qd:11hdv.0", "qd:nds0.0",  "qd:r12k.0", 
+                         "qd:r12v.0",  "qd:r134.0",  "qd:r13g.0", 
+                         "qd:rfxf.0",  "qd:rhtz.0",  "qd:rhzq.0", 
+                         "qd:rj22.0",  "qd:tx4z.0",  "qd:tz39.0", 
+                         "qd:tzgk.0",  "qd:v0fv.0",  "qd:wznj.0", 
+                         "qd:tx4z.0",  "qd:rfxf.0")
+
+sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
+
+```
+
+Since determining character exchanges at scene boundaries is not a multi-play task, the function `hamming()` does not allow `QDDrama` objects that contain multiple plays. It's still possible to calculate the exchanges for many plays though, using `split()` and `lapply()`. `split()` is a function defined in the `DramaAnalysis` package and can be used to split up a `QDDrama` object if it contains multiple plays. It returns a list of individual objects. This list is then fed into the function `lapply()`, which applies the function `hamming()` on each element of the list.
+
+```{r}
+profiles <- lapply(split(sturm_und_drang.plays), hamming, variant = "Trilcke")
+```
+
+The result of this is a list that contains an entry for each play, which in turn reflects the distances at specific scene boundaries. Thus, the lists have different lengths, as the plays have different lengths.
+
+```{r fig.height=20}
+par(mfrow=c(length(profiles),1), mar=c(2,2,2,2))
+lapply(profiles, plot, type="l", ylab="Character exchange rate", ylim=c(0,1))
+
+```

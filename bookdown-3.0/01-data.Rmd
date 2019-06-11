@@ -38,3 +38,63 @@ text <- combine(rksp.0, rjmw.0)
 
 ```
 
+## Collection data
+
+To work with corpus data, it's necessary to define a corpus first. In DramaAnalysis, we consider corpora as sets of texts. Typically, these sets have names, such as "comedies", but it does not technically matter why texts are in a collection.
+
+Pre-defined collections can be downloaded with the function `installCollectionData()`. This function clones a git repository ([this one](https://github.com/quadrama/metadata)), which contains a number of plain text files that in turn contain drama ids.
+
+**TODO: ids, corpus prefixes**
+
+Once a vector with ids has been defined, it can be passed as an argument to the function `loadDrama()`. The returning `QDDrama` object contains all loadable plays.
+
+# Basics
+
+This is not really an R tutorial. If you're looking for a full-fledged R tutorial, we recommend [@Arnold:2015aa], because it is very practical, and also deals with text analysis. However, this chapter introduces some concepts related to R.
+
+## R Basics
+
+### Variable assignment
+
+Assigning variables is one of the things you do most frequently in most programming languages. In R, this is done with the arrow operator: `a <- 5`. This creates a new variable `a` that has the value 5. Conceptually, variables are aliases for values. The same value can be assigned to multiple names, but one variable only can point to one value. 
+
+### Function calls
+
+The R package for drama analysis defines a number of functions. Functions are mini programs that can be executed anytime by a user. Function calls (i.e., the execution of a function) can be recognized by round parentheses: `sessionInfo()` is a function call. If you enter this in the R console and press enter, the function gets executed and its return value is printed on the console. The function [`sessionInfo()`](https://www.rdocumentation.org/packages/utils/versions/3.6.0/topics/sessionInfo) can be used to get information about your R session and installation. The function does not take any arguments, which is why the round parentheses are empty. The function `sum`, on the other hand, takes arguments: The values it should add. Thus, calling `sum(1,1)` prints 2 on the console. 
+
+
+## magrittr Pipes / `%>%` {#magrittr}
+
+In the tutorial, we make heavy use of `magrittr`-pipes. These are provided by the R package [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html). The core idea behind pipes is to use the output of one function directly as input for the next function -- to create a pipeline of functions (if you're familiar with the unix command line you probably have used this before).
+
+The pipeline is represented by `%>%`. The semantics of `%>%` is to use the output of whatever comes before as *first argument* for whatever comes after. Thus, if we write `runif(5) %>% barplot`, the result of `runif(5)` (which is a vector with five random numbers) is used as the first argument for the function `barplot()`. This is eqivalent to:
+
+```{r eval=FALSE}
+r <- runif(5)
+barplot(r)
+```
+
+The nice thing about magrittr is that you can create pipes that are much longer:
+
+```{r eval=FALSE}
+d <- loadDrama("test:rksp.0")
+
+d %>%
+  dictionaryStatistics() %>%
+  filter(d) %>%
+  format(d) %>%
+  barplot() 
+```
+
+Again, this is equivalent to a version with variables:
+
+```{r eval=FALSE}
+d <- loadDrama("test:rksp.0")
+
+ds <- dictionaryStatistics(d)
+dsf <- filter(ds, d)
+dsff <- format(dsf, d)
+barplot(dsff)
+```
+
+Pipes are much faster to write and more transparent, that's why they are used in this tutorial.

@@ -245,7 +245,7 @@ dsl <- dictionaryStatistics(rksp.0,
                             normalizeByFigure=TRUE,
                             segment="Act") %>% 
   filter(rksp.0,
-         threshold = 6) %>%
+         n = 6) %>%
   format(rksp.0)
 
 dsl <- reshape(dsl, direction = "wide",  # the table becomes wider
@@ -262,3 +262,91 @@ matplot(mat, type="l", lty = 1:ncol(mat), col="black", main="Liebe")
 legend(x="topleft", legend=colnames(mat), lty=1:ncol(mat))
 
 ```
+
+## Corpus Analysis
+
+Finally, we will do word field analysis with a small corpus. The following snippet creates a vector with ids for plays from the *Sturm und Drang* period. Providing this vector as an argument for the `loadDrama()` function loads them all as a single `QDDrama` object. To reproduce this, you will need to install the quadrama corpus first, which can be done by executing `installData("qd")`.
+
+```{r warning=FALSE}
+sturm_und_drang.ids <- c("qd:11f81.0", "qd:11g1d.0", "qd:11g9w.0", 
+                         "qd:11hdv.0", "qd:nds0.0", "qd:r12k.0", 
+                         "qd:r12v.0", "qd:r134.0",  "qd:r13g.0", 
+                         "qd:rfxf.0",  "qd:rhtz.0", "qd:rhzq.0", 
+                         "qd:rj22.0", "qd:tx4z.0", "qd:tz39.0", 
+                         "qd:tzgk.0", "qd:v0fv.0", "qd:wznj.0", 
+                         "qd:tx4z.0", "qd:rfxf.0")
+
+sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
+
+```
+
+The resulting table is reproduced here in readable formatting:
+
+```{r results="asis"}
+knitr::kable(sturm_und_drang.plays$meta)
+```
+
+For the sake of demo, we will use the `base_dictionary` that is included in the R package. It contains entries for the fields `r names(base_dictionary)`. Typing `base_dictionary` in the R console shows all words in all five fields. For loading other dictionaries, **see above**.
+
+Counting word frequencies on a corpus works exactly as on a single text.
+
+```{r}
+dictionaryStatistics(sturm_und_drang.plays, 
+                     fieldnames=names(base_dictionary), 
+                     byFigure = FALSE)
+
+```
+
+In order to visualize this in a time line, we need to merge this table with the meta data table. This can be done easily with the `merge()` function. This function is quite handy in our use cases, as it can merge tables based on values in the table. In our case, we mostly want to merge tables that both have a `corpus`  and `drama` column. If the two tables have columns with the same name, this is done automatically. Otherwise, one can specify the columns using the arguments `by`, `by.x` and/or `by.y`.
+
+As the data contains three different types of date (written, printed, premiere), and not all plays have all dates, we create an artificial reference date by taking the earliest date possible. This is done using the `apply` function in the code below, and by taking the minimum value in each row.
+
+After that, the table is ordered by this reference date, and the plotting itself can be done with regular `plot()` function provided by R. 
+
+```{r}
+# count the words (as before)
+dstat <- dictionaryStatistics(sturm_und_drang.plays, 
+                     fieldnames=names(base_dictionary), 
+                     byFigure = FALSE, 
+                     normalizeByFigure = TRUE)
+
+# merge them with the meta object
+dstat <- merge(dstat, sturm_und_drang.plays$meta)
+
+# for each play, take the earliest date available
+# (not all plays have all kinds of date)
+dstat$Date.Ref <- apply(dstat[,c("Date.Printed", "Date.Written", "Date.Premiere")], 
+                        1, min, na.rm=TRUE)
+
+# order them by this reference date
+dstat <- dstat[order(dstat$Date.Ref),]
+
+# plot them
+plot(Liebe ~ Date.Ref,  # y ~ x
+     data = dstat[dstat$Date.Ref!=Inf,],  # the data set, filtering Inf values
+     pch = 4,           # we print a cross (see ?points for other options)
+     xlab="Year"        # label of the x axis
+)
+
+```
+
+The resulting plot shows the percentage of *love*-words in each play, organized by reference date. Thus, in 1776, a very "lovely" play has been published, achieving over 1.8 percent of love words (it's *Stella* by Goethe). The identification of plays in this plot can be simplified if we plot not only crosses/points, but some kind of identifier. In the plot below, we use the textgrid id of the play (which we also use in QuaDramA, because it's relatively short and still memorable).
+
+```{r}
+# it makes use of the text() function much easier if we have
+# a new variable for this filtered data set
+dstat.filtered <- dstat[dstat$Date.Ref!=Inf,]
+
+plot(Liebe ~ Date.Ref,  # y ~ x
+     data = dstat.filtered, # the data set
+     pch = 4,           # we print a cross (see ?points for other options)
+     xlab="Year"        # label of the x axis
+)
+
+text(x = dstat.filtered$Date.Ref+1, 
+     y = dstat.filtered$Liebe,
+     labels=dstat.filtered$drama,
+     cex=0.7)
+```
+
+

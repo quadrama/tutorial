@@ -35,7 +35,7 @@ This is informative, but doesn't look very nice and some colors are difficult to
 
 ```{r}
 c <- configuration(rksp.0) %>%
-  filter(rksp.0, threshold = 5) %>%
+  filter(rksp.0, n = 5) %>%
   format(rksp.0)
 
 mat <- as.matrix(c)
@@ -62,7 +62,7 @@ Since each act has a different length, it is often useful to normalize each bloc
 c <- configuration(rksp.0)   # getting the full configuration (with all characters)
 mat_orig <- as.matrix(c)     # extracting the matrix
 
-c_filtered <- c %>% filter(rksp.0, threshold=8) # filtering, so that only the top 8 characters remain
+c_filtered <- c %>% filter(rksp.0,n = 8) # filtering, so that only the top 8 characters remain
 mat_filtered <- as.matrix(c_filtered)  # extracting the filtered matrix
 
 # scaling, using values from the unfiltered matrix
@@ -127,7 +127,7 @@ The copresence can be visualised in a simple heat map. We first focus on the low
 
 ```{r}
 c <- configuration(rksp.0, onlyPresence = TRUE, segment="Scene") %>%
-  filter(rksp.0, threshold = 7) %>%
+  filter(rksp.0, n = 7) %>%
   format(rksp.0)
 
 # extract a matrix
@@ -175,7 +175,7 @@ Technically, the matrix we created before is an [adjacency matrix](https://en.wi
 
 ```{r}
 c <- configuration(rksp.0, onlyPresence = TRUE, segment="Scene") %>%
-  filter(rksp.0, threshold = 7) %>%
+  filter(rksp.0, n = 7) %>%
   format(rksp.0)
 
 # extract a matrix
