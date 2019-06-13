@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-06-08}
+    \date{2019-06-13}
 
 
 \begin{document}
@@ -172,7 +172,7 @@ While we are using GerDraCor as a basis, we have added linguistic annotations to
 \hypertarget{preprocessed-data}{%
 \section{Preprocessed data}\label{preprocessed-data}}
 
-As a first step, we process all dramatic texts using our \href{https://github.com/quadrama/DramaNLP}{DramaNLP} pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. \href{https://github.com/quadrama/data_test}{This repository} contains two plays in the format, which are also included in our R package.
+As a first step, we process all dramatic texts using our \href{https://github.com/quadrama/DramaNLP}{DramaNLP} pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. \href{https://github.com/quadrama/data_test}{This repository} contains two plays in the format.
 
 \begin{longtable}[]{@{}ll@{}}
 \caption{Different CSV files used in the analysis. \emph{ID} is a placeholder for a unique identifier for the play}\tabularnewline
@@ -230,8 +230,14 @@ Information about acts and scenes\strut
 \bottomrule
 \end{longtable}
 
+Next to the above mentioned \texttt{test}-corpus, we are providing others as well. They are all stored in git repositories in the \href{https://github.com/quadrama}{quadrama organization on GitHub}. Repositories that start with \texttt{data\_} are corpora.
+
+The part after the underscore (\texttt{test} in the above example) is considered to be the corpus prefix. Within a corpus, a play is identified by a unique id. Thus, \texttt{test:rksp.0} is a full identified containing the corpus prefix and play id.
+
 \hypertarget{sample-data}{%
-\section{Sample data}\label{sample-data}}
+\subsection{Sample data}\label{sample-data}}
+
+For demo and test purposes, the \texttt{DramaAnalysis} r package contains the two plays of the \texttt{test} corpus. For technical reasons, the plays that are included in the package do not contain umlauts (äöüß etc.), but are restricted to ASCII characters. In these versions, all non-ASCII characters have been replaced by ASCII characters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -245,25 +251,118 @@ Information about acts and scenes\strut
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{part-structure-analysis}{%
-\part{Structure Analysis}\label{part-structure-analysis}}
+\hypertarget{installing-corpora}{%
+\section{Installing corpora}\label{installing-corpora}}
 
-We're assuming here that we have loaded some texts using \texttt{loadDrama()}, and that this text is stored as a \texttt{QDDrama}-object in the variable \texttt{text}. For demo purposes, we will use the two plays that are included in the R-package, Lessing's \emph{Emilia Galotti} and \emph{Miss Sara Sampson}. Both have been preprocessed by the \href{https://github.com/quadrama/DramaNLP}{DramaNLP} pipeline.
+Installing a corpus that is available on \href{http://github.com/quadrama}{github.com/quadrama} is straightforward and can be done by entering the command \texttt{installData()} into the R console.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# installation of the test corpus}
+\KeywordTok{installData}\NormalTok{(}\StringTok{"test"}\NormalTok{)}
+
+\CommentTok{# installation of the quadrama corpus}
+\KeywordTok{installData}\NormalTok{(}\StringTok{"qd"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Corpora do not necessarily have to be provided by us, however. If a compatible set of CSV files is available from another source, the function \texttt{installData()} allows finer control to install data from anywhere, as long as it's a git repository and can be cloned. See \texttt{?installData} for details on the options.
+
+\hypertarget{collection-data}{%
+\section{Collection data}\label{collection-data}}
+
+In addition to the above introduced corpora, we also support smaller groups of plays called collections. A collection is just a set of texts, and can include texts from multiple corpora. Typically, these sets have names, such as ``comedies'', but it does not technically matter why texts are in a collection. Technically, these collections are just vectors of ids.
+
+Pre-defined collections can be downloaded with the function \texttt{installCollectionData()}. This function clones a git repository (\href{https://github.com/quadrama/metadata}{this one}), which contains a number of plain text files that in turn contain drama ids. As before, users can feed in other sources for the collection data, enter \texttt{?installCollectionData} in the R console to get more information about options and parameters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{installCollectionData}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Once collection (i.e., a vector with ids) has been defined, it can be passed as an argument to the function \texttt{loadDrama()}. The returning \texttt{QDDrama} object contains all loadable plays. Many functions work similarly for single texts or text collections, but some will not. The descriptions below contain information about this.
+
+\hypertarget{defining-collections}{%
+\subsection{Defining collections}\label{defining-collections}}
+
+Before processing, it's necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical).
+
+\hypertarget{basics}{%
+\chapter{Basics}\label{basics}}
+
+This is not really an R tutorial. If you're looking for a full-fledged R tutorial, we recommend \citep{Arnold:2015aa}, because it is very practical, and also deals with text analysis. However, this chapter introduces some concepts related to R.
+
+\hypertarget{r-basics}{%
+\section{R Basics}\label{r-basics}}
+
+\hypertarget{variable-assignment}{%
+\subsection{Variable assignment}\label{variable-assignment}}
+
+Assigning variables is one of the things you do most frequently in most programming languages. In R, this is done with the arrow operator: \texttt{a\ \textless{}-\ 5}. This creates a new variable \texttt{a} that has the value 5. Conceptually, variables are aliases for values. The same value can be assigned to multiple names, but one variable only can point to one value.
+
+\hypertarget{function-calls}{%
+\subsection{Function calls}\label{function-calls}}
+
+The R package for drama analysis defines a number of functions. Functions are mini programs that can be executed anytime by a user. Function calls (i.e., the execution of a function) can be recognized by round parentheses: \texttt{sessionInfo()} is a function call. If you enter this in the R console and press enter, the function gets executed and its return value is printed on the console. The function \href{https://www.rdocumentation.org/packages/utils/versions/3.6.0/topics/sessionInfo}{\texttt{sessionInfo()}} can be used to get information about your R session and installation. The function does not take any arguments, which is why the round parentheses are empty. The function \texttt{sum}, on the other hand, takes arguments: The values it should add. Thus, calling \texttt{sum(1,1)} prints 2 on the console.
+
+\hypertarget{magrittr}{%
+\section{\texorpdfstring{magrittr Pipes / \texttt{\%\textgreater{}\%}}{magrittr Pipes / \%\textgreater{}\%}}\label{magrittr}}
+
+In the tutorial, we make heavy use of \texttt{magrittr}-pipes. These are provided by the R package \href{https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html}{\texttt{magrittr}}. The core idea behind pipes is to use the output of one function directly as input for the next function -- to create a pipeline of functions (if you're familiar with the unix command line you probably have used this before).
+
+The pipeline is represented by \texttt{\%\textgreater{}\%}. The semantics of \texttt{\%\textgreater{}\%} is to use the output of whatever comes before as \emph{first argument} for whatever comes after. Thus, if we write \texttt{runif(5)\ \%\textgreater{}\%\ barplot}, the result of \texttt{runif(5)} (which is a vector with five random numbers) is used as the first argument for the function \texttt{barplot()}. This is eqivalent to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\KeywordTok{barplot}\NormalTok{(r)}
+\end{Highlighting}
+\end{Shaded}
+
+The nice thing about magrittr is that you can create pipes that are much longer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(}\StringTok{"test:rksp.0"}\NormalTok{)}
+
+\NormalTok{d }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{dictionaryStatistics}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(d) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{format}\NormalTok{(d) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{barplot}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+Again, this is equivalent to a version with variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(}\StringTok{"test:rksp.0"}\NormalTok{)}
+
+\NormalTok{ds <-}\StringTok{ }\KeywordTok{dictionaryStatistics}\NormalTok{(d)}
+\NormalTok{dsf <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(ds, d)}
+\NormalTok{dsff <-}\StringTok{ }\KeywordTok{format}\NormalTok{(dsf, d)}
+\KeywordTok{barplot}\NormalTok{(dsff)}
+\end{Highlighting}
+\end{Shaded}
+
+Pipes are much faster to write and more transparent, that's why they are used in this tutorial.
 
 \hypertarget{who-how-much}{%
 \chapter{Who's talking how much?}\label{who-how-much}}
 
+We're assuming here that we have loaded some texts using \texttt{loadDrama()}, and that this text is stored as a \texttt{QDDrama}-object in the variable \texttt{text}. For demo purposes, we will use the two plays that are included in the R-package, Lessing's \emph{Emilia Galotti} and \emph{Miss Sara Sampson}. Both have been preprocessed by the \href{https://github.com/quadrama/DramaNLP}{DramaNLP} pipeline.
+
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{DramaAnalysis_files/figure-latex/unnamed-chunk-3-1} \caption{Relevant classes and functions in this chaper}\label{fig:unnamed-chunk-3}
+\includegraphics[width=0.9\linewidth]{DramaAnalysis_files/figure-latex/unnamed-chunk-8-1} \caption{Relevant classes and functions in this chapter}\label{fig:unnamed-chunk-8}
 \end{figure}
 
 First, we calculate summary statistics over all characters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{charStats <-}\StringTok{ }\KeywordTok{characterStatistics}\NormalTok{(text)}
-
-\NormalTok{charStats}
+\KeywordTok{characterStatistics}\NormalTok{(text)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -434,7 +533,7 @@ Of course, the values in the above table can be directly plotted:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \hypertarget{format}{%
 \section{Character names instead of identifiers}\label{format}}
@@ -456,24 +555,24 @@ By default, all our functions identify characters using technical ids, which may
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-12-1.pdf}
 
 As can be seen above \texttt{format()} requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function \texttt{loadDrama()}).
 
 \hypertarget{stacked-bar-plot}{%
 \section{Stacked bar plot}\label{stacked-bar-plot}}
 
-The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the \texttt{QDCharacterStatistics} directly into the \texttt{barplot()} function. In combination with the \texttt{margrittr} pipes, we can call it like this (enter \texttt{?barplot.QDCharacterStatistics} for details on the special barplot function):
+The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the \texttt{QDCharacterStatistics} directly into the \texttt{barplot()} function. In combination with the \texttt{magrittr} pipes (see \ref{magrittr}), we can call it like this (enter \texttt{?barplot.QDCharacterStatistics} for details on the special barplot function):
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{characterStatistics}\NormalTok{(text, }\DataTypeTok{normalize=}\OtherTok{FALSE}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(text) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{barplot}\NormalTok{(}\DataTypeTok{names.arg=}\KeywordTok{c}\NormalTok{(}\StringTok{"Miss Sara Sampson"}\NormalTok{, }\StringTok{"Emilia Galotti"}\NormalTok{))}
+\StringTok{  }\KeywordTok{barplot}\NormalTok{(}\DataTypeTok{names.arg=}\KeywordTok{dramaNames}\NormalTok{(text, }\StringTok{"%T"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-13-1.pdf}
 
 By default, the \texttt{barplot.QDCharacterStatistics()} function visualises the number of tokens spoken by the characters (and ranks the characters accordingly). This can be changed by supplying the option \texttt{column}, and specifying another value.
 
@@ -481,17 +580,49 @@ By default, the \texttt{barplot.QDCharacterStatistics()} function visualises the
 \begin{Highlighting}[]
 \KeywordTok{characterStatistics}\NormalTok{(text, }\DataTypeTok{normalize=}\OtherTok{FALSE}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(text) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{barplot}\NormalTok{(}\DataTypeTok{names.arg=}\KeywordTok{c}\NormalTok{(}\StringTok{"Miss Sara Sampson"}\NormalTok{, }\StringTok{"Emilia Galotti"}\NormalTok{), }
+\StringTok{  }\KeywordTok{barplot}\NormalTok{(}\DataTypeTok{names.arg=}\KeywordTok{dramaNames}\NormalTok{(text, }\StringTok{"%T"}\NormalTok{), }
           \DataTypeTok{column =} \StringTok{"utteranceLengthMean"}\NormalTok{) }\CommentTok{# show mean utterance length}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 This picture looks quite different! Other interesting columns to experiment with are \texttt{types} and \texttt{utteranceLengthSd}.
 
-\hypertarget{whos-talking-how-often}{%
-\chapter{Who's talking how often?}\label{whos-talking-how-often}}
+Another function that we used above is called \texttt{dramaNames()}. It can be used to extract
+
+\hypertarget{collection-analysis}{%
+\section{Collection analysis}\label{collection-analysis}}
+
+As we have already seen above, the \texttt{characterStatistics()} function works well with multiple texts. This means, we can also use it to analyze all \emph{Sturm und Drang} plays at once:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# this list can also be loaded using loadSet()}
+\NormalTok{sturm_und_drang.ids <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"qd:11f81.0"}\NormalTok{, }\StringTok{"qd:11g1d.0"}\NormalTok{, }\StringTok{"qd:11g9w.0"}\NormalTok{, }
+                         \StringTok{"qd:11hdv.0"}\NormalTok{, }\StringTok{"qd:nds0.0"}\NormalTok{, }\StringTok{"qd:r12k.0"}\NormalTok{, }
+                         \StringTok{"qd:r12v.0"}\NormalTok{, }\StringTok{"qd:r134.0"}\NormalTok{,  }\StringTok{"qd:r13g.0"}\NormalTok{, }
+                         \StringTok{"qd:rfxf.0"}\NormalTok{,  }\StringTok{"qd:rhtz.0"}\NormalTok{, }\StringTok{"qd:rhzq.0"}\NormalTok{, }
+                         \StringTok{"qd:rj22.0"}\NormalTok{, }\StringTok{"qd:tx4z.0"}\NormalTok{, }\StringTok{"qd:tz39.0"}\NormalTok{, }
+                         \StringTok{"qd:tzgk.0"}\NormalTok{, }\StringTok{"qd:v0fv.0"}\NormalTok{, }\StringTok{"qd:wznj.0"}\NormalTok{, }
+                         \StringTok{"qd:tx4z.0"}\NormalTok{, }\StringTok{"qd:rfxf.0"}\NormalTok{)}
+
+\NormalTok{sturm_und_drang.plays <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(sturm_und_drang.ids)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{characterStatistics}\NormalTok{(sturm_und_drang.plays, }\DataTypeTok{normalize=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{format}\NormalTok{(sturm_und_drang.plays) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{barplot}\NormalTok{(}\DataTypeTok{las=}\DecValTok{2}\NormalTok{, }\DataTypeTok{names.arg =} \KeywordTok{dramaNames}\NormalTok{(sturm_und_drang.plays, }
+                                        \DataTypeTok{formatString =} \StringTok{"%A: %T"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+While readability can certainly be improved upon, we can directly see that the relative active presence of the characters is distributed very differently in different plays. The most ``talkative'' character in Klinger's \emph{Zwillinge}, for instance, speaks almost one half of the words in the play, while Wenzelslaus in Lenz' \emph{Hofmeister} speaks much less, even in relative terms.
+
+\hypertarget{who-how-often}{%
+\chapter{Who's talking how often?}\label{who-how-often}}
 
 So far, we have counted words for characters. Now we will turn to utterances, and their properties.
 
@@ -523,17 +654,18 @@ This creates a table that is very long, which is why we only show the first 10 r
 \begin{Highlighting}[]
 \NormalTok{ustat <-}\StringTok{ }\KeywordTok{utteranceStatistics}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)   }\CommentTok{# use names instead of character ids (see above)}
-
+  
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{9}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)) }\CommentTok{# increase margin}
 
 \KeywordTok{boxplot}\NormalTok{(utteranceLength }\OperatorTok{~}\StringTok{ }\NormalTok{character, }\CommentTok{# what do we want to correlate }
-        \DataTypeTok{data=}\NormalTok{ustat, }
+        \DataTypeTok{data=}\NormalTok{ustat,   }\CommentTok{# the data set to use}
+        \DataTypeTok{main =} \KeywordTok{dramaNames}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{), }\CommentTok{# the main title of the plot}
         \DataTypeTok{las =} \DecValTok{2} \CommentTok{# rotate axis labels}
-\NormalTok{      )}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-12-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-18-1.pdf}
 
 This uses the regular \texttt{boxplot()} function, enter \texttt{?boxplot} for documentation. \texttt{utteranceLength\ \textasciitilde{}\ character} is called a formula in R and (in this case) expresses that we want to look at the column \texttt{utteranceLength}, grouped by the column \texttt{character}. The boxplot is a useful way to grasp the dispersion of a set of values (in this case: the lengths of all utterances by a character).
 
@@ -548,11 +680,11 @@ While the above displays the \emph{length} of utterances, we can also display th
 
 \KeywordTok{utteranceStatistics}\NormalTok{(rjmw}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rjmw}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}\StringTok{    }\CommentTok{# character names instead of ids}
-\StringTok{  }\KeywordTok{plot}\NormalTok{()                }\CommentTok{# calling plot.QDUtteranceStatistics()}
+\StringTok{  }\KeywordTok{plot}\NormalTok{(}\DataTypeTok{main=}\KeywordTok{dramaNames}\NormalTok{(rjmw}\FloatTok{.0}\NormalTok{))                }\CommentTok{# calling plot.QDUtteranceStatistics()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-13-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function \texttt{format()} to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type \texttt{QDHasCharacter}. Secondly, the call to the function \texttt{plot()} gets rerouted to the function \texttt{plot.QDUtteranceStatistics()}, because the object we supply as argument is of the type \texttt{QDUtteranceStatistics}. Information about this function can be retrieved by entering \texttt{?plot.QDUtteranceStatistics}.
 
@@ -566,13 +698,56 @@ Now it would be useful to include information on act/scene boundaries in this pl
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 \KeywordTok{utteranceStatistics}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{plot}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{) }\CommentTok{# adding the `QDDrama` object here creates the act boundaries.}
+\StringTok{  }\KeywordTok{plot}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\CommentTok{# adding the `QDDrama` object here creates the act boundaries.}
+       \DataTypeTok{main=}\KeywordTok{dramaNames}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 Please note that the information contained in this plot is very similar to the information in configuration matrices.
+
+\hypertarget{who-how-often-collection}{%
+\section{Collection analysis}\label{who-how-often-collection}}
+
+In Version 3.0, the function \texttt{utteranceStatistics()} expects to be fed a QDDrama object that contains a single play (it will stop otherwise). It's still possible to run it over several plays at once, if the plays are in different objects but in a single list.
+
+We again load the \emph{Sturm und Drang} plays as before, but we will use the function \texttt{split()} to separate the plays. This results in a list of \texttt{QDDrama} objects.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sturm_und_drang.ids <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"qd:11f81.0"}\NormalTok{, }\StringTok{"qd:11g1d.0"}\NormalTok{, }\StringTok{"qd:11g9w.0"}\NormalTok{, }
+                         \StringTok{"qd:11hdv.0"}\NormalTok{, }\StringTok{"qd:nds0.0"}\NormalTok{,  }\StringTok{"qd:r12k.0"}\NormalTok{, }
+                         \StringTok{"qd:r12v.0"}\NormalTok{,  }\StringTok{"qd:r134.0"}\NormalTok{,  }\StringTok{"qd:r13g.0"}\NormalTok{, }
+                         \StringTok{"qd:rfxf.0"}\NormalTok{,  }\StringTok{"qd:rhtz.0"}\NormalTok{,  }\StringTok{"qd:rhzq.0"}\NormalTok{, }
+                         \StringTok{"qd:rj22.0"}\NormalTok{,  }\StringTok{"qd:tx4z.0"}\NormalTok{,  }\StringTok{"qd:tz39.0"}\NormalTok{, }
+                         \StringTok{"qd:tzgk.0"}\NormalTok{,  }\StringTok{"qd:v0fv.0"}\NormalTok{,  }\StringTok{"qd:wznj.0"}\NormalTok{, }
+                         \StringTok{"qd:tx4z.0"}\NormalTok{,  }\StringTok{"qd:rfxf.0"}\NormalTok{)}
+
+\NormalTok{sturm_und_drang.plays <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(sturm_und_drang.ids)}
+
+\CommentTok{# separate the plays}
+\NormalTok{sturm_und_drang.plays <-}\StringTok{ }\KeywordTok{split}\NormalTok{(sturm_und_drang.plays) }
+\end{Highlighting}
+\end{Shaded}
+
+This list can of course be plotted again, but it will result in a number of individual plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\KeywordTok{length}\NormalTok{(sturm_und_drang.plays),}\DecValTok{1}\NormalTok{), }\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\KeywordTok{lapply}\NormalTok{(sturm_und_drang.plays, }
+       \ControlFlowTok{function}\NormalTok{(x) \{}
+         \KeywordTok{utteranceStatistics}\NormalTok{(x) }\OperatorTok{%>%}
+\StringTok{           }\KeywordTok{format}\NormalTok{(x) }\OperatorTok{%>%}
+\StringTok{           }\KeywordTok{plot}\NormalTok{(x, }\DataTypeTok{main=}\KeywordTok{dramaNames}\NormalTok{(x))}
+\NormalTok{       \}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-22-1.pdf}
 
 \hypertarget{configuration}{%
 \chapter{Configuration}\label{configuration}}
@@ -582,7 +757,7 @@ Please note that the information contained in this plot is very similar to the i
 \hypertarget{matrices}{%
 \section{Matrices}\label{matrices}}
 
-Configuration matrices can be extracted with the function \texttt{configuration()}. As usual, entering \texttt{?configuration} provies more detailed information about the options the function provides.
+Configuration matrices can be extracted with the function \texttt{configuration()}. As usual, entering \texttt{?configuration} provies more detailed information about the options the function provides. This function can only deal with a single play at a time, but using \texttt{lappy()}, we can call it for many plays quickly (this the same we did with the function \texttt{utteranceStatistics()} \protect\hyperlink{who-how-often-collection}{above}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -628,7 +803,7 @@ We first need to extract the numeric content from the above table. This can easi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-24-1.pdf}
 
 \hypertarget{filter}{%
 \subsection{Filtering unimportant characters}\label{filter}}
@@ -638,7 +813,7 @@ This is informative, but doesn't look very nice and some colors are difficult to
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{c <-}\StringTok{ }\KeywordTok{configuration}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{threshold =} \DecValTok{5}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{n =} \DecValTok{5}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)}
 
 \NormalTok{mat <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(c)}
@@ -655,7 +830,7 @@ This is informative, but doesn't look very nice and some colors are difficult to
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-25-1.pdf}
 
 Of course, the speech of characters that do not speak often is now removed, leaving only a portion of each act covered in the plot.
 
@@ -669,7 +844,7 @@ Since each act has a different length, it is often useful to normalize each bloc
 \NormalTok{c <-}\StringTok{ }\KeywordTok{configuration}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)   }\CommentTok{# getting the full configuration (with all characters)}
 \NormalTok{mat_orig <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(c)     }\CommentTok{# extracting the matrix}
 
-\NormalTok{c_filtered <-}\StringTok{ }\NormalTok{c }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{threshold=}\DecValTok{8}\NormalTok{) }\CommentTok{# filtering, so that only the top 8 characters remain}
+\NormalTok{c_filtered <-}\StringTok{ }\NormalTok{c }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{,}\DataTypeTok{n =} \DecValTok{8}\NormalTok{) }\CommentTok{# filtering, so that only the top 8 characters remain}
 \NormalTok{mat_filtered <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(c_filtered)  }\CommentTok{# extracting the filtered matrix}
 
 \CommentTok{# scaling, using values from the unfiltered matrix}
@@ -693,7 +868,7 @@ Since each act has a different length, it is often useful to normalize each bloc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-18-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 \hypertarget{copresence}{%
 \section{Copresence}\label{copresence}}
@@ -816,7 +991,7 @@ The copresence can be visualised in a simple heat map. We first focus on the low
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{c <-}\StringTok{ }\KeywordTok{configuration}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{onlyPresence =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{segment=}\StringTok{"Scene"}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{threshold =} \DecValTok{7}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{n =} \DecValTok{7}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)}
 
 \CommentTok{# extract a matrix}
@@ -855,7 +1030,7 @@ The copresence can be visualised in a simple heat map. We first focus on the low
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 Apparently, Marinelli and the prince have the most shared scenes. Marinelli also shares a scene with most other figures (sum of the vertical bar: 16).
 
@@ -869,7 +1044,7 @@ Technically, the matrix we created before is an \href{https://en.wikipedia.org/w
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{c <-}\StringTok{ }\KeywordTok{configuration}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{onlyPresence =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{segment=}\StringTok{"Scene"}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{threshold =} \DecValTok{7}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{, }\DataTypeTok{n =} \DecValTok{7}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)}
 
 \CommentTok{# extract a matrix}
@@ -909,7 +1084,7 @@ Now the variable \texttt{g} holds the graph object. There are different things w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \hypertarget{network-properties}{%
 \subsection{Network properties}\label{network-properties}}
@@ -1039,7 +1214,7 @@ The return value of the function is just a vector of numbers, one less than the 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 Hamming distance, in its original definition as well as the \texttt{Hamming} variant in our function, returns absolute values. As usual, these values should be normalized, and the function \texttt{hamming()} provides two ways of doing that.
 
@@ -1086,8 +1261,54 @@ One more possible normalization has been proposed by \citet{Trilcke:2017ab}. Ins
 
 The Trilcke variant is the default setting of the \texttt{hamming()}-function.
 
-\hypertarget{part-text-analysis}{%
-\part{Text Analysis}\label{part-text-analysis}}
+\hypertarget{corpus-analysis}{%
+\section{Corpus Analysis}\label{corpus-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sturm_und_drang.ids <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"qd:11f81.0"}\NormalTok{, }\StringTok{"qd:11g1d.0"}\NormalTok{, }\StringTok{"qd:11g9w.0"}\NormalTok{, }
+                         \StringTok{"qd:11hdv.0"}\NormalTok{, }\StringTok{"qd:nds0.0"}\NormalTok{,  }\StringTok{"qd:r12k.0"}\NormalTok{, }
+                         \StringTok{"qd:r12v.0"}\NormalTok{,  }\StringTok{"qd:r134.0"}\NormalTok{,  }\StringTok{"qd:r13g.0"}\NormalTok{, }
+                         \StringTok{"qd:rfxf.0"}\NormalTok{,  }\StringTok{"qd:rhtz.0"}\NormalTok{,  }\StringTok{"qd:rhzq.0"}\NormalTok{, }
+                         \StringTok{"qd:rj22.0"}\NormalTok{,  }\StringTok{"qd:tx4z.0"}\NormalTok{,  }\StringTok{"qd:tz39.0"}\NormalTok{, }
+                         \StringTok{"qd:tzgk.0"}\NormalTok{,  }\StringTok{"qd:v0fv.0"}\NormalTok{,  }\StringTok{"qd:wznj.0"}\NormalTok{, }
+                         \StringTok{"qd:tx4z.0"}\NormalTok{,  }\StringTok{"qd:rfxf.0"}\NormalTok{)}
+
+\NormalTok{sturm_und_drang.plays <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(sturm_und_drang.ids)}
+\end{Highlighting}
+\end{Shaded}
+
+Since determining character exchanges at scene boundaries is not a multi-play task, the function \texttt{hamming()} does not allow \texttt{QDDrama} objects that contain multiple plays. It's still possible to calculate the exchanges for many plays though, using \texttt{split()} and \texttt{lapply()}. \texttt{split()} is a function defined in the \texttt{DramaAnalysis} package and can be used to split up a \texttt{QDDrama} object if it contains multiple plays. It returns a list of individual objects. This list is then fed into the function \texttt{lapply()}, which applies the function \texttt{hamming()} on each element of the list.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{profiles <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{split}\NormalTok{(sturm_und_drang.plays), hamming, }\DataTypeTok{variant =} \StringTok{"Trilcke"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The result of this is a list that contains an entry for each play, which in turn reflects the distances at specific scene boundaries. Thus, the lists have different lengths, as the plays have different lengths. We apply the same trick with \texttt{lappy()} to create plots of all the plays. Instead of calling a pre-existing function (as before with \texttt{hamming()}), we define a new (anonymous) function. This is mainly to allow printing the authors and names of the play into the plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\KeywordTok{length}\NormalTok{(profiles),}\DecValTok{1}\NormalTok{), }\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\KeywordTok{lapply}\NormalTok{(}\KeywordTok{names}\NormalTok{(profiles), }
+       \ControlFlowTok{function}\NormalTok{(x) \{}
+         \KeywordTok{plot}\NormalTok{(profiles[[x]],  }\CommentTok{# take the data}
+              \DataTypeTok{type=}\StringTok{"l"}\NormalTok{,       }\CommentTok{# we print lines}
+              \DataTypeTok{ylab=}\StringTok{"Character exchange rate"}\NormalTok{, }\CommentTok{# y axis label }
+              \DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),                    }\CommentTok{# y axis scale}
+              \CommentTok{# create nice labels}
+              \DataTypeTok{main=}\KeywordTok{paste}\NormalTok{(sturm_und_drang.plays}\OperatorTok{$}\NormalTok{meta[drama}\OperatorTok{==}\NormalTok{x,]}\OperatorTok{$}\NormalTok{Name,}
+\NormalTok{                         sturm_und_drang.plays}\OperatorTok{$}\NormalTok{meta[drama}\OperatorTok{==}\NormalTok{x,]}\OperatorTok{$}\NormalTok{documentTitle, }
+                         \DataTypeTok{sep=}\StringTok{": "}\NormalTok{, }\DataTypeTok{collapse=}\StringTok{": "}\NormalTok{)}
+\NormalTok{         )}
+\NormalTok{       \}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 \hypertarget{word-field-analysis}{%
 \chapter{Word Field Analysis}\label{word-field-analysis}}
@@ -1163,7 +1384,7 @@ We can visualise these counts in a simple bar chart:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-47-1.pdf}
 
 Apparently, the prince and Marinelli are mentioning these words a lot more than the other characters.
 
@@ -1185,7 +1406,7 @@ When comparing characters, it often (but not always) makes sense to normalize th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-48-1.pdf}
 
 \hypertarget{multiple-word-fields}{%
 \section{Multiple Word Fields}\label{multiple-word-fields}}
@@ -1221,31 +1442,31 @@ The following examples use the \texttt{base\_dictionary}, i.e., a specific versi
 
 \begin{verbatim}
 ##    corpus  drama        character        Liebe      Familie        Ratio
-## 1    test rksp.0           angelo 5.025967e-05 4.314529e-05 7.290755e-05
+## 1    test rksp.0           angelo 5.025967e-05 6.471794e-05 7.290755e-05
 ## 2    test rksp.0          appiani 8.610133e-05 1.355080e-04 6.661338e-05
 ## 3    test rksp.0         battista 0.000000e+00 1.404988e-04 0.000000e+00
 ## 4    test rksp.0     camillo_rota 1.003613e-04 1.292324e-04 4.367575e-04
-## 5    test rksp.0  claudia_galotti 6.591891e-05 2.350575e-04 3.972037e-05
+## 5    test rksp.0  claudia_galotti 7.606028e-05 2.350575e-04 3.972037e-05
 ## 6    test rksp.0            conti 1.531692e-04 5.379043e-05 3.635835e-05
 ## 7    test rksp.0 der_kammerdiener 0.000000e+00 0.000000e+00 0.000000e+00
-## 8    test rksp.0        der_prinz 7.021317e-05 6.974600e-05 4.714313e-05
-## 9    test rksp.0           emilia 7.014262e-05 3.311757e-04 4.884005e-05
-## 10   test rksp.0        marinelli 8.026020e-05 1.451804e-04 3.991777e-05
-## 11   test rksp.0          odoardo 5.895608e-05 2.319657e-04 6.271666e-05
-## 12   test rksp.0           orsina 5.259046e-05 8.223048e-05 4.250366e-05
-## 13   test rksp.0            pirro 0.000000e+00 1.597508e-04 2.699492e-05
+## 8    test rksp.0        der_prinz 7.021317e-05 6.974600e-05 5.238125e-05
+## 9    test rksp.0           emilia 8.417115e-05 3.311757e-04 4.884005e-05
+## 10   test rksp.0        marinelli 8.026020e-05 1.550231e-04 4.657073e-05
+## 11   test rksp.0          odoardo 5.895608e-05 2.361833e-04 6.556741e-05
+## 12   test rksp.0           orsina 5.259046e-05 1.160901e-04 5.231220e-05
+## 13   test rksp.0            pirro 0.000000e+00 1.996885e-04 5.398985e-05
 ##           Krieg     Religion
 ## 1  5.624297e-05 0.000000e+00
 ## 2  4.817575e-05 0.000000e+00
 ## 3  0.000000e+00 0.000000e+00
 ## 4  8.423181e-05 0.000000e+00
-## 5  4.681329e-05 5.853528e-05
+## 5  4.681329e-05 8.362183e-05
 ## 6  2.337322e-05 0.000000e+00
 ## 7  0.000000e+00 0.000000e+00
-## 8  2.862261e-05 3.308290e-05
-## 9  3.139717e-05 8.482745e-05
-## 10 3.528446e-05 1.890842e-05
-## 11 4.123417e-05 4.861291e-05
+## 8  2.862261e-05 3.969947e-05
+## 9  3.139717e-05 1.002506e-04
+## 10 3.849213e-05 1.890842e-05
+## 11 4.123417e-05 5.401435e-05
 ## 12 2.522195e-05 1.238973e-05
 ## 13 0.000000e+00 1.022966e-04
 \end{verbatim}
@@ -1268,7 +1489,7 @@ It is now straightforward to show the distribution of fields for a single charac
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-51-1.pdf}
 
 \hypertarget{bar-plot-by-field}{%
 \subsection{Bar plot by field}\label{bar-plot-by-field}}
@@ -1299,7 +1520,7 @@ Conversely, we can also show who uses words of a certain field how often:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-52-1.pdf}
 
 \hypertarget{dictionary-based-distance}{%
 \section{Dictionary Based Distance}\label{dictionary-based-distance}}
@@ -1321,31 +1542,31 @@ The matrix doesn't have row names by default. The snippet below can be used to a
 
 \begin{verbatim}
 ##                        Liebe     Familie       Ratio       Krieg
-## angelo           0.004724409 0.003149606 0.007874016 0.006299213
+## angelo           0.004724409 0.004724409 0.007874016 0.006299213
 ## appiani          0.008093525 0.009892086 0.007194245 0.005395683
 ## battista         0.000000000 0.010256410 0.000000000 0.000000000
 ## camillo_rota     0.009433962 0.009433962 0.047169811 0.009433962
-## claudia_galotti  0.006196378 0.017159199 0.004289800 0.005243089
+## claudia_galotti  0.007149666 0.017159199 0.004289800 0.005243089
 ## conti            0.014397906 0.003926702 0.003926702 0.002617801
 ## der_kammerdiener 0.000000000 0.000000000 0.000000000 0.000000000
-## der_prinz        0.006600038 0.005091458 0.005091458 0.003205733
-## emilia           0.006593407 0.024175824 0.005274725 0.003516484
-## marinelli        0.007544458 0.010598168 0.004311119 0.003951859
-## odoardo          0.005541872 0.016933498 0.006773399 0.004618227
-## orsina           0.004943503 0.006002825 0.004590395 0.002824859
-## pirro            0.000000000 0.011661808 0.002915452 0.000000000
+## der_prinz        0.006600038 0.005091458 0.005657175 0.003205733
+## emilia           0.007912088 0.024175824 0.005274725 0.003516484
+## marinelli        0.007544458 0.011316688 0.005029639 0.004311119
+## odoardo          0.005541872 0.017241379 0.007081281 0.004618227
+## orsina           0.004943503 0.008474576 0.005649718 0.002824859
+## pirro            0.000000000 0.014577259 0.005830904 0.000000000
 ##                      Religion
 ## angelo           0.0000000000
 ## appiani          0.0000000000
 ## battista         0.0000000000
 ## camillo_rota     0.0000000000
-## claudia_galotti  0.0033365110
+## claudia_galotti  0.0047664442
 ## conti            0.0000000000
 ## der_kammerdiener 0.0000000000
-## der_prinz        0.0018857251
-## emilia           0.0048351648
+## der_prinz        0.0022628701
+## emilia           0.0057142857
 ## marinelli        0.0010777798
-## odoardo          0.0027709360
+## odoardo          0.0030788177
 ## orsina           0.0007062147
 ## pirro            0.0058309038
 \end{verbatim}
@@ -1391,7 +1612,7 @@ This network can of course be visualised again.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 Although this network is similar to the one shown in \protect\hyperlink{network}{Section 5.2.2} (both undirected and weighted), it displays a totally different kind of information. The networks based on copresence connect characters that appear together on stage, while this network connects characters with similar thematic profile in their speech (within the limits of being able to detect thematic profiles via word fields).
 
@@ -1419,7 +1640,7 @@ We can now plot the theme progress over the course of the play. This can be done
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-46-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 Depending on the use case, it might be easier to interpret if the numbers are cumulatively added up. The snippet below shows how this works.
 
@@ -1443,7 +1664,7 @@ Depending on the use case, it might be easier to interpret if the numbers are cu
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 \hypertarget{comparing-characters}{%
 \subsection{Comparing characters}\label{comparing-characters}}
@@ -1457,7 +1678,7 @@ Simultaneously to the setting above, we now want to compare the development of s
                             \DataTypeTok{normalizeByFigure=}\OtherTok{TRUE}\NormalTok{,}
                             \DataTypeTok{segment=}\StringTok{"Act"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{filter}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{,}
-         \DataTypeTok{threshold =} \DecValTok{6}\NormalTok{) }\OperatorTok{%>%}
+         \DataTypeTok{n =} \DecValTok{6}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{format}\NormalTok{(rksp}\FloatTok{.0}\NormalTok{)}
 
 \NormalTok{dsl <-}\StringTok{ }\KeywordTok{reshape}\NormalTok{(dsl, }\DataTypeTok{direction =} \StringTok{"wide"}\NormalTok{,  }\CommentTok{# the table becomes wider}
@@ -1475,7 +1696,187 @@ Simultaneously to the setting above, we now want to compare the development of s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-59-1.pdf}
+
+\hypertarget{corpus-analysis-1}{%
+\section{Corpus Analysis}\label{corpus-analysis-1}}
+
+Finally, we will do word field analysis with a small corpus. The following snippet creates a vector with ids for plays from the \emph{Sturm und Drang} period. Providing this vector as an argument for the \texttt{loadDrama()} function loads them all as a single \texttt{QDDrama} object. To reproduce this, you will need to install the quadrama corpus first, which can be done by executing \texttt{installData("qd")}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sturm_und_drang.ids <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"qd:11f81.0"}\NormalTok{, }\StringTok{"qd:11g1d.0"}\NormalTok{, }\StringTok{"qd:11g9w.0"}\NormalTok{, }
+                         \StringTok{"qd:11hdv.0"}\NormalTok{, }\StringTok{"qd:nds0.0"}\NormalTok{, }\StringTok{"qd:r12k.0"}\NormalTok{, }
+                         \StringTok{"qd:r12v.0"}\NormalTok{, }\StringTok{"qd:r134.0"}\NormalTok{,  }\StringTok{"qd:r13g.0"}\NormalTok{, }
+                         \StringTok{"qd:rfxf.0"}\NormalTok{,  }\StringTok{"qd:rhtz.0"}\NormalTok{, }\StringTok{"qd:rhzq.0"}\NormalTok{, }
+                         \StringTok{"qd:rj22.0"}\NormalTok{, }\StringTok{"qd:tx4z.0"}\NormalTok{, }\StringTok{"qd:tz39.0"}\NormalTok{, }
+                         \StringTok{"qd:tzgk.0"}\NormalTok{, }\StringTok{"qd:v0fv.0"}\NormalTok{, }\StringTok{"qd:wznj.0"}\NormalTok{, }
+                         \StringTok{"qd:tx4z.0"}\NormalTok{, }\StringTok{"qd:rfxf.0"}\NormalTok{)}
+
+\NormalTok{sturm_und_drang.plays <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(sturm_und_drang.ids)}
+\end{Highlighting}
+\end{Shaded}
+
+The resulting table is reproduced here in readable formatting:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(sturm_und_drang.plays}\OperatorTok{$}\NormalTok{meta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|l|l|l|l|l|l|l|r|r|r|l}
+\hline
+corpus & drama & documentTitle & language & Name & Pnd & Translator.Name & Translator.Pnd & Date.Written & Date.Printed & Date.Premiere & Date.Translation\\
+\hline
+qd & 11f81.0 & Clavigo & de & Goethe, Johann Wolfgang & 118540238 & NA & NA & 1774 & 1774 & 1774 & NA\\
+\hline
+qd & 11g1d.0 & Götz von Berlichingen mit der eisernen Hand & de & Goethe, Johann Wolfgang & 118540238 & NA & NA & NA & 1773 & NA & NA\\
+\hline
+qd & 11g9w.0 & Egmont & de & Goethe, Johann Wolfgang & 118540238 & NA & NA & 1787 & 1788 & 1791 & NA\\
+\hline
+qd & 11hdv.0 & Stella & de & Goethe, Johann Wolfgang & 118540238 & NA & NA & 1776 & 1776 & 1776 & NA\\
+\hline
+qd & nds0.0 & Ugolino & de & Gerstenberg, Heinrich Wilhelm von & 118690949 & NA & NA & NA & 1768 & 1769 & NA\\
+\hline
+qd & r12k.0 & Sturm und Drang & de & Klinger, Friedrich Maximilian & 118563319 & NA & NA & 1776 & NA & NA & NA\\
+\hline
+qd & r12v.0 & Die Zwillinge & de & Klinger, Friedrich Maximilian & 118563319 & NA & NA & NA & 1776 & 1776 & NA\\
+\hline
+qd & r134.0 & Die neue Arria & de & Klinger, Friedrich Maximilian & 118563319 & NA & NA & NA & NA & NA & NA\\
+\hline
+qd & r13g.0 & Simsone Grisaldo & de & Klinger, Friedrich Maximilian & 118563319 & NA & NA & NA & NA & NA & NA\\
+\hline
+qd & rfxf.0 & Julius von Tarent & de & Leisewitz, Johann Anton & 118571370 & NA & NA & NA & NA & NA & NA\\
+\hline
+qd & rhtz.0 & Die Soldaten & de & Lenz, Jakob Michael Reinhold & 118571656 & NA & NA & 1775 & 1776 & 1863 & NA\\
+\hline
+qd & rhzq.0 & Der Hofmeister oder Vorteile der Privaterziehung & de & Lenz, Jakob Michael Reinhold & 118571656 & NA & NA & 1772 & 1774 & NA & NA\\
+\hline
+qd & rj22.0 & Der neue Menoza & de & Lenz, Jakob Michael Reinhold & 118571656 & NA & NA & NA & NA & NA & NA\\
+\hline
+qd & tx4z.0 & Don Carlos, Infant von Spanien & de & Schiller, Friedrich & 118607626 & NA & NA & 1787 & 1787 & 1787 & NA\\
+\hline
+qd & tz39.0 & Kabale und Liebe & de & Schiller, Friedrich & 118607626 & NA & NA & 1783 & NA & NA & NA\\
+\hline
+qd & tzgk.0 & Die Verschwörung des Fiesco zu Genua & de & Schiller, Friedrich & 118607626 & NA & NA & 1782 & NA & NA & NA\\
+\hline
+qd & v0fv.0 & Die Räuber & de & Schiller, Friedrich & 118607626 & NA & NA & 1780 & 1781 & 1882 & NA\\
+\hline
+qd & wznj.0 & Die Kindermörderin & de & Wagner, Heinrich Leopold & 11862833X & NA & NA & 1776 & NA & 1777 & NA\\
+\hline
+\end{tabular}
+
+For the sake of demo, we will use the \texttt{base\_dictionary} that is included in the R package. It contains entries for the fields Familie, Krieg, Ratio, Liebe, Religion. Typing \texttt{base\_dictionary} in the R console shows all words in all five fields. For loading other dictionaries, \textbf{see above}.
+
+Counting word frequencies on a corpus works exactly as on a single text.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dictionaryStatistics}\NormalTok{(sturm_und_drang.plays, }
+                     \DataTypeTok{fieldnames=}\KeywordTok{names}\NormalTok{(base_dictionary), }
+                     \DataTypeTok{byFigure =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    corpus   drama Familie Krieg Ratio Liebe Religion
+## 1      qd 11f81.0     168    47   100   159       48
+## 2      qd 11g1d.0     158   183   107   188      142
+## 3      qd 11g9w.0     137   179   120   173       80
+## 4      qd 11hdv.0     119    22    40   207       77
+## 5      qd  nds0.0     284    47    50   124      103
+## 6      qd  r12k.0     216    84    67   210       56
+## 7      qd  r12v.0     349   141    47   191       64
+## 8      qd  r134.0     136    88    93   384       75
+## 9      qd  r13g.0      87   156   107   357       76
+## 10     qd  rfxf.0     504   142   220   428      160
+## 11     qd  rhtz.0     182    53   100    63       44
+## 12     qd  rhzq.0     357    76   123    98      114
+## 13     qd  rj22.0     217    46    93   114      102
+## 14     qd  tx4z.0     606   378   552   746      420
+## 15     qd  tz39.0     441   109   178   263      197
+## 16     qd  tzgk.0     213   220   151   195      111
+## 17     qd  v0fv.0     394   191   222   298      243
+## 18     qd  wznj.0     246    35   129    78       95
+\end{verbatim}
+
+In order to visualize this in a time line, we need to merge this table with the meta data table. This can be done easily with the \texttt{merge()} function. This function is quite handy in our use cases, as it can merge tables based on values in the table. In our case, we mostly want to merge tables that both have a \texttt{corpus} and \texttt{drama} column. If the two tables have columns with the same name, this is done automatically. Otherwise, one can specify the columns using the arguments \texttt{by}, \texttt{by.x} and/or \texttt{by.y}.
+
+As the data contains three different types of date (written, printed, premiere), and not all plays have all dates, we create an artificial reference date by taking the earliest date possible. This is done using the \texttt{apply} function in the code below, and by taking the minimum value in each row.
+
+After that, the table is ordered by this reference date, and the plotting itself can be done with regular \texttt{plot()} function provided by R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# count the words (as before)}
+\NormalTok{dstat <-}\StringTok{ }\KeywordTok{dictionaryStatistics}\NormalTok{(sturm_und_drang.plays, }
+                     \DataTypeTok{fieldnames=}\KeywordTok{names}\NormalTok{(base_dictionary), }
+                     \DataTypeTok{byFigure =} \OtherTok{FALSE}\NormalTok{, }
+                     \DataTypeTok{normalizeByFigure =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# merge them with the meta object}
+\NormalTok{dstat <-}\StringTok{ }\KeywordTok{merge}\NormalTok{(dstat, sturm_und_drang.plays}\OperatorTok{$}\NormalTok{meta)}
+
+\CommentTok{# for each play, take the earliest date available}
+\CommentTok{# (not all plays have all kinds of date)}
+\NormalTok{dstat}\OperatorTok{$}\NormalTok{Date.Ref <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(dstat[,}\KeywordTok{c}\NormalTok{(}\StringTok{"Date.Printed"}\NormalTok{, }\StringTok{"Date.Written"}\NormalTok{, }\StringTok{"Date.Premiere"}\NormalTok{)], }
+                        \DecValTok{1}\NormalTok{, min, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in FUN(newX[, i], ...): kein nicht-fehlendes Argument für min; gebe
+## Inf zurück
+
+## Warning in FUN(newX[, i], ...): kein nicht-fehlendes Argument für min; gebe
+## Inf zurück
+
+## Warning in FUN(newX[, i], ...): kein nicht-fehlendes Argument für min; gebe
+## Inf zurück
+
+## Warning in FUN(newX[, i], ...): kein nicht-fehlendes Argument für min; gebe
+## Inf zurück
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# order them by this reference date}
+\NormalTok{dstat <-}\StringTok{ }\NormalTok{dstat[}\KeywordTok{order}\NormalTok{(dstat}\OperatorTok{$}\NormalTok{Date.Ref),]}
+
+\CommentTok{# plot them}
+\KeywordTok{plot}\NormalTok{(Liebe }\OperatorTok{~}\StringTok{ }\NormalTok{Date.Ref,  }\CommentTok{# y ~ x}
+     \DataTypeTok{data =}\NormalTok{ dstat[dstat}\OperatorTok{$}\NormalTok{Date.Ref}\OperatorTok{!=}\OtherTok{Inf}\NormalTok{,],  }\CommentTok{# the data set, filtering Inf values}
+     \DataTypeTok{pch =} \DecValTok{4}\NormalTok{,           }\CommentTok{# we print a cross (see ?points for other options)}
+     \DataTypeTok{xlab=}\StringTok{"Year"}        \CommentTok{# label of the x axis}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-63-1.pdf}
+
+The resulting plot shows the percentage of \emph{love}-words in each play, organized by reference date. Thus, in 1776, a very ``lovely'' play has been published, achieving over 1.8 percent of love words (it's \emph{Stella} by Goethe). The identification of plays in this plot can be simplified if we plot not only crosses/points, but some kind of identifier. In the plot below, we use the textgrid id of the play (which we also use in QuaDramA, because it's relatively short and still memorable).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# it makes use of the text() function much easier if we have}
+\CommentTok{# a new variable for this filtered data set}
+\NormalTok{dstat.filtered <-}\StringTok{ }\NormalTok{dstat[dstat}\OperatorTok{$}\NormalTok{Date.Ref}\OperatorTok{!=}\OtherTok{Inf}\NormalTok{,]}
+
+\KeywordTok{plot}\NormalTok{(Liebe }\OperatorTok{~}\StringTok{ }\NormalTok{Date.Ref,  }\CommentTok{# y ~ x}
+     \DataTypeTok{data =}\NormalTok{ dstat.filtered, }\CommentTok{# the data set}
+     \DataTypeTok{pch =} \DecValTok{4}\NormalTok{,           }\CommentTok{# we print a cross (see ?points for other options)}
+     \DataTypeTok{xlab=}\StringTok{"Year"}        \CommentTok{# label of the x axis}
+\NormalTok{)}
+
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ dstat.filtered}\OperatorTok{$}\NormalTok{Date.Ref}\OperatorTok{+}\DecValTok{1}\NormalTok{, }
+     \DataTypeTok{y =}\NormalTok{ dstat.filtered}\OperatorTok{$}\NormalTok{Liebe,}
+     \DataTypeTok{labels=}\NormalTok{dstat.filtered}\OperatorTok{$}\NormalTok{drama,}
+     \DataTypeTok{cex=}\FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 \hypertarget{advanced-text-analysis}{%
 \chapter{Advanced Text Analysis}\label{advanced-text-analysis}}
@@ -1532,421 +1933,7 @@ A simple visualisation that shows the characters active and passive presence in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-50-1.pdf}
-
-\hypertarget{text-collections}{%
-\chapter{Text Collections}\label{text-collections}}
-
-So far, we have mostly processed single texts. In this chapter, we will cover the important things to know when processing collections of texts -- be it genres or the works of an author.
-
-The following code can only be reproduced if the GerDraCor data set and the collection repository have been installed. This can be done with the following code (assuming an internet connection).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{installData}\NormalTok{(}\StringTok{"qd"}\NormalTok{)}
-\KeywordTok{installCollectionData}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-Depending on whether you have done this before, this will either update the data or create it new. Consequently, the output of these functions looks differently.
-
-\hypertarget{defining-collections}{%
-\section{Defining collections}\label{defining-collections}}
-
-Before processing, it's necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# load ids that are comedies and tragedies}
-\NormalTok{ids.tragedy <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(}\KeywordTok{loadSet}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"trauerspiel"}\NormalTok{, }\StringTok{"tragödie"}\NormalTok{, }\StringTok{"tragoedie"}\NormalTok{)))}
-\NormalTok{ids.comedy <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(}\KeywordTok{loadSet}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"lustspiel"}\NormalTok{, }\StringTok{"komödie"}\NormalTok{, }\StringTok{"komoedie"}\NormalTok{)))}
-
-\CommentTok{# make sure we're using the QuaDramA corpus}
-\NormalTok{ids.tragedy <-}\StringTok{ }\KeywordTok{sub}\NormalTok{(}\StringTok{"tg:"}\NormalTok{, }\StringTok{"qd:"}\NormalTok{, ids.tragedy, }\DataTypeTok{fixed =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{ids.comedy <-}\StringTok{ }\KeywordTok{sub}\NormalTok{(}\StringTok{"tg:"}\NormalTok{, }\StringTok{"qd:"}\NormalTok{, ids.comedy, }\DataTypeTok{fixed =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{loading-multiple-plays}{%
-\section{Loading multiple plays}\label{loading-multiple-plays}}
-
-Loading multiple plays at once is straightforward, and not different from loading a single one. We just use a vector of play ids as argument to the \texttt{loadDrama()} function.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{text.tragedies <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(ids.tragedy)}
-\NormalTok{text.comedies  <-}\StringTok{ }\KeywordTok{loadDrama}\NormalTok{(ids.comedy)}
-\end{Highlighting}
-\end{Shaded}
-
-This may create a lot of output (suppressed here), telling you about specific plays that could not be loaded (we'll ignore this for the moment).
-
-First, we'll get an overview of the plays that we just loaded. The meta data for tragedies (and comedies) are in a straightforward table:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{text.tragedies}\OperatorTok{$}\NormalTok{meta}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##     corpus   drama                            documentTitle language
-##  1:     qd 11f81.0                                  Clavigo       de
-##  2:     qd 11g3h.0                   Die natürliche Tochter       de
-##  3:     qd 11g9w.0                                   Egmont       de
-##  4:     qd  kjfg.0                                Der Paria       de
-##  5:     qd  kq6v.0                            Der Freigeist       de
-##  6:     qd  mr3k.0           Der letzte Held von Marienburg       de
-##  7:     qd  mv7f.0                          Eid und Pflicht       de
-##  8:     qd  nks0.0                       Der sterbende Cato       de
-##  9:     qd  npsg.0          Des Meeres und der Liebe Wellen       de
-## 10:     qd  ns3r.0                     Die Jüdin von Toledo       de
-## 11:     qd  ns9c.0              Ein Bruderzwist in Habsburg       de
-## 12:     qd  nsv5.0                              Die Ahnfrau       de
-## 13:     qd  nttc.0            König Ottokars Glück und Ende       de
-## 14:     qd  nvk1.0           Ein treuer Diener seines Herrn       de
-## 15:     qd  pm1c.0                         Kriemhilds Rache       de
-## 16:     qd  q41n.0                          Don Juan's Ende       de
-## 17:     qd  qdj2.0                                 Der Turm       de
-## 18:     qd  qdk1.0                                 Alkestis       de
-## 19:     qd  qkq1.0 Andreas Hofer, der Sandwirt von Passeyer       de
-## 20:     qd  r0px.0               Die Familie Schroffenstein       de
-## 21:     qd  r121.0     Faust. Ein Trauerspiel in fünf Acten       de
-## 22:     qd  r12v.0                            Die Zwillinge       de
-## 23:     qd  r1zm.0                            Der Tod Adams       de
-## 24:     qd  rfxf.0                        Julius von Tarent       de
-## 25:     qd  rjmw.0                         Miß Sara Sampson       de
-## 26:     qd  rksp.0                           Emilia Galotti       de
-## 27:     qd  s6m2.0                            Die Makkabäer       de
-## 28:     qd  s6m6.0                           Der Erbförster       de
-## 29:     qd  ssrb.0                             König Yngurd       de
-## 30:     qd  ssrf.0                               Die Schuld       de
-## 31:     qd  tzgk.0     Die Verschwörung des Fiesco zu Genua       de
-## 32:     qd  v341.0                                  Alarkos       de
-## 33:     qd  v3mq.0                                    Canut       de
-## 34:     qd  w3zd.0                                    Julie       de
-## 35:     qd  wpvj.0                Ernst Herzog von Schwaben       de
-## 36:     qd  wzgs.0   Faust. Trauerspiel mit Gesang und Tanz       de
-## 37:     qd  wznj.0                       Die Kindermörderin       de
-## 38:     qd  x4gj.0                        Atreus und Thyest       de
-## 39:     qd  x8fs.0                        Lady Johanna Gray       de
-## 40:     qd  x8mw.0                 Gracchus der Volkstribun       de
-## 41:     qd  x8nq.0                           Die Karolinger       de
-## 42:     qd  x90m.0                                    Armut       de
-## 43:     qd 11d11.0         Faust. Der Tragödie zweiter Teil       de
-## 44:     qd  kmq3.0                       Ein Faust der That       de
-## 45:     qd  kq6k.0                                    Faust       de
-## 46:     qd  ndmr.0                               Der Moloch       de
-## 47:     qd  nmg0.0                       Don Juan und Faust       de
-## 48:     qd  nmg5.0              Herzog Theodor von Gothland       de
-## 49:     qd  pkhc.0                        Frau Nadja Bielew       de
-## 50:     qd  pmgg.0                     Herodes und Mariamne       de
-## 51:     qd  pmj9.0                      Gyges und sein Ring       de
-## 52:     qd  pmtc.0                                 Genoveva       de
-## 53:     qd  pn2n.0                                   Judith       de
-## 54:     qd  psxj.0                                 Almansor       de
-## 55:     qd  pvxf.0                      Die Kinder Godunófs       de
-## 56:     qd  qd2g.0                                  Elektra       de
-## 57:     qd  qh44.0                              Ignorabimus       de
-## 58:     qd  qkp7.0           Das Gericht von St. Petersburg       de
-## 59:     qd  qn2w.0                             Die Opferung       de
-## 60:     qd  trwt.0            Faustine, der weibliche Faust       de
-## 61:     qd  tvdq.0                          Es lebe Europa!       de
-## 62:     qd  tvdx.0                     Der Schornsteinfeger       de
-## 63:     qd  tvg7.0             Herr Kammerdiener Kneetschke       de
-## 64:     qd  tz9d.0                 Die Jungfrau von Orleans       de
-## 65:     qd  vmvc.0                             Julius Cäsar       de
-## 66:     qd  vncw.0               Hamlet. Prinz von Dänemark       de
-## 67:     qd  vnfd.0                       König Richard III.       de
-## 68:     qd  vnfz.0                               König Lear       de
-## 69:     qd  w40m.0                  Der Bettler von Syrakus       de
-## 70:     qd  wz0s.0                                Faust III       de
-## 71:     qd  x34j.0                       Frühlings Erwachen       de
-## 72:     qd  x3bf.0                   Die Büchse der Pandora       de
-## 73:     qd  x3f6.0                                 Erdgeist       de
-## 74:     qd  x5bv.0            Der vierundzwanzigste Februar       de
-## 75:     qd  x90s.0                                Dies irae       de
-## 76:     qd  nds0.0                                  Ugolino       de
-## 77:     qd  tz39.0                         Kabale und Liebe       de
-## 78:     qd  twt3.0                             Maria Stuart       de
-##     corpus   drama                            documentTitle language
-##                                  Name       Pnd          Translator.Name
-##  1:           Goethe, Johann Wolfgang 118540238                     <NA>
-##  2:           Goethe, Johann Wolfgang 118540238                     <NA>
-##  3:           Goethe, Johann Wolfgang 118540238                     <NA>
-##  4:                     Beer, Michael 118657887                     <NA>
-##  5:        Brawe, Joachim Wilhelm von 11865991X                     <NA>
-##  6:           Eichendorff, Joseph von 118529390                     <NA>
-##  7:               Engel, Johann Jakob 11868468X                     <NA>
-##  8:       Gottsched, Johann Christoph 118541013                     <NA>
-##  9:                Grillparzer, Franz 118542192                     <NA>
-## 10:                Grillparzer, Franz 118542192                     <NA>
-## 11:                Grillparzer, Franz 118542192                     <NA>
-## 12:                Grillparzer, Franz 118542192                     <NA>
-## 13:                Grillparzer, Franz 118542192                     <NA>
-## 14:                Grillparzer, Franz 118542192                     <NA>
-## 15:                 Hebbel, Friedrich 118547445                     <NA>
-## 16:                       Heyse, Paul 118550772                     <NA>
-## 17:            Hofmannsthal, Hugo von 118552759                     <NA>
-## 18:            Hofmannsthal, Hugo von 118552759                     <NA>
-## 19:                   Immermann, Karl 118555553                     <NA>
-## 20:              Kleist, Heinrich von 118563076                     <NA>
-## 21:                Klingemann, August 118563300                     <NA>
-## 22:     Klinger, Friedrich Maximilian 118563319                     <NA>
-## 23:     Klopstock, Friedrich Gottlieb 118563386                     <NA>
-## 24:           Leisewitz, Johann Anton 118571370                     <NA>
-## 25:         Lessing, Gotthold Ephraim 118572121                     <NA>
-## 26:         Lessing, Gotthold Ephraim 118572121                     <NA>
-## 27:                      Ludwig, Otto 118574973                     <NA>
-## 28:                      Ludwig, Otto 118574973                     <NA>
-## 29:                   Müllner, Adolph 118737775                     <NA>
-## 30:                   Müllner, Adolph 118737775                     <NA>
-## 31:               Schiller, Friedrich 118607626                     <NA>
-## 32:               Schlegel, Friedrich 118607987                     <NA>
-## 33:            Schlegel, Johann Elias 118608002                     <NA>
-## 34:             Sturz, Helfrich Peter 118619756                     <NA>
-## 35:                    Uhland, Ludwig 118625063                     <NA>
-## 36:                   Voß, Julius von 118627929                     <NA>
-## 37:          Wagner, Heinrich Leopold 11862833X                     <NA>
-## 38:            Weiße, Christian Felix 118630563                     <NA>
-## 39:         Wieland, Christoph Martin 118632477                     <NA>
-## 40:              Wilbrandt, Adolf von 118807250                     <NA>
-## 41:            Wildenbruch, Ernst von 118771760                     <NA>
-## 42:                   Wildgans, Anton 118632841                     <NA>
-## 43:           Goethe, Johann Wolfgang 118540238                     <NA>
-## 44:                   Bleibtreu, Karl 118663909                     <NA>
-## 45:  Braun von Braunthal, Karl Johann 116428384                     <NA>
-## 46:                   Gerhäuser, Emil 11656640X                     <NA>
-## 47:        Grabbe, Christian Dietrich 118541102                     <NA>
-## 48:        Grabbe, Christian Dietrich 118541102                     <NA>
-## 49:                   Hauptmann, Carl 118546910                     <NA>
-## 50:                 Hebbel, Friedrich 118547445                     <NA>
-## 51:                 Hebbel, Friedrich 118547445                     <NA>
-## 52:                 Hebbel, Friedrich 118547445                     <NA>
-## 53:                 Hebbel, Friedrich 118547445                     <NA>
-## 54:                   Heine, Heinrich 118548018                     <NA>
-## 55:               Heiseler, Henry von 118709933                     <NA>
-## 56:            Hofmannsthal, Hugo von 118552759                     <NA>
-## 57:                        Holz, Arno 118553216                     <NA>
-## 58:                   Immermann, Karl 118555553                     <NA>
-## 59:                   Kaltneker, Hans 11855963X                     <NA>
-## 60:                  Schäfer, Wilhelm      <NA>                     <NA>
-## 61:                  Scheerbart, Paul 118606816                     <NA>
-## 62:                  Scheerbart, Paul 118606816                     <NA>
-## 63:                  Scheerbart, Paul 118606816                     <NA>
-## 64:               Schiller, Friedrich 118607626                     <NA>
-## 65:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 66:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 67:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 68:              Shakespeare, William 118613723 Baudissin, Wolf Graf von
-## 69:                Sudermann, Hermann 118619853                     <NA>
-## 70:        Vischer, Friedrich Theodor 11862721X                     <NA>
-## 71:                   Wedekind, Frank 118629867                     <NA>
-## 72:                   Wedekind, Frank 118629867                     <NA>
-## 73:                   Wedekind, Frank 118629867                     <NA>
-## 74:                 Werner, Zacharias 118767208                     <NA>
-## 75:                   Wildgans, Anton 118632841                     <NA>
-## 76: Gerstenberg, Heinrich Wilhelm von 118690949                     <NA>
-## 77:               Schiller, Friedrich 118607626                     <NA>
-## 78:               Schiller, Friedrich 118607626                     <NA>
-##                                  Name       Pnd          Translator.Name
-##     Translator.Pnd Date.Written Date.Printed Date.Premiere
-##  1:             NA         1774         1774          1774
-##  2:             NA         1803         1804          1803
-##  3:             NA         1787         1788          1791
-##  4:             NA            0            0             0
-##  5:             NA            0         1758          1759
-##  6:             NA            0         1830          1831
-##  7:             NA            0            0             0
-##  8:             NA         1730         1732          1731
-##  9:             NA         1829            0             0
-## 10:             NA         1851         1872          1872
-## 11:             NA         1848         1848             0
-## 12:             NA            0            0             0
-## 13:             NA         1823            0             0
-## 14:             NA         1827            0             0
-## 15:             NA         1860            0             0
-## 16:             NA            0            0             0
-## 17:             NA         1924         1924          1948
-## 18:             NA         1894         1909          1916
-## 19:             NA         1833            0             0
-## 20:             NA         1802         1803          1804
-## 21:             NA            0            0          1812
-## 22:             NA            0         1776          1776
-## 23:             NA         1756         1757             0
-## 24:             NA            0            0             0
-## 25:             NA            0         1755          1755
-## 26:             NA            0            0             0
-## 27:             NA            0            0             0
-## 28:             NA            0            0             0
-## 29:             NA            0            0             0
-## 30:             NA            0            0             0
-## 31:             NA         1782            0             0
-## 32:             NA         1801         1802          1802
-## 33:             NA         1746         1746             0
-## 34:             NA            0         1767          1768
-## 35:             NA         1817         1818          1818
-## 36:             NA            0            0             0
-## 37:             NA         1776            0          1777
-## 38:             NA         1766         1766          1766
-## 39:             NA         1758         1758          1758
-## 40:             NA            0         1872          1872
-## 41:             NA            0         1881          1881
-## 42:             NA         1914            0             0
-## 43:             NA         1831         1832          1854
-## 44:             NA            0            0             0
-## 45:             NA         1835         1835             0
-## 46:             NA            0            0          1906
-## 47:             NA         1829            0             0
-## 48:             NA         1822         1827          1892
-## 49:             NA            0            0             0
-## 50:             NA            0            0             0
-## 51:             NA            0         1856          1889
-## 52:             NA            0            0             0
-## 53:             NA            0         1841          1840
-## 54:             NA            0         1821          1823
-## 55:             NA         1923         1929          1930
-## 56:             NA         1903         1904          1903
-## 57:             NA            0            0             0
-## 58:             NA            0         1832          1835
-## 59:             NA            0            0             0
-## 60:             NA            0         1898             0
-## 61:             NA            0            0             0
-## 62:             NA            0         1904             0
-## 63:             NA            0            0             0
-## 64:             NA         1801            0             0
-## 65:      118607960            0            0             0
-## 66:      118607960            0            0             0
-## 67:      118607960            0            0             0
-## 68:     1075372348            0            0             0
-## 69:             NA            0         1911          1911
-## 70:             NA            0         1862             0
-## 71:             NA            0            0             0
-## 72:             NA            0            0             0
-## 73:             NA            0            0             0
-## 74:             NA         1808         1815          1810
-## 75:             NA         1918         1918          1919
-## 76:             NA            0         1768          1769
-## 77:             NA         1783            0             0
-## 78:             NA         1800            0             0
-##     Translator.Pnd Date.Written Date.Printed Date.Premiere
-##     Date.Translation
-##  1:                0
-##  2:                0
-##  3:                0
-##  4:                0
-##  5:                0
-##  6:                0
-##  7:                0
-##  8:                0
-##  9:                0
-## 10:                0
-## 11:                0
-## 12:                0
-## 13:                0
-## 14:                0
-## 15:                0
-## 16:                0
-## 17:                0
-## 18:                0
-## 19:                0
-## 20:                0
-## 21:                0
-## 22:                0
-## 23:                0
-## 24:                0
-## 25:                0
-## 26:                0
-## 27:                0
-## 28:                0
-## 29:                0
-## 30:                0
-## 31:                0
-## 32:                0
-## 33:                0
-## 34:                0
-## 35:                0
-## 36:                0
-## 37:                0
-## 38:                0
-## 39:                0
-## 40:                0
-## 41:                0
-## 42:                0
-## 43:                0
-## 44:                0
-## 45:                0
-## 46:                0
-## 47:                0
-## 48:                0
-## 49:                0
-## 50:                0
-## 51:                0
-## 52:                0
-## 53:                0
-## 54:                0
-## 55:                0
-## 56:                0
-## 57:                0
-## 58:                0
-## 59:                0
-## 60:                0
-## 61:                0
-## 62:                0
-## 63:                0
-## 64:                0
-## 65:                0
-## 66:                0
-## 67:                0
-## 68:                0
-## 69:                0
-## 70:                0
-## 71:                0
-## 72:                0
-## 73:                0
-## 74:                0
-## 75:                0
-## 76:                0
-## 77:                0
-## 78:                0
-##     Date.Translation
-\end{verbatim}
-
-\hypertarget{analysing-multiple-plays}{%
-\section{Analysing multiple plays}\label{analysing-multiple-plays}}
-
-As the \texttt{QDDrama}-object we are dealing with can represent one or more texts, most functions can just be used with a text collection or a single text, without a difference. However, results may need to handled differently, because we no longer can visualise all individual characters easily.
-
-\hypertarget{character-statistics}{%
-\subsection{Character statistics}\label{character-statistics}}
-
-It's straightforward to extract character statistics for an entire corpus:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{charStat <-}\StringTok{ }\KeywordTok{characterStatistics}\NormalTok{(text.tragedies)}
-\end{Highlighting}
-\end{Shaded}
-
-Visualising this directly (as we have done in Section @ref\{who-how-much\}) works technically, but is not very helpful. Instead, we will formulate a few concrete questions and investigate them:
-
-\hypertarget{proportion-of-characters}{%
-\subsubsection{Proportion of characters}\label{proportion-of-characters}}
-
-What's the proportion of the most (second-most) talkative character, w.r.t. the entire play?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{charStat <-}\StringTok{ }\KeywordTok{characterStatistics}\NormalTok{(text.tragedies)}
-\KeywordTok{class}\NormalTok{(charStat)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "QDCharacterStatistics" "QDHasCharacter"        "data.frame"
-\end{verbatim}
-
-Although this works technically, it is not very helpful, as the plot contains way too much information too densely. We will
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-66-1.pdf}
 
 \hypertarget{resterampe}{%
 \chapter{Resterampe}\label{resterampe}}
@@ -1963,7 +1950,7 @@ We will now combine this information with additional meta data about characters,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \hypertarget{character-groups}{%
 \subsection{Character groups}\label{character-groups}}
@@ -1990,7 +1977,7 @@ Next, we want to make the same analysis not for individual characters, but for c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{DramaAnalysis_files/figure-latex/unnamed-chunk-68-1.pdf}
 
 According to this picture, female characters speak slightly longer utterances in this play.
 

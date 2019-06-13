@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Character Exchange | DramaAnalysis</title>
-  <meta name="description" content="7 Character Exchange | DramaAnalysis" />
+  <title>5 Who’s talking how often? | DramaAnalysis</title>
+  <meta name="description" content="5 Who’s talking how often? | DramaAnalysis" />
   <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Character Exchange | DramaAnalysis" />
+  <meta property="og:title" content="5 Who’s talking how often? | DramaAnalysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Character Exchange | DramaAnalysis" />
+  <meta name="twitter:title" content="5 Who’s talking how often? | DramaAnalysis" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="configuration.html">
-<link rel="next" href="word-field-analysis.html">
+<link rel="prev" href="who-how-much.html">
+<link rel="next" href="configuration.html">
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -216,49 +216,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="character-exchange" class="section level1">
-<h1><span class="header-section-number">7</span> Character Exchange</h1>
-<p>Character exchange – entering and leaving the stage – often takes place at scene boundaries. We offer multiple ways to measure and visualize this exchange over the course of the play.</p>
-<div id="hamming-distance" class="section level2">
-<h2><span class="header-section-number">7.1</span> Hamming Distance</h2>
-<p>The <a href="https://en.wikipedia.org/wiki/Hamming_distance">hamming distance</a> has been introduced in information theory by Richard Hamming <span class="citation">(Hamming 1950)</span>. Intuitively, the hamming distance expresses the number of characters that either enter or leave the stage. Its application to a dramatic text is straightforward, using the function <code>hamming()</code>. By default, the hamming distance is calculated over scene boundaries.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Hamming&quot;</span>)</code></pre>
-<pre><code>##  [1] 2 1 1 1 1 2 2 4 2 4 3 2 1 1 1 2 2 2 4 2 2 3 2 4 1 3 3 1 3 2 2 1 1 1 5
-## [36] 3 1 1 2 2 1 2</code></pre>
-<p>The return value of the function is just a vector of numbers, one less than the number of scenes in the play. Of course, this can be plotted:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Hamming&quot;</span>),
-     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
-     <span class="dt">ylab=</span><span class="st">&quot;Hamming distance&quot;</span>,
-     <span class="dt">xlab=</span><span class="st">&quot;Scenes&quot;</span>)</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<p>Hamming distance, in its original definition as well as the <code>Hamming</code> variant in our function, returns absolute values. As usual, these values should be normalized, and the function <code>hamming()</code> provides two ways of doing that.</p>
-<div id="normalizedhamming" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> NormalizedHamming</h3>
-<p>Straightforwardly, one can normalise by the overall number of characters in the play. This value is only maximal, if at once scene boundary, one subset of characters enters the stage, and the entire other subset leaves the stage. As we can see below, this is not the case in our demo text.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;NormalizedHamming&quot;</span>)</code></pre>
-<pre><code>##  [1] 0.15384615 0.07692308 0.07692308 0.07692308 0.07692308 0.15384615
-##  [7] 0.15384615 0.30769231 0.15384615 0.30769231 0.23076923 0.15384615
-## [13] 0.07692308 0.07692308 0.07692308 0.15384615 0.15384615 0.15384615
-## [19] 0.30769231 0.15384615 0.15384615 0.23076923 0.15384615 0.30769231
-## [25] 0.07692308 0.23076923 0.23076923 0.07692308 0.23076923 0.15384615
-## [31] 0.15384615 0.07692308 0.07692308 0.07692308 0.38461538 0.23076923
-## [37] 0.07692308 0.07692308 0.15384615 0.15384615 0.07692308 0.15384615</code></pre>
+<div id="who-how-often" class="section level1">
+<h1><span class="header-section-number">5</span> Who’s talking how often?</h1>
+<p>So far, we have counted words for characters. Now we will turn to utterances, and their properties.</p>
+<p>First, we will use the function <code>utteranceStatistics()</code> to extract quantitative information about utterances:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">utteranceStatistics</span>(rksp<span class="fl">.0</span>)</code></pre>
+<pre><code>##    corpus  drama        character utteranceBegin utteranceLength
+## 1    test rksp.0        der_prinz            426    3.874388e-03
+## 2    test rksp.0 der_kammerdiener           1149    8.156607e-05
+## 3    test rksp.0        der_prinz           1178    2.895595e-03
+## 4    test rksp.0 der_kammerdiener           1526    6.525285e-04
+## 5    test rksp.0        der_prinz           1655    2.854812e-04
+## 6    test rksp.0 der_kammerdiener           1697    1.631321e-04
+## 7    test rksp.0        der_prinz           1739    1.019576e-03
+## 8    test rksp.0 der_kammerdiener           1857    3.262643e-04
+## 9    test rksp.0        der_prinz           1919    2.528548e-03
+## 10   test rksp.0 der_kammerdiener           2299    3.670473e-04</code></pre>
+<p>This creates a table that is very long, which is why we only show the first 10 rows here. The table contains one row for each utterance, and information about the speaker of the utterance, its length (measured in tokens) and its starting position (character position). We can now inspect the variance in utterance length:</p>
+<pre class="sourceCode r"><code class="sourceCode r">ustat &lt;-<span class="st"> </span><span class="kw">utteranceStatistics</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">format</span>(rksp<span class="fl">.0</span>)   <span class="co"># use names instead of character ids (see above)</span>
+  
+<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>)) <span class="co"># increase margin</span>
+
+<span class="kw">boxplot</span>(utteranceLength <span class="op">~</span><span class="st"> </span>character, <span class="co"># what do we want to correlate </span>
+        <span class="dt">data=</span>ustat,   <span class="co"># the data set to use</span>
+        <span class="dt">main =</span> <span class="kw">dramaNames</span>(rksp<span class="fl">.0</span>), <span class="co"># the main title of the plot</span>
+        <span class="dt">las =</span> <span class="dv">2</span> <span class="co"># rotate axis labels</span>
+)</code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>This uses the regular <code>boxplot()</code> function, enter <code>?boxplot</code> for documentation. <code>utteranceLength ~ character</code> is called a formula in R and (in this case) expresses that we want to look at the column <code>utteranceLength</code>, grouped by the column <code>character</code>. The boxplot is a useful way to grasp the dispersion of a set of values (in this case: the lengths of all utterances by a character).</p>
+<div id="when-are-characters-talking" class="section level2">
+<h2><span class="header-section-number">5.1</span> When are characters talking?</h2>
+<p>While the above displays the <em>length</em> of utterances, we can also display the position of utterances (remember the column <code>utteranceBegin</code>?). The following snippet visualizes when characters are talking, this time for Lessings Miss Sara Sampson:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="kw">utteranceStatistics</span>(rjmw<span class="fl">.0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">format</span>(rjmw<span class="fl">.0</span>) <span class="op">%&gt;%</span><span class="st">    </span><span class="co"># character names instead of ids</span>
+<span class="st">  </span><span class="kw">plot</span>(<span class="dt">main=</span><span class="kw">dramaNames</span>(rjmw<span class="fl">.0</span>))                <span class="co"># calling plot.QDUtteranceStatistics()</span></code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function <code>format()</code> to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type <code>QDHasCharacter</code>. Secondly, the call to the function <code>plot()</code> gets rerouted to the function <code>plot.QDUtteranceStatistics()</code>, because the object we supply as argument is of the type <code>QDUtteranceStatistics</code>. Information about this function can be retrieved by entering <code>?plot.QDUtteranceStatistics</code>.</p>
 </div>
-<div id="trilcke" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Trilcke</h3>
-<p>One more possible normalization has been proposed by <span class="citation">Trilcke et al. (2017)</span>. Instead of normalizing with all characters in the play, the Trilcke variant only normalizes with the characters in the two adjacent scenes. Thus, if all characters leave the stage, and a new set of characters enter it, the distance is maximal. This however does not have to include <em>all</em> characters in the play.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hamming</span>(rksp<span class="fl">.0</span>, <span class="dt">variant=</span><span class="st">&quot;Trilcke&quot;</span>)</code></pre>
-<pre><code>##  [1] 0.6666667 0.5000000 0.5000000 0.5000000 0.5000000 0.6666667 0.6666667
-##  [8] 1.0000000 0.6666667 1.0000000 0.7500000 0.6666667 0.5000000 0.3333333
-## [15] 0.3333333 0.5000000 0.5000000 0.6666667 1.0000000 0.6666667 0.6666667
-## [22] 0.7500000 0.5000000 0.8000000 0.3333333 0.7500000 0.7500000 0.3333333
-## [29] 0.7500000 0.6666667 0.6666667 0.3333333 0.3333333 0.3333333 1.0000000
-## [36] 1.0000000 0.5000000 0.5000000 0.6666667 0.6666667 0.5000000 0.5000000</code></pre>
-<p>The Trilcke variant is the default setting of the <code>hamming()</code>-function.</p>
+<div id="adding-act-boundaries" class="section level2">
+<h2><span class="header-section-number">5.2</span> Adding act boundaries</h2>
+<p>Now it would be useful to include information on act/scene boundaries in this plot. This can be done by supplying the original drama object as a second argument to the <code>plot()</code> function:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">utteranceStatistics</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">format</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">plot</span>(rksp<span class="fl">.0</span>, <span class="co"># adding the `QDDrama` object here creates the act boundaries.</span>
+       <span class="dt">main=</span><span class="kw">dramaNames</span>(rksp<span class="fl">.0</span>)) </code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Please note that the information contained in this plot is very similar to the information in configuration matrices.</p>
 </div>
-</div>
-<div id="corpus-analysis" class="section level2">
-<h2><span class="header-section-number">7.2</span> Corpus Analysis</h2>
+<div id="who-how-often-collection" class="section level2">
+<h2><span class="header-section-number">5.3</span> Collection analysis</h2>
+<p>In Version 3.0, the function <code>utteranceStatistics()</code> expects to be fed a QDDrama object that contains a single play (it will stop otherwise). It’s still possible to run it over several plays at once, if the plays are in different objects but in a single list.</p>
+<p>We again load the <em>Sturm und Drang</em> plays as before, but we will use the function <code>split()</code> to separate the plays. This results in a list of <code>QDDrama</code> objects.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sturm_und_drang.ids &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;qd:11f81.0&quot;</span>, <span class="st">&quot;qd:11g1d.0&quot;</span>, <span class="st">&quot;qd:11g9w.0&quot;</span>, 
                          <span class="st">&quot;qd:11hdv.0&quot;</span>, <span class="st">&quot;qd:nds0.0&quot;</span>,  <span class="st">&quot;qd:r12k.0&quot;</span>, 
                          <span class="st">&quot;qd:r12v.0&quot;</span>,  <span class="st">&quot;qd:r134.0&quot;</span>,  <span class="st">&quot;qd:r13g.0&quot;</span>, 
@@ -267,27 +279,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                          <span class="st">&quot;qd:tzgk.0&quot;</span>,  <span class="st">&quot;qd:v0fv.0&quot;</span>,  <span class="st">&quot;qd:wznj.0&quot;</span>, 
                          <span class="st">&quot;qd:tx4z.0&quot;</span>,  <span class="st">&quot;qd:rfxf.0&quot;</span>)
 
-sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(sturm_und_drang.ids)</code></pre>
-<p>Since determining character exchanges at scene boundaries is not a multi-play task, the function <code>hamming()</code> does not allow <code>QDDrama</code> objects that contain multiple plays. It’s still possible to calculate the exchanges for many plays though, using <code>split()</code> and <code>lapply()</code>. <code>split()</code> is a function defined in the <code>DramaAnalysis</code> package and can be used to split up a <code>QDDrama</code> object if it contains multiple plays. It returns a list of individual objects. This list is then fed into the function <code>lapply()</code>, which applies the function <code>hamming()</code> on each element of the list.</p>
-<pre class="sourceCode r"><code class="sourceCode r">profiles &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">split</span>(sturm_und_drang.plays), hamming, <span class="dt">variant =</span> <span class="st">&quot;Trilcke&quot;</span>)</code></pre>
-<p>The result of this is a list that contains an entry for each play, which in turn reflects the distances at specific scene boundaries. Thus, the lists have different lengths, as the plays have different lengths. We apply the same trick with <code>lappy()</code> to create plots of all the plays. Instead of calling a pre-existing function (as before with <code>hamming()</code>), we define a new (anonymous) function. This is mainly to allow printing the authors and names of the play into the plots.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="kw">length</span>(profiles),<span class="dv">1</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(sturm_und_drang.ids)
 
-<span class="kw">lapply</span>(<span class="kw">names</span>(profiles), 
+<span class="co"># separate the plays</span>
+sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">split</span>(sturm_und_drang.plays) </code></pre>
+<p>This list can of course be plotted again, but it will result in a number of individual plots.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="kw">length</span>(sturm_und_drang.plays),<span class="dv">1</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">15</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="kw">lapply</span>(sturm_und_drang.plays, 
        <span class="cf">function</span>(x) {
-         <span class="kw">plot</span>(profiles[[x]],  <span class="co"># take the data</span>
-              <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,       <span class="co"># we print lines</span>
-              <span class="dt">ylab=</span><span class="st">&quot;Character exchange rate&quot;</span>, <span class="co"># y axis label </span>
-              <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),                    <span class="co"># y axis scale</span>
-              <span class="co"># create nice labels</span>
-              <span class="dt">main=</span><span class="kw">paste</span>(sturm_und_drang.plays<span class="op">$</span>meta[drama<span class="op">==</span>x,]<span class="op">$</span>Name,
-                         sturm_und_drang.plays<span class="op">$</span>meta[drama<span class="op">==</span>x,]<span class="op">$</span>documentTitle, 
-                         <span class="dt">sep=</span><span class="st">&quot;: &quot;</span>, <span class="dt">collapse=</span><span class="st">&quot;: &quot;</span>)
-         )
+         <span class="kw">utteranceStatistics</span>(x) <span class="op">%&gt;%</span>
+<span class="st">           </span><span class="kw">format</span>(x) <span class="op">%&gt;%</span>
+<span class="st">           </span><span class="kw">plot</span>(x, <span class="dt">main=</span><span class="kw">dramaNames</span>(x))
        }
 )</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
-
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -296,8 +302,8 @@ sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">loadDrama</
           </div>
         </div>
       </div>
-<a href="configuration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="word-field-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="who-how-much.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="configuration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

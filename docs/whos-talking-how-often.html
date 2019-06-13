@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-06-11" />
+<meta name="date" content="2019-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -134,9 +134,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.3</b> Sample data</a></li>
-<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.2.1</b> Sample data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>2.3</b> Installing corpora</a></li>
+<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>2.4.1</b> Defining collections</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>3</b> Basics</a><ul>
 <li class="chapter" data-level="3.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>3.1</b> R Basics</a><ul>
@@ -145,14 +149,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>3.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
-<li class="part"><span><b>I Structure Analysis</b></span></li>
 <li class="chapter" data-level="4" data-path="who-how-much.html"><a href="who-how-much.html"><i class="fa fa-check"></i><b>4</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="4.1" data-path="who-how-much.html"><a href="who-how-much.html#format"><i class="fa fa-check"></i><b>4.1</b> Character names instead of identifiers</a></li>
 <li class="chapter" data-level="4.2" data-path="who-how-much.html"><a href="who-how-much.html#stacked-bar-plot"><i class="fa fa-check"></i><b>4.2</b> Stacked bar plot</a></li>
+<li class="chapter" data-level="4.3" data-path="who-how-much.html"><a href="who-how-much.html#collection-analysis"><i class="fa fa-check"></i><b>4.3</b> Collection analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html"><i class="fa fa-check"></i><b>5</b> Who’s talking how often?</a><ul>
 <li class="chapter" data-level="5.1" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#when-are-characters-talking"><i class="fa fa-check"></i><b>5.1</b> When are characters talking?</a></li>
 <li class="chapter" data-level="5.2" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#adding-act-boundaries"><i class="fa fa-check"></i><b>5.2</b> Adding act boundaries</a></li>
+<li class="chapter" data-level="5.3" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#collection-analysis-1"><i class="fa fa-check"></i><b>5.3</b> Collection analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>6</b> Configuration</a><ul>
 <li class="chapter" data-level="6.1" data-path="configuration.html"><a href="configuration.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a><ul>
@@ -173,7 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="character-exchange.html"><a href="character-exchange.html#corpus-analysis"><i class="fa fa-check"></i><b>7.2</b> Corpus Analysis</a></li>
 </ul></li>
-<li class="part"><span><b>II Text Analysis</b></span></li>
 <li class="chapter" data-level="8" data-path="word-field-analysis.html"><a href="word-field-analysis.html"><i class="fa fa-check"></i><b>8</b> Word Field Analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#single-word-field"><i class="fa fa-check"></i><b>8.1</b> Single word field</a></li>
 <li class="chapter" data-level="8.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#multiple-word-fields"><i class="fa fa-check"></i><b>8.2</b> Multiple Word Fields</a><ul>
@@ -191,10 +195,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html#when-are-characters-mentioned"><i class="fa fa-check"></i><b>9.1</b> When are characters mentioned?</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="text-collections.html"><a href="text-collections.html"><i class="fa fa-check"></i><b>10</b> Text Collections</a><ul>
-<li class="chapter" data-level="10.1" data-path="text-collections.html"><a href="text-collections.html#defining-collections"><i class="fa fa-check"></i><b>10.1</b> Defining collections</a></li>
-<li class="chapter" data-level="10.2" data-path="text-collections.html"><a href="text-collections.html#loading-multiple-plays"><i class="fa fa-check"></i><b>10.2</b> Loading multiple plays</a></li>
-<li class="chapter" data-level="10.3" data-path="text-collections.html"><a href="text-collections.html#analysing-multiple-plays"><i class="fa fa-check"></i><b>10.3</b> Analysing multiple plays</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="text-collections.html"><a href="text-collections.html#character-statistics"><i class="fa fa-check"></i><b>10.3.1</b> Character statistics</a></li>
+<li class="chapter" data-level="10.1" data-path="text-collections.html"><a href="text-collections.html#analysing-multiple-plays"><i class="fa fa-check"></i><b>10.1</b> Analysing multiple plays</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="text-collections.html"><a href="text-collections.html#character-statistics"><i class="fa fa-check"></i><b>10.1.1</b> Character statistics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>11</b> Resterampe</a><ul>
@@ -242,10 +244,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>)) <span class="co"># increase margin</span>
 
 <span class="kw">boxplot</span>(utteranceLength <span class="op">~</span><span class="st"> </span>character, <span class="co"># what do we want to correlate </span>
-        <span class="dt">data=</span>ustat, 
+        <span class="dt">data=</span>ustat,   <span class="co"># the data set to use</span>
+        <span class="dt">main =</span> <span class="kw">dramaNames</span>(rksp<span class="fl">.0</span>), <span class="co"># the main title of the plot</span>
         <span class="dt">las =</span> <span class="dv">2</span> <span class="co"># rotate axis labels</span>
-      )</code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+)</code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>This uses the regular <code>boxplot()</code> function, enter <code>?boxplot</code> for documentation. <code>utteranceLength ~ character</code> is called a formula in R and (in this case) expresses that we want to look at the column <code>utteranceLength</code>, grouped by the column <code>character</code>. The boxplot is a useful way to grasp the dispersion of a set of values (in this case: the lengths of all utterances by a character).</p>
 <div id="when-are-characters-talking" class="section level2">
 <h2><span class="header-section-number">5.1</span> When are characters talking?</h2>
@@ -254,8 +257,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <span class="kw">utteranceStatistics</span>(rjmw<span class="fl">.0</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">format</span>(rjmw<span class="fl">.0</span>) <span class="op">%&gt;%</span><span class="st">    </span><span class="co"># character names instead of ids</span>
-<span class="st">  </span><span class="kw">plot</span>()                <span class="co"># calling plot.QDUtteranceStatistics()</span></code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">plot</span>(<span class="dt">main=</span><span class="kw">dramaNames</span>(rjmw<span class="fl">.0</span>))                <span class="co"># calling plot.QDUtteranceStatistics()</span></code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function <code>format()</code> to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type <code>QDHasCharacter</code>. Secondly, the call to the function <code>plot()</code> gets rerouted to the function <code>plot.QDUtteranceStatistics()</code>, because the object we supply as argument is of the type <code>QDUtteranceStatistics</code>. Information about this function can be retrieved by entering <code>?plot.QDUtteranceStatistics</code>.</p>
 </div>
 <div id="adding-act-boundaries" class="section level2">
@@ -264,9 +267,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">2</span>))
 <span class="kw">utteranceStatistics</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">format</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">plot</span>(rksp<span class="fl">.0</span>) <span class="co"># adding the `QDDrama` object here creates the act boundaries.</span></code></pre>
-<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">plot</span>(rksp<span class="fl">.0</span>, <span class="co"># adding the `QDDrama` object here creates the act boundaries.</span>
+       <span class="dt">main=</span><span class="kw">dramaNames</span>(rksp<span class="fl">.0</span>)) </code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Please note that the information contained in this plot is very similar to the information in configuration matrices.</p>
+</div>
+<div id="collection-analysis-1" class="section level2">
+<h2><span class="header-section-number">5.3</span> Collection analysis</h2>
+<p>In Version 3.0, the function <code>utteranceStatistics()</code> expects to be fed a QDDrama object that contains a single play (it will stop otherwise). It’s still possible to run it over several plays at once, if the plays are in different objects but in a single list.</p>
+<p>We again load the <em>Sturm und Drang</em> plays as before, but we will use the function <code>split()</code> to separate the plays. This results in a list of <code>QDDrama</code> objects.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sturm_und_drang.ids &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;qd:11f81.0&quot;</span>, <span class="st">&quot;qd:11g1d.0&quot;</span>, <span class="st">&quot;qd:11g9w.0&quot;</span>, 
+                         <span class="st">&quot;qd:11hdv.0&quot;</span>, <span class="st">&quot;qd:nds0.0&quot;</span>,  <span class="st">&quot;qd:r12k.0&quot;</span>, 
+                         <span class="st">&quot;qd:r12v.0&quot;</span>,  <span class="st">&quot;qd:r134.0&quot;</span>,  <span class="st">&quot;qd:r13g.0&quot;</span>, 
+                         <span class="st">&quot;qd:rfxf.0&quot;</span>,  <span class="st">&quot;qd:rhtz.0&quot;</span>,  <span class="st">&quot;qd:rhzq.0&quot;</span>, 
+                         <span class="st">&quot;qd:rj22.0&quot;</span>,  <span class="st">&quot;qd:tx4z.0&quot;</span>,  <span class="st">&quot;qd:tz39.0&quot;</span>, 
+                         <span class="st">&quot;qd:tzgk.0&quot;</span>,  <span class="st">&quot;qd:v0fv.0&quot;</span>,  <span class="st">&quot;qd:wznj.0&quot;</span>, 
+                         <span class="st">&quot;qd:tx4z.0&quot;</span>,  <span class="st">&quot;qd:rfxf.0&quot;</span>)
+
+sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(sturm_und_drang.ids)
+
+<span class="co"># separate the plays</span>
+sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">split</span>(sturm_und_drang.plays) </code></pre>
+<p>This list can of course be plotted again, but it will result in a number of individual plots.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="kw">length</span>(sturm_und_drang.plays),<span class="dv">1</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">15</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="kw">lapply</span>(sturm_und_drang.plays, 
+       <span class="cf">function</span>(x) {
+         <span class="kw">utteranceStatistics</span>(x) <span class="op">%&gt;%</span>
+<span class="st">           </span><span class="kw">format</span>(x) <span class="op">%&gt;%</span>
+<span class="st">           </span><span class="kw">plot</span>(x, <span class="dt">main=</span><span class="kw">dramaNames</span>(x))
+       }
+)</code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 
 </div>
 </div>

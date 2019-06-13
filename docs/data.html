@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-06-11" />
+<meta name="date" content="2019-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -134,9 +134,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.3</b> Sample data</a></li>
-<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.2.1</b> Sample data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>2.3</b> Installing corpora</a></li>
+<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>2.4.1</b> Defining collections</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>3</b> Basics</a><ul>
 <li class="chapter" data-level="3.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>3.1</b> R Basics</a><ul>
@@ -145,14 +149,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>3.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
-<li class="part"><span><b>I Structure Analysis</b></span></li>
 <li class="chapter" data-level="4" data-path="who-how-much.html"><a href="who-how-much.html"><i class="fa fa-check"></i><b>4</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="4.1" data-path="who-how-much.html"><a href="who-how-much.html#format"><i class="fa fa-check"></i><b>4.1</b> Character names instead of identifiers</a></li>
 <li class="chapter" data-level="4.2" data-path="who-how-much.html"><a href="who-how-much.html#stacked-bar-plot"><i class="fa fa-check"></i><b>4.2</b> Stacked bar plot</a></li>
+<li class="chapter" data-level="4.3" data-path="who-how-much.html"><a href="who-how-much.html#collection-analysis"><i class="fa fa-check"></i><b>4.3</b> Collection analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html"><i class="fa fa-check"></i><b>5</b> Who’s talking how often?</a><ul>
-<li class="chapter" data-level="5.1" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#when-are-characters-talking"><i class="fa fa-check"></i><b>5.1</b> When are characters talking?</a></li>
-<li class="chapter" data-level="5.2" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#adding-act-boundaries"><i class="fa fa-check"></i><b>5.2</b> Adding act boundaries</a></li>
+<li class="chapter" data-level="5" data-path="who-how-often.html"><a href="who-how-often.html"><i class="fa fa-check"></i><b>5</b> Who’s talking how often?</a><ul>
+<li class="chapter" data-level="5.1" data-path="who-how-often.html"><a href="who-how-often.html#when-are-characters-talking"><i class="fa fa-check"></i><b>5.1</b> When are characters talking?</a></li>
+<li class="chapter" data-level="5.2" data-path="who-how-often.html"><a href="who-how-often.html#adding-act-boundaries"><i class="fa fa-check"></i><b>5.2</b> Adding act boundaries</a></li>
+<li class="chapter" data-level="5.3" data-path="who-how-often.html"><a href="who-how-often.html#who-how-often-collection"><i class="fa fa-check"></i><b>5.3</b> Collection analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>6</b> Configuration</a><ul>
 <li class="chapter" data-level="6.1" data-path="configuration.html"><a href="configuration.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a><ul>
@@ -173,7 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="character-exchange.html"><a href="character-exchange.html#corpus-analysis"><i class="fa fa-check"></i><b>7.2</b> Corpus Analysis</a></li>
 </ul></li>
-<li class="part"><span><b>II Text Analysis</b></span></li>
 <li class="chapter" data-level="8" data-path="word-field-analysis.html"><a href="word-field-analysis.html"><i class="fa fa-check"></i><b>8</b> Word Field Analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#single-word-field"><i class="fa fa-check"></i><b>8.1</b> Single word field</a></li>
 <li class="chapter" data-level="8.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#multiple-word-fields"><i class="fa fa-check"></i><b>8.2</b> Multiple Word Fields</a><ul>
@@ -190,16 +194,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html"><i class="fa fa-check"></i><b>9</b> Advanced Text Analysis</a><ul>
 <li class="chapter" data-level="9.1" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html#when-are-characters-mentioned"><i class="fa fa-check"></i><b>9.1</b> When are characters mentioned?</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="text-collections.html"><a href="text-collections.html"><i class="fa fa-check"></i><b>10</b> Text Collections</a><ul>
-<li class="chapter" data-level="10.1" data-path="text-collections.html"><a href="text-collections.html#defining-collections"><i class="fa fa-check"></i><b>10.1</b> Defining collections</a></li>
-<li class="chapter" data-level="10.2" data-path="text-collections.html"><a href="text-collections.html#loading-multiple-plays"><i class="fa fa-check"></i><b>10.2</b> Loading multiple plays</a></li>
-<li class="chapter" data-level="10.3" data-path="text-collections.html"><a href="text-collections.html#analysing-multiple-plays"><i class="fa fa-check"></i><b>10.3</b> Analysing multiple plays</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="text-collections.html"><a href="text-collections.html#character-statistics"><i class="fa fa-check"></i><b>10.3.1</b> Character statistics</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>11</b> Resterampe</a><ul>
-<li class="chapter" data-level="11.0.1" data-path="resterampe.html"><a href="resterampe.html#character-meta-data"><i class="fa fa-check"></i><b>11.0.1</b> Character meta data</a></li>
-<li class="chapter" data-level="11.0.2" data-path="resterampe.html"><a href="resterampe.html#character-groups"><i class="fa fa-check"></i><b>11.0.2</b> Character groups</a></li>
+<li class="chapter" data-level="10" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>10</b> Resterampe</a><ul>
+<li class="chapter" data-level="10.0.1" data-path="resterampe.html"><a href="resterampe.html#character-meta-data"><i class="fa fa-check"></i><b>10.0.1</b> Character meta data</a></li>
+<li class="chapter" data-level="10.0.2" data-path="resterampe.html"><a href="resterampe.html#character-groups"><i class="fa fa-check"></i><b>10.0.2</b> Character groups</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -229,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="preprocessed-data" class="section level2">
 <h2><span class="header-section-number">2.2</span> Preprocessed data</h2>
-<p>As a first step, we process all dramatic texts using our <a href="https://github.com/quadrama/DramaNLP">DramaNLP</a> pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. <a href="https://github.com/quadrama/data_test">This repository</a> contains two plays in the format, which are also included in our R package.</p>
+<p>As a first step, we process all dramatic texts using our <a href="https://github.com/quadrama/DramaNLP">DramaNLP</a> pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. <a href="https://github.com/quadrama/data_test">This repository</a> contains two plays in the format.</p>
 <table>
 <caption>Different CSV files used in the analysis. <em>ID</em> is a placeholder for a unique identifier for the play</caption>
 <colgroup>
@@ -273,9 +270,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-</div>
-<div id="sample-data" class="section level2">
-<h2><span class="header-section-number">2.3</span> Sample data</h2>
+<p>Next to the above mentioned <code>test</code>-corpus, we are providing others as well. They are all stored in git repositories in the <a href="https://github.com/quadrama">quadrama organization on GitHub</a>. Repositories that start with <code>data_</code> are corpora.</p>
+<p>The part after the underscore (<code>test</code> in the above example) is considered to be the corpus prefix. Within a corpus, a play is identified by a unique id. Thus, <code>test:rksp.0</code> is a full identified containing the corpus prefix and play id.</p>
+<div id="sample-data" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Sample data</h3>
+<p>For demo and test purposes, the <code>DramaAnalysis</code> r package contains the two plays of the <code>test</code> corpus. For technical reasons, the plays that are included in the package do not contain umlauts (äöüß etc.), but are restricted to ASCII characters. In these versions, all non-ASCII characters have been replaced by ASCII characters.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load Emilia Galotti</span>
 <span class="kw">data</span>(rksp<span class="fl">.0</span>)
 
@@ -284,12 +283,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 text &lt;-<span class="st"> </span><span class="kw">combine</span>(rksp<span class="fl">.0</span>, rjmw<span class="fl">.0</span>)</code></pre>
 </div>
+</div>
+<div id="installing-corpora" class="section level2">
+<h2><span class="header-section-number">2.3</span> Installing corpora</h2>
+<p>Installing a corpus that is available on <a href="http://github.com/quadrama">github.com/quadrama</a> is straightforward and can be done by entering the command <code>installData()</code> into the R console.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># installation of the test corpus</span>
+<span class="kw">installData</span>(<span class="st">&quot;test&quot;</span>)
+
+<span class="co"># installation of the quadrama corpus</span>
+<span class="kw">installData</span>(<span class="st">&quot;qd&quot;</span>)</code></pre>
+<p>Corpora do not necessarily have to be provided by us, however. If a compatible set of CSV files is available from another source, the function <code>installData()</code> allows finer control to install data from anywhere, as long as it’s a git repository and can be cloned. See <code>?installData</code> for details on the options.</p>
+</div>
 <div id="collection-data" class="section level2">
 <h2><span class="header-section-number">2.4</span> Collection data</h2>
-<p>To work with corpus data, it’s necessary to define a corpus first. In DramaAnalysis, we consider corpora as sets of texts. Typically, these sets have names, such as “comedies”, but it does not technically matter why texts are in a collection.</p>
-<p>Pre-defined collections can be downloaded with the function <code>installCollectionData()</code>. This function clones a git repository (<a href="https://github.com/quadrama/metadata">this one</a>), which contains a number of plain text files that in turn contain drama ids.</p>
-<p><strong>TODO: ids, corpus prefixes</strong></p>
-<p>Once a vector with ids has been defined, it can be passed as an argument to the function <code>loadDrama()</code>. The returning <code>QDDrama</code> object contains all loadable plays.</p>
+<p>In addition to the above introduced corpora, we also support smaller groups of plays called collections. A collection is just a set of texts, and can include texts from multiple corpora. Typically, these sets have names, such as “comedies”, but it does not technically matter why texts are in a collection. Technically, these collections are just vectors of ids.</p>
+<p>Pre-defined collections can be downloaded with the function <code>installCollectionData()</code>. This function clones a git repository (<a href="https://github.com/quadrama/metadata">this one</a>), which contains a number of plain text files that in turn contain drama ids. As before, users can feed in other sources for the collection data, enter <code>?installCollectionData</code> in the R console to get more information about options and parameters.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">installCollectionData</span>()</code></pre>
+<p>Once collection (i.e., a vector with ids) has been defined, it can be passed as an argument to the function <code>loadDrama()</code>. The returning <code>QDDrama</code> object contains all loadable plays. Many functions work similarly for single texts or text collections, but some will not. The descriptions below contain information about this.</p>
+<div id="defining-collections" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Defining collections</h3>
+<p>Before processing, it’s necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical).</p>
+</div>
 </div>
 </div>
             </section>

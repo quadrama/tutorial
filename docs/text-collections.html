@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-06-11" />
+<meta name="date" content="2019-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -134,9 +134,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
 <li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.3</b> Sample data</a></li>
-<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.2.1</b> Sample data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>2.3</b> Installing corpora</a></li>
+<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>2.4.1</b> Defining collections</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>3</b> Basics</a><ul>
 <li class="chapter" data-level="3.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>3.1</b> R Basics</a><ul>
@@ -145,14 +149,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>3.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
-<li class="part"><span><b>I Structure Analysis</b></span></li>
 <li class="chapter" data-level="4" data-path="who-how-much.html"><a href="who-how-much.html"><i class="fa fa-check"></i><b>4</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="4.1" data-path="who-how-much.html"><a href="who-how-much.html#format"><i class="fa fa-check"></i><b>4.1</b> Character names instead of identifiers</a></li>
 <li class="chapter" data-level="4.2" data-path="who-how-much.html"><a href="who-how-much.html#stacked-bar-plot"><i class="fa fa-check"></i><b>4.2</b> Stacked bar plot</a></li>
+<li class="chapter" data-level="4.3" data-path="who-how-much.html"><a href="who-how-much.html#collection-analysis"><i class="fa fa-check"></i><b>4.3</b> Collection analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html"><i class="fa fa-check"></i><b>5</b> Who’s talking how often?</a><ul>
-<li class="chapter" data-level="5.1" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#when-are-characters-talking"><i class="fa fa-check"></i><b>5.1</b> When are characters talking?</a></li>
-<li class="chapter" data-level="5.2" data-path="whos-talking-how-often.html"><a href="whos-talking-how-often.html#adding-act-boundaries"><i class="fa fa-check"></i><b>5.2</b> Adding act boundaries</a></li>
+<li class="chapter" data-level="5" data-path="who-how-often.html"><a href="who-how-often.html"><i class="fa fa-check"></i><b>5</b> Who’s talking how often?</a><ul>
+<li class="chapter" data-level="5.1" data-path="who-how-often.html"><a href="who-how-often.html#when-are-characters-talking"><i class="fa fa-check"></i><b>5.1</b> When are characters talking?</a></li>
+<li class="chapter" data-level="5.2" data-path="who-how-often.html"><a href="who-how-often.html#adding-act-boundaries"><i class="fa fa-check"></i><b>5.2</b> Adding act boundaries</a></li>
+<li class="chapter" data-level="5.3" data-path="who-how-often.html"><a href="who-how-often.html#who-how-often-collection"><i class="fa fa-check"></i><b>5.3</b> Collection analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>6</b> Configuration</a><ul>
 <li class="chapter" data-level="6.1" data-path="configuration.html"><a href="configuration.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a><ul>
@@ -173,7 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="character-exchange.html"><a href="character-exchange.html#corpus-analysis"><i class="fa fa-check"></i><b>7.2</b> Corpus Analysis</a></li>
 </ul></li>
-<li class="part"><span><b>II Text Analysis</b></span></li>
 <li class="chapter" data-level="8" data-path="word-field-analysis.html"><a href="word-field-analysis.html"><i class="fa fa-check"></i><b>8</b> Word Field Analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="word-field-analysis.html"><a href="word-field-analysis.html#single-word-field"><i class="fa fa-check"></i><b>8.1</b> Single word field</a></li>
 <li class="chapter" data-level="8.2" data-path="word-field-analysis.html"><a href="word-field-analysis.html#multiple-word-fields"><i class="fa fa-check"></i><b>8.2</b> Multiple Word Fields</a><ul>
@@ -191,10 +195,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1" data-path="advanced-text-analysis.html"><a href="advanced-text-analysis.html#when-are-characters-mentioned"><i class="fa fa-check"></i><b>9.1</b> When are characters mentioned?</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="text-collections.html"><a href="text-collections.html"><i class="fa fa-check"></i><b>10</b> Text Collections</a><ul>
-<li class="chapter" data-level="10.1" data-path="text-collections.html"><a href="text-collections.html#defining-collections"><i class="fa fa-check"></i><b>10.1</b> Defining collections</a></li>
-<li class="chapter" data-level="10.2" data-path="text-collections.html"><a href="text-collections.html#loading-multiple-plays"><i class="fa fa-check"></i><b>10.2</b> Loading multiple plays</a></li>
-<li class="chapter" data-level="10.3" data-path="text-collections.html"><a href="text-collections.html#analysing-multiple-plays"><i class="fa fa-check"></i><b>10.3</b> Analysing multiple plays</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="text-collections.html"><a href="text-collections.html#character-statistics"><i class="fa fa-check"></i><b>10.3.1</b> Character statistics</a></li>
+<li class="chapter" data-level="10.1" data-path="text-collections.html"><a href="text-collections.html#analysing-multiple-plays"><i class="fa fa-check"></i><b>10.1</b> Analysing multiple plays</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="text-collections.html"><a href="text-collections.html#character-statistics"><i class="fa fa-check"></i><b>10.1.1</b> Character statistics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resterampe.html"><a href="resterampe.html"><i class="fa fa-check"></i><b>11</b> Resterampe</a><ul>
@@ -221,26 +223,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="text-collections" class="section level1">
 <h1><span class="header-section-number">10</span> Text Collections</h1>
-<p>So far, we have mostly processed single texts. In this chapter, we will cover the important things to know when processing collections of texts – be it genres or the works of an author.</p>
-<p>The following code can only be reproduced if the GerDraCor data set and the collection repository have been installed. This can be done with the following code (assuming an internet connection).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">installData</span>(<span class="st">&quot;qd&quot;</span>)
-<span class="kw">installCollectionData</span>()</code></pre>
-<p>Depending on whether you have done this before, this will either update the data or create it new. Consequently, the output of these functions looks differently.</p>
-<div id="defining-collections" class="section level2">
-<h2><span class="header-section-number">10.1</span> Defining collections</h2>
-<p>Before processing, it’s necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load ids that are comedies and tragedies</span>
 ids.tragedy &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">loadSet</span>(<span class="kw">c</span>(<span class="st">&quot;trauerspiel&quot;</span>, <span class="st">&quot;tragödie&quot;</span>, <span class="st">&quot;tragoedie&quot;</span>)))
 ids.comedy &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">loadSet</span>(<span class="kw">c</span>(<span class="st">&quot;lustspiel&quot;</span>, <span class="st">&quot;komödie&quot;</span>, <span class="st">&quot;komoedie&quot;</span>)))
 
 <span class="co"># make sure we&#39;re using the QuaDramA corpus</span>
 ids.tragedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;tg:&quot;</span>, <span class="st">&quot;qd:&quot;</span>, ids.tragedy, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)
-ids.comedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;tg:&quot;</span>, <span class="st">&quot;qd:&quot;</span>, ids.comedy, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre>
-</div>
-<div id="loading-multiple-plays" class="section level2">
-<h2><span class="header-section-number">10.2</span> Loading multiple plays</h2>
-<p>Loading multiple plays at once is straightforward, and not different from loading a single one. We just use a vector of play ids as argument to the <code>loadDrama()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r">text.tragedies &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(ids.tragedy)</code></pre>
+ids.comedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;tg:&quot;</span>, <span class="st">&quot;qd:&quot;</span>, ids.comedy, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)
+
+text.tragedies &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(ids.tragedy)</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/rm3n.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/p7dk.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/p7m9.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/p8rz.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/qd2n.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/qfsn.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/r0vx.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/r135.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/s4hh.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/s4hw.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/s4jp.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/s4m0.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/t9qb.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/v0d8.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/11dtg.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/11f7n.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/11g9q.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/kmf9.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/kmff.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/mvrv.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/nmf9.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/nmfs.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/s8fd.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/tp8b.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/11g68.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
 <pre><code>## Warning: 7 parsing failures.
 ##  row col   expected     actual                                                               file
 ##  642  -- 12 columns 14 columns &#39;/Users/reiterns/QuaDramA/Data2/qd/csv/mv7f.0.StageDirections.csv&#39;
@@ -486,6 +502,14 @@ ids.comedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class
 ## .... ... .......... .......... ..................................................................
 ## See problems(...) for more details.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">text.comedies  &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(ids.comedy)</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/qmt7.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/t9qb.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/t9qh.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/x438.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/n2m1.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/tpq4.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/v3nb.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
+<pre><code>## /Users/reiterns/QuaDramA/Data2/qd/csv/v3nq.0.UtterancesWithTokens.csv could not be loaded and was skipped</code></pre>
 <pre><code>## Warning: 1 parsing failure.
 ##  row                 col           expected actual                                                                file
 ## 1046 Mentioned.figure_id 1/0/T/F/TRUE/FALSE    (5) &#39;/Users/reiterns/QuaDramA/Data2/qd/csv/11g5f.0.StageDirections.csv&#39;</code></pre>
@@ -711,340 +735,16 @@ ids.comedy &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class
 ## 3614 Mentioned.figure_id      1/0/T/F/TRUE/FALSE 43467  &#39;/Users/reiterns/QuaDramA/Data2/qd/csv/v3tw.0.StageDirections.csv&#39;
 ## .... ........................ .................. ...... ..................................................................
 ## See problems(...) for more details.</code></pre>
-<p>This may create a lot of output (suppressed here), telling you about specific plays that could not be loaded (we’ll ignore this for the moment).</p>
-<p>First, we’ll get an overview of the plays that we just loaded. The meta data for tragedies (and comedies) are in a straightforward table:</p>
-<pre class="sourceCode r"><code class="sourceCode r">text.tragedies<span class="op">$</span>meta</code></pre>
-<pre><code>##     corpus   drama                            documentTitle language
-##  1:     qd 11f81.0                                  Clavigo       de
-##  2:     qd 11g3h.0                   Die natürliche Tochter       de
-##  3:     qd 11g9w.0                                   Egmont       de
-##  4:     qd  kjfg.0                                Der Paria       de
-##  5:     qd  kq6v.0                            Der Freigeist       de
-##  6:     qd  mr3k.0           Der letzte Held von Marienburg       de
-##  7:     qd  mv7f.0                          Eid und Pflicht       de
-##  8:     qd  nks0.0                       Der sterbende Cato       de
-##  9:     qd  npsg.0          Des Meeres und der Liebe Wellen       de
-## 10:     qd  ns3r.0                     Die Jüdin von Toledo       de
-## 11:     qd  ns9c.0              Ein Bruderzwist in Habsburg       de
-## 12:     qd  nsv5.0                              Die Ahnfrau       de
-## 13:     qd  nttc.0            König Ottokars Glück und Ende       de
-## 14:     qd  nvk1.0           Ein treuer Diener seines Herrn       de
-## 15:     qd  pm1c.0                         Kriemhilds Rache       de
-## 16:     qd  q41n.0                          Don Juan&#39;s Ende       de
-## 17:     qd  qdj2.0                                 Der Turm       de
-## 18:     qd  qdk1.0                                 Alkestis       de
-## 19:     qd  qkq1.0 Andreas Hofer, der Sandwirt von Passeyer       de
-## 20:     qd  r0px.0               Die Familie Schroffenstein       de
-## 21:     qd  r121.0     Faust. Ein Trauerspiel in fünf Acten       de
-## 22:     qd  r12v.0                            Die Zwillinge       de
-## 23:     qd  r1zm.0                            Der Tod Adams       de
-## 24:     qd  rfxf.0                        Julius von Tarent       de
-## 25:     qd  rjmw.0                         Miß Sara Sampson       de
-## 26:     qd  rksp.0                           Emilia Galotti       de
-## 27:     qd  s6m2.0                            Die Makkabäer       de
-## 28:     qd  s6m6.0                           Der Erbförster       de
-## 29:     qd  ssrb.0                             König Yngurd       de
-## 30:     qd  ssrf.0                               Die Schuld       de
-## 31:     qd  tzgk.0     Die Verschwörung des Fiesco zu Genua       de
-## 32:     qd  v341.0                                  Alarkos       de
-## 33:     qd  v3mq.0                                    Canut       de
-## 34:     qd  w3zd.0                                    Julie       de
-## 35:     qd  wpvj.0                Ernst Herzog von Schwaben       de
-## 36:     qd  wzgs.0   Faust. Trauerspiel mit Gesang und Tanz       de
-## 37:     qd  wznj.0                       Die Kindermörderin       de
-## 38:     qd  x4gj.0                        Atreus und Thyest       de
-## 39:     qd  x8fs.0                        Lady Johanna Gray       de
-## 40:     qd  x8mw.0                 Gracchus der Volkstribun       de
-## 41:     qd  x8nq.0                           Die Karolinger       de
-## 42:     qd  x90m.0                                    Armut       de
-## 43:     qd 11d11.0         Faust. Der Tragödie zweiter Teil       de
-## 44:     qd  kmq3.0                       Ein Faust der That       de
-## 45:     qd  kq6k.0                                    Faust       de
-## 46:     qd  ndmr.0                               Der Moloch       de
-## 47:     qd  nmg0.0                       Don Juan und Faust       de
-## 48:     qd  nmg5.0              Herzog Theodor von Gothland       de
-## 49:     qd  pkhc.0                        Frau Nadja Bielew       de
-## 50:     qd  pmgg.0                     Herodes und Mariamne       de
-## 51:     qd  pmj9.0                      Gyges und sein Ring       de
-## 52:     qd  pmtc.0                                 Genoveva       de
-## 53:     qd  pn2n.0                                   Judith       de
-## 54:     qd  psxj.0                                 Almansor       de
-## 55:     qd  pvxf.0                      Die Kinder Godunófs       de
-## 56:     qd  qd2g.0                                  Elektra       de
-## 57:     qd  qh44.0                              Ignorabimus       de
-## 58:     qd  qkp7.0           Das Gericht von St. Petersburg       de
-## 59:     qd  qn2w.0                             Die Opferung       de
-## 60:     qd  trwt.0            Faustine, der weibliche Faust       de
-## 61:     qd  tvdq.0                          Es lebe Europa!       de
-## 62:     qd  tvdx.0                     Der Schornsteinfeger       de
-## 63:     qd  tvg7.0             Herr Kammerdiener Kneetschke       de
-## 64:     qd  tz9d.0                 Die Jungfrau von Orleans       de
-## 65:     qd  vmvc.0                             Julius Cäsar       de
-## 66:     qd  vncw.0               Hamlet. Prinz von Dänemark       de
-## 67:     qd  vnfd.0                       König Richard III.       de
-## 68:     qd  vnfz.0                               König Lear       de
-## 69:     qd  w40m.0                  Der Bettler von Syrakus       de
-## 70:     qd  wz0s.0                                Faust III       de
-## 71:     qd  x34j.0                       Frühlings Erwachen       de
-## 72:     qd  x3bf.0                   Die Büchse der Pandora       de
-## 73:     qd  x3f6.0                                 Erdgeist       de
-## 74:     qd  x5bv.0            Der vierundzwanzigste Februar       de
-## 75:     qd  x90s.0                                Dies irae       de
-## 76:     qd  nds0.0                                  Ugolino       de
-## 77:     qd  tz39.0                         Kabale und Liebe       de
-## 78:     qd  twt3.0                             Maria Stuart       de
-##     corpus   drama                            documentTitle language
-##                                  Name       Pnd          Translator.Name
-##  1:           Goethe, Johann Wolfgang 118540238                     &lt;NA&gt;
-##  2:           Goethe, Johann Wolfgang 118540238                     &lt;NA&gt;
-##  3:           Goethe, Johann Wolfgang 118540238                     &lt;NA&gt;
-##  4:                     Beer, Michael 118657887                     &lt;NA&gt;
-##  5:        Brawe, Joachim Wilhelm von 11865991X                     &lt;NA&gt;
-##  6:           Eichendorff, Joseph von 118529390                     &lt;NA&gt;
-##  7:               Engel, Johann Jakob 11868468X                     &lt;NA&gt;
-##  8:       Gottsched, Johann Christoph 118541013                     &lt;NA&gt;
-##  9:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 10:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 11:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 12:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 13:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 14:                Grillparzer, Franz 118542192                     &lt;NA&gt;
-## 15:                 Hebbel, Friedrich 118547445                     &lt;NA&gt;
-## 16:                       Heyse, Paul 118550772                     &lt;NA&gt;
-## 17:            Hofmannsthal, Hugo von 118552759                     &lt;NA&gt;
-## 18:            Hofmannsthal, Hugo von 118552759                     &lt;NA&gt;
-## 19:                   Immermann, Karl 118555553                     &lt;NA&gt;
-## 20:              Kleist, Heinrich von 118563076                     &lt;NA&gt;
-## 21:                Klingemann, August 118563300                     &lt;NA&gt;
-## 22:     Klinger, Friedrich Maximilian 118563319                     &lt;NA&gt;
-## 23:     Klopstock, Friedrich Gottlieb 118563386                     &lt;NA&gt;
-## 24:           Leisewitz, Johann Anton 118571370                     &lt;NA&gt;
-## 25:         Lessing, Gotthold Ephraim 118572121                     &lt;NA&gt;
-## 26:         Lessing, Gotthold Ephraim 118572121                     &lt;NA&gt;
-## 27:                      Ludwig, Otto 118574973                     &lt;NA&gt;
-## 28:                      Ludwig, Otto 118574973                     &lt;NA&gt;
-## 29:                   Müllner, Adolph 118737775                     &lt;NA&gt;
-## 30:                   Müllner, Adolph 118737775                     &lt;NA&gt;
-## 31:               Schiller, Friedrich 118607626                     &lt;NA&gt;
-## 32:               Schlegel, Friedrich 118607987                     &lt;NA&gt;
-## 33:            Schlegel, Johann Elias 118608002                     &lt;NA&gt;
-## 34:             Sturz, Helfrich Peter 118619756                     &lt;NA&gt;
-## 35:                    Uhland, Ludwig 118625063                     &lt;NA&gt;
-## 36:                   Voß, Julius von 118627929                     &lt;NA&gt;
-## 37:          Wagner, Heinrich Leopold 11862833X                     &lt;NA&gt;
-## 38:            Weiße, Christian Felix 118630563                     &lt;NA&gt;
-## 39:         Wieland, Christoph Martin 118632477                     &lt;NA&gt;
-## 40:              Wilbrandt, Adolf von 118807250                     &lt;NA&gt;
-## 41:            Wildenbruch, Ernst von 118771760                     &lt;NA&gt;
-## 42:                   Wildgans, Anton 118632841                     &lt;NA&gt;
-## 43:           Goethe, Johann Wolfgang 118540238                     &lt;NA&gt;
-## 44:                   Bleibtreu, Karl 118663909                     &lt;NA&gt;
-## 45:  Braun von Braunthal, Karl Johann 116428384                     &lt;NA&gt;
-## 46:                   Gerhäuser, Emil 11656640X                     &lt;NA&gt;
-## 47:        Grabbe, Christian Dietrich 118541102                     &lt;NA&gt;
-## 48:        Grabbe, Christian Dietrich 118541102                     &lt;NA&gt;
-## 49:                   Hauptmann, Carl 118546910                     &lt;NA&gt;
-## 50:                 Hebbel, Friedrich 118547445                     &lt;NA&gt;
-## 51:                 Hebbel, Friedrich 118547445                     &lt;NA&gt;
-## 52:                 Hebbel, Friedrich 118547445                     &lt;NA&gt;
-## 53:                 Hebbel, Friedrich 118547445                     &lt;NA&gt;
-## 54:                   Heine, Heinrich 118548018                     &lt;NA&gt;
-## 55:               Heiseler, Henry von 118709933                     &lt;NA&gt;
-## 56:            Hofmannsthal, Hugo von 118552759                     &lt;NA&gt;
-## 57:                        Holz, Arno 118553216                     &lt;NA&gt;
-## 58:                   Immermann, Karl 118555553                     &lt;NA&gt;
-## 59:                   Kaltneker, Hans 11855963X                     &lt;NA&gt;
-## 60:                  Schäfer, Wilhelm      &lt;NA&gt;                     &lt;NA&gt;
-## 61:                  Scheerbart, Paul 118606816                     &lt;NA&gt;
-## 62:                  Scheerbart, Paul 118606816                     &lt;NA&gt;
-## 63:                  Scheerbart, Paul 118606816                     &lt;NA&gt;
-## 64:               Schiller, Friedrich 118607626                     &lt;NA&gt;
-## 65:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 66:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 67:              Shakespeare, William 118613723 Schlegel, August Wilhelm
-## 68:              Shakespeare, William 118613723 Baudissin, Wolf Graf von
-## 69:                Sudermann, Hermann 118619853                     &lt;NA&gt;
-## 70:        Vischer, Friedrich Theodor 11862721X                     &lt;NA&gt;
-## 71:                   Wedekind, Frank 118629867                     &lt;NA&gt;
-## 72:                   Wedekind, Frank 118629867                     &lt;NA&gt;
-## 73:                   Wedekind, Frank 118629867                     &lt;NA&gt;
-## 74:                 Werner, Zacharias 118767208                     &lt;NA&gt;
-## 75:                   Wildgans, Anton 118632841                     &lt;NA&gt;
-## 76: Gerstenberg, Heinrich Wilhelm von 118690949                     &lt;NA&gt;
-## 77:               Schiller, Friedrich 118607626                     &lt;NA&gt;
-## 78:               Schiller, Friedrich 118607626                     &lt;NA&gt;
-##                                  Name       Pnd          Translator.Name
-##     Translator.Pnd Date.Written Date.Printed Date.Premiere
-##  1:             NA         1774         1774          1774
-##  2:             NA         1803         1804          1803
-##  3:             NA         1787         1788          1791
-##  4:             NA           NA           NA            NA
-##  5:             NA           NA         1758          1759
-##  6:             NA           NA         1830          1831
-##  7:             NA           NA           NA            NA
-##  8:             NA         1730         1732          1731
-##  9:             NA         1829           NA            NA
-## 10:             NA         1851         1872          1872
-## 11:             NA         1848         1848            NA
-## 12:             NA           NA           NA            NA
-## 13:             NA         1823           NA            NA
-## 14:             NA         1827           NA            NA
-## 15:             NA         1860           NA            NA
-## 16:             NA           NA           NA            NA
-## 17:             NA         1924         1924          1948
-## 18:             NA         1894         1909          1916
-## 19:             NA         1833           NA            NA
-## 20:             NA         1802         1803          1804
-## 21:             NA           NA           NA          1812
-## 22:             NA           NA         1776          1776
-## 23:             NA         1756         1757            NA
-## 24:             NA           NA           NA            NA
-## 25:             NA           NA         1755          1755
-## 26:             NA           NA           NA            NA
-## 27:             NA           NA           NA            NA
-## 28:             NA           NA           NA            NA
-## 29:             NA           NA           NA            NA
-## 30:             NA           NA           NA            NA
-## 31:             NA         1782           NA            NA
-## 32:             NA         1801         1802          1802
-## 33:             NA         1746         1746            NA
-## 34:             NA           NA         1767          1768
-## 35:             NA         1817         1818          1818
-## 36:             NA           NA           NA            NA
-## 37:             NA         1776           NA          1777
-## 38:             NA         1766         1766          1766
-## 39:             NA         1758         1758          1758
-## 40:             NA           NA         1872          1872
-## 41:             NA           NA         1881          1881
-## 42:             NA         1914           NA            NA
-## 43:             NA         1831         1832          1854
-## 44:             NA           NA           NA            NA
-## 45:             NA         1835         1835            NA
-## 46:             NA           NA           NA          1906
-## 47:             NA         1829           NA            NA
-## 48:             NA         1822         1827          1892
-## 49:             NA           NA           NA            NA
-## 50:             NA           NA           NA            NA
-## 51:             NA           NA         1856          1889
-## 52:             NA           NA           NA            NA
-## 53:             NA           NA         1841          1840
-## 54:             NA           NA         1821          1823
-## 55:             NA         1923         1929          1930
-## 56:             NA         1903         1904          1903
-## 57:             NA           NA           NA            NA
-## 58:             NA           NA         1832          1835
-## 59:             NA           NA           NA            NA
-## 60:             NA           NA         1898            NA
-## 61:             NA           NA           NA            NA
-## 62:             NA           NA         1904            NA
-## 63:             NA           NA           NA            NA
-## 64:             NA         1801           NA            NA
-## 65:      118607960           NA           NA            NA
-## 66:      118607960           NA           NA            NA
-## 67:      118607960           NA           NA            NA
-## 68:     1075372348           NA           NA            NA
-## 69:             NA           NA         1911          1911
-## 70:             NA           NA         1862            NA
-## 71:             NA           NA           NA            NA
-## 72:             NA           NA           NA            NA
-## 73:             NA           NA           NA            NA
-## 74:             NA         1808         1815          1810
-## 75:             NA         1918         1918          1919
-## 76:             NA           NA         1768          1769
-## 77:             NA         1783           NA            NA
-## 78:             NA         1800           NA            NA
-##     Translator.Pnd Date.Written Date.Printed Date.Premiere
-##     Date.Translation
-##  1:                0
-##  2:                0
-##  3:                0
-##  4:                0
-##  5:                0
-##  6:                0
-##  7:                0
-##  8:                0
-##  9:                0
-## 10:                0
-## 11:                0
-## 12:                0
-## 13:                0
-## 14:                0
-## 15:                0
-## 16:                0
-## 17:                0
-## 18:                0
-## 19:                0
-## 20:                0
-## 21:                0
-## 22:                0
-## 23:                0
-## 24:                0
-## 25:                0
-## 26:                0
-## 27:                0
-## 28:                0
-## 29:                0
-## 30:                0
-## 31:                0
-## 32:                0
-## 33:                0
-## 34:                0
-## 35:                0
-## 36:                0
-## 37:                0
-## 38:                0
-## 39:                0
-## 40:                0
-## 41:                0
-## 42:                0
-## 43:                0
-## 44:                0
-## 45:                0
-## 46:                0
-## 47:                0
-## 48:                0
-## 49:                0
-## 50:                0
-## 51:                0
-## 52:                0
-## 53:                0
-## 54:                0
-## 55:                0
-## 56:                0
-## 57:                0
-## 58:                0
-## 59:                0
-## 60:                0
-## 61:                0
-## 62:                0
-## 63:                0
-## 64:                0
-## 65:                0
-## 66:                0
-## 67:                0
-## 68:                0
-## 69:                0
-## 70:                0
-## 71:                0
-## 72:                0
-## 73:                0
-## 74:                0
-## 75:                0
-## 76:                0
-## 77:                0
-## 78:                0
-##     Date.Translation</code></pre>
-</div>
 <div id="analysing-multiple-plays" class="section level2">
-<h2><span class="header-section-number">10.3</span> Analysing multiple plays</h2>
+<h2><span class="header-section-number">10.1</span> Analysing multiple plays</h2>
 <p>As the <code>QDDrama</code>-object we are dealing with can represent one or more texts, most functions can just be used with a text collection or a single text, without a difference. However, results may need to handled differently, because we no longer can visualise all individual characters easily.</p>
 <div id="character-statistics" class="section level3">
-<h3><span class="header-section-number">10.3.1</span> Character statistics</h3>
+<h3><span class="header-section-number">10.1.1</span> Character statistics</h3>
 <p>It’s straightforward to extract character statistics for an entire corpus:</p>
 <pre class="sourceCode r"><code class="sourceCode r">charStat &lt;-<span class="st"> </span><span class="kw">characterStatistics</span>(text.tragedies)</code></pre>
 <p>Visualising this directly (as we have done in Section @ref{who-how-much}) works technically, but is not very helpful. Instead, we will formulate a few concrete questions and investigate them:</p>
 <div id="proportion-of-characters" class="section level4">
-<h4><span class="header-section-number">10.3.1.1</span> Proportion of characters</h4>
+<h4><span class="header-section-number">10.1.1.1</span> Proportion of characters</h4>
 <p>What’s the proportion of the most (second-most) talkative character, w.r.t. the entire play?</p>
 <pre class="sourceCode r"><code class="sourceCode r">charStat &lt;-<span class="st"> </span><span class="kw">characterStatistics</span>(text.tragedies)
 <span class="kw">class</span>(charStat)</code></pre>
