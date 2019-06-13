@@ -4,7 +4,7 @@
 
 ## Matrices
 
-Configuration matrices can be extracted with the function `configuration()`. As usual, entering `?configuration` provies more detailed information about the options the function provides.
+Configuration matrices can be extracted with the function `configuration()`. As usual, entering `?configuration` provies more detailed information about the options the function provides. This function can only deal with a single play at a time, but using `lappy()`, we can call it for many plays quickly (this the same we did with the function `utteranceStatistics()` [above](#who-how-often-collection)).
 
 ```{r}
 configuration(rksp.0)
@@ -213,6 +213,7 @@ plot(g,
 )  
 ```
 
+
 ### Network properties
 
 `igraph` offers a number of function to extract graph properties. We will show them below without explanation. The documentation of each function can be found [here](https://igraph.org/r/doc/).
@@ -273,4 +274,6 @@ This results in a file called [`rksp.0.graphml`](rksp.0.graphml), that starts si
 ```
 
 This file can be opened with Gephi.
+
+
 

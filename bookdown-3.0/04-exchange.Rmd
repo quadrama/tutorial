@@ -71,10 +71,23 @@ Since determining character exchanges at scene boundaries is not a multi-play ta
 profiles <- lapply(split(sturm_und_drang.plays), hamming, variant = "Trilcke")
 ```
 
-The result of this is a list that contains an entry for each play, which in turn reflects the distances at specific scene boundaries. Thus, the lists have different lengths, as the plays have different lengths.
+The result of this is a list that contains an entry for each play, which in turn reflects the distances at specific scene boundaries. Thus, the lists have different lengths, as the plays have different lengths. We apply the same trick with `lappy()` to create plots of all the plays. Instead of calling a pre-existing function (as before with `hamming()`), we define a new (anonymous) function. This is mainly to allow printing the authors and names of the play into the plots.
 
-```{r fig.height=20}
+```{r fig.height=25, results='hide'}
 par(mfrow=c(length(profiles),1), mar=c(2,2,2,2))
-lapply(profiles, plot, type="l", ylab="Character exchange rate", ylim=c(0,1))
+
+lapply(names(profiles), 
+       function(x) {
+         plot(profiles[[x]],  # take the data
+              type="l",       # we print lines
+              ylab="Character exchange rate", # y axis label 
+              ylim=c(0,1),                    # y axis scale
+              # create nice labels
+              main=paste(sturm_und_drang.plays$meta[drama==x,]$Name,
+                         sturm_und_drang.plays$meta[drama==x,]$documentTitle, 
+                         sep=": ", collapse=": ")
+         )
+       }
+)
 
 ```

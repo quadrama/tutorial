@@ -10,8 +10,7 @@ While we are using GerDraCor as a basis, we have added linguistic annotations to
 
 ## Preprocessed data
 
-As a first step, we process all dramatic texts using our [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. [This repository](https://github.com/quadrama/data_test) contains two plays in the format, which are also included in our R package.
-
+As a first step, we process all dramatic texts using our [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. [This repository](https://github.com/quadrama/data_test) contains two plays in the format.
 
 | File | Description |
 | ------------------- | ------------------------------------------------- |
@@ -24,8 +23,13 @@ As a first step, we process all dramatic texts using our [DramaNLP](https://gith
 | *ID*.Segments.csv | Information about acts and scenes |
 : Different CSV files used in the analysis. *ID* is a placeholder for a unique identifier for the play
 
+Next to the above mentioned `test`-corpus, we are providing others as well. They are all stored in git repositories in the [quadrama organization on GitHub](https://github.com/quadrama). Repositories that start with `data_` are corpora.
 
-## Sample data
+The part after the underscore (`test` in the above example) is considered to be the corpus prefix. Within a corpus, a play is identified by a unique id. Thus, `test:rksp.0` is a full identified containing the corpus prefix and play id.
+
+### Sample data
+
+For demo and test purposes, the `DramaAnalysis` r package contains the two plays of the `test` corpus. For technical reasons, the plays that are included in the package do not contain umlauts (äöüß etc.), but are restricted to ASCII characters. In these versions, all non-ASCII characters have been replaced by ASCII characters.
 
 ```{r}
 # Load Emilia Galotti
@@ -38,15 +42,37 @@ text <- combine(rksp.0, rjmw.0)
 
 ```
 
+## Installing corpora
+
+Installing a corpus that is available on [github.com/quadrama](http://github.com/quadrama) is straightforward and can be done by entering the command `installData()` into the R console. 
+
+```{r eval=FALSE}
+
+# installation of the test corpus
+installData("test")
+
+# installation of the quadrama corpus
+installData("qd")
+```
+
+Corpora do not necessarily have to be provided by us, however. If a compatible set of CSV files is available from another source, the function `installData()` allows finer control to install data from anywhere, as long as it's a git repository and can be cloned. See `?installData` for details on the options.
+
 ## Collection data
 
-To work with corpus data, it's necessary to define a corpus first. In DramaAnalysis, we consider corpora as sets of texts. Typically, these sets have names, such as "comedies", but it does not technically matter why texts are in a collection.
+In addition to the above introduced corpora, we also support smaller groups of plays called collections. A collection is just a set of texts, and can include texts from multiple corpora. Typically, these sets have names, such as "comedies", but it does not technically matter why texts are in a collection. Technically, these collections are just vectors of ids.
 
-Pre-defined collections can be downloaded with the function `installCollectionData()`. This function clones a git repository ([this one](https://github.com/quadrama/metadata)), which contains a number of plain text files that in turn contain drama ids.
+Pre-defined collections can be downloaded with the function `installCollectionData()`. This function clones a git repository ([this one](https://github.com/quadrama/metadata)), which contains a number of plain text files that in turn contain drama ids. As before, users can feed in other sources for the collection data, enter `?installCollectionData` in the R console to get more information about options and parameters.
 
-**TODO: ids, corpus prefixes**
+```{r eval=FALSE}
+installCollectionData()
+```
 
-Once a vector with ids has been defined, it can be passed as an argument to the function `loadDrama()`. The returning `QDDrama` object contains all loadable plays.
+Once collection (i.e., a vector with ids) has been defined, it can be passed as an argument to the function `loadDrama()`. The returning `QDDrama` object contains all loadable plays. Many functions work similarly for single texts or text collections, but some will not. The descriptions below contain information about this.
+
+### Defining collections
+
+Before processing, it's necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical). 
+
 
 # Basics
 
