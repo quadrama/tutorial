@@ -151,8 +151,4 @@ v <- packageVersion("DramaAnalysis")
 
 ```
 
-## Technical basics
-
-### Classes
-
-### Pipelining with `margrittr`
+## Classes
