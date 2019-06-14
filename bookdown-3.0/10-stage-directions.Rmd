@@ -1,0 +1,33 @@
+# Stage Directions
+
+So far, we have analysed the character speech of the plays, and/or the structural information (acts and scenes). We will now turn to stage directions, using the collection of *Sturm und Drang* plays again. Dealing with stage directions is new in 3.0 of the package and thus not as polished as the other parts.
+
+```{r}
+sturm_und_drang.ids <- c("qd:11f81.0", "qd:11g1d.0", "qd:11g9w.0", 
+                         "qd:11hdv.0", "qd:nds0.0",  "qd:r12k.0", 
+                         "qd:r12v.0",  "qd:r134.0",  "qd:r13g.0", 
+                         "qd:rfxf.0",  "qd:rhtz.0",  "qd:rhzq.0", 
+                         "qd:rj22.0",  "qd:tx4z.0",  "qd:tz39.0", 
+                         "qd:tzgk.0",  "qd:v0fv.0",  "qd:wznj.0", 
+                         "qd:tx4z.0",  "qd:rfxf.0")
+
+sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
+```
+
+
+First of all, we check the overall number, which already reveals large differences.
+
+```{r fig.height=12}
+
+sd <- sturm_und_drang.plays$stageDirections[, 
+                                            .(l=length(unique(utteranceBegin))),
+                                            .(corpus,drama)]
+par(mar=c(15,3,1,1))
+barplot(sd$l, 
+        names.arg = dramaNames(sturm_und_drang.plays, "%T"), 
+        las=2,
+        col=qd.colors)
+
+```
+
+

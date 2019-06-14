@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Introduction | DramaAnalysis</title>
-  <meta name="description" content="1 Introduction | DramaAnalysis" />
+  <title>8 Stage Directions | DramaAnalysis</title>
+  <meta name="description" content="8 Stage Directions | DramaAnalysis" />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Introduction | DramaAnalysis" />
+  <meta property="og:title" content="8 Stage Directions | DramaAnalysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Introduction | DramaAnalysis" />
+  <meta name="twitter:title" content="8 Stage Directions | DramaAnalysis" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="data.html">
+<link rel="prev" href="character-exchange.html">
+<link rel="next" href="word-field-analysis.html">
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -214,26 +214,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
-<div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="DramaAnalysis_files/figure-html/unnamed-chunk-1-1.png" alt="Some caption." width="90%" />
-<p class="caption">
-Figure 1.1: Some caption.
-</p>
-</div>
-<div id="classes" class="section level2">
-<h2><span class="header-section-number">1.1</span> Classes</h2>
+<div id="stage-directions" class="section level1">
+<h1><span class="header-section-number">8</span> Stage Directions</h1>
+<p>So far, we have analysed the character speech of the plays, and/or the structural information (acts and scenes). We will now turn to stage directions, using the collection of <em>Sturm und Drang</em> plays again. Dealing with stage directions is new in 3.0 of the package and thus not as polished as the other parts.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sturm_und_drang.ids &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;qd:11f81.0&quot;</span>, <span class="st">&quot;qd:11g1d.0&quot;</span>, <span class="st">&quot;qd:11g9w.0&quot;</span>, 
+                         <span class="st">&quot;qd:11hdv.0&quot;</span>, <span class="st">&quot;qd:nds0.0&quot;</span>,  <span class="st">&quot;qd:r12k.0&quot;</span>, 
+                         <span class="st">&quot;qd:r12v.0&quot;</span>,  <span class="st">&quot;qd:r134.0&quot;</span>,  <span class="st">&quot;qd:r13g.0&quot;</span>, 
+                         <span class="st">&quot;qd:rfxf.0&quot;</span>,  <span class="st">&quot;qd:rhtz.0&quot;</span>,  <span class="st">&quot;qd:rhzq.0&quot;</span>, 
+                         <span class="st">&quot;qd:rj22.0&quot;</span>,  <span class="st">&quot;qd:tx4z.0&quot;</span>,  <span class="st">&quot;qd:tz39.0&quot;</span>, 
+                         <span class="st">&quot;qd:tzgk.0&quot;</span>,  <span class="st">&quot;qd:v0fv.0&quot;</span>,  <span class="st">&quot;qd:wznj.0&quot;</span>, 
+                         <span class="st">&quot;qd:tx4z.0&quot;</span>,  <span class="st">&quot;qd:rfxf.0&quot;</span>)
 
-</div>
+sturm_und_drang.plays &lt;-<span class="st"> </span><span class="kw">loadDrama</span>(sturm_und_drang.ids)</code></pre>
+<p>First of all, we check the overall number, which already reveals large differences.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sd &lt;-<span class="st"> </span>sturm_und_drang.plays<span class="op">$</span>stageDirections[, 
+                                            .(<span class="dt">l=</span><span class="kw">length</span>(<span class="kw">unique</span>(utteranceBegin))),
+                                            .(corpus,drama)]
+<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">15</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>))
+<span class="kw">barplot</span>(sd<span class="op">$</span>l, 
+        <span class="dt">names.arg =</span> <span class="kw">dramaNames</span>(sturm_und_drang.plays, <span class="st">&quot;%T&quot;</span>), 
+        <span class="dt">las=</span><span class="dv">2</span>,
+        <span class="dt">col=</span>qd.colors)</code></pre>
+<p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="character-exchange.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-field-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

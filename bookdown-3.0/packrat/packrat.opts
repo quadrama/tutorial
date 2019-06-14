@@ -7,6 +7,10 @@ external.packages:
     data.table
     devtools
     igraph
+    reshape2
+    readr
+    xml2
+    tokenizers
 local.repos: 
 load.external.packages.on.startup: TRUE
 ignored.packages: 

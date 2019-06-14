@@ -267,7 +267,7 @@ legend(x="topleft", legend=colnames(mat), lty=1:ncol(mat))
 
 Finally, we will do word field analysis with a small corpus. The following snippet creates a vector with ids for plays from the *Sturm und Drang* period. Providing this vector as an argument for the `loadDrama()` function loads them all as a single `QDDrama` object. To reproduce this, you will need to install the quadrama corpus first, which can be done by executing `installData("qd")`.
 
-```{r warning=FALSE}
+```{r}
 sturm_und_drang.ids <- c("qd:11f81.0", "qd:11g1d.0", "qd:11g9w.0", 
                          "qd:11hdv.0", "qd:nds0.0", "qd:r12k.0", 
                          "qd:r12v.0", "qd:r134.0",  "qd:r13g.0", 
