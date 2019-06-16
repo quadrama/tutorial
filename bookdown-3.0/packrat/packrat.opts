@@ -11,6 +11,8 @@ external.packages:
     readr
     xml2
     tokenizers
+    magick
+    pdftools
 local.repos: 
 load.external.packages.on.startup: TRUE
 ignored.packages: 

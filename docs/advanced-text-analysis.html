@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-06-14" />
+<meta name="date" content="2019-06-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -129,22 +129,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#classes"><i class="fa fa-check"></i><b>1.1</b> Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
-<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.2.1</b> Sample data</a></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics</a><ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>2.1</b> R Basics</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="basics.html"><a href="basics.html#variable-assignment"><i class="fa fa-check"></i><b>2.1.1</b> Variable assignment</a></li>
+<li class="chapter" data-level="2.1.2" data-path="basics.html"><a href="basics.html#function-calls"><i class="fa fa-check"></i><b>2.1.2</b> Function calls</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>2.3</b> Installing corpora</a></li>
-<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>2.4.1</b> Defining collections</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>2.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
+<li class="part"><span><b>I DramaAnalysis</b></span></li>
+<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>3.1</b> Origin: TEI-XML</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>3.2</b> Preprocessed data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>3.2.1</b> Sample data</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>3</b> Basics</a><ul>
-<li class="chapter" data-level="3.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>3.1</b> R Basics</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="basics.html"><a href="basics.html#variable-assignment"><i class="fa fa-check"></i><b>3.1.1</b> Variable assignment</a></li>
-<li class="chapter" data-level="3.1.2" data-path="basics.html"><a href="basics.html#function-calls"><i class="fa fa-check"></i><b>3.1.2</b> Function calls</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>3.3</b> Installing corpora</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>3.4</b> Collection data</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>3.4.1</b> Defining collections</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>3.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="who-how-much.html"><a href="who-how-much.html"><i class="fa fa-check"></i><b>4</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="4.1" data-path="who-how-much.html"><a href="who-how-much.html#format"><i class="fa fa-check"></i><b>4.1</b> Character names instead of identifiers</a></li>
@@ -216,42 +217,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="advanced-text-analysis" class="section level1">
 <h1><span class="header-section-number">10</span> Advanced Text Analysis</h1>
+<p>This chapter contains analyis steps that are advanced. Concretely, this means that they are not as easy to reproduce as the others.</p>
 <div id="when-are-characters-mentioned" class="section level2">
 <h2><span class="header-section-number">10.1</span> When are characters mentioned?</h2>
+<p><em>The identification of character mentions is not done within the R package, but in the NLP pipeline <a href="https://github.com/quadrama/DramaNLP">DramaNLP</a>, and is still in development (the NLP name for this task is coreference resolution. For demo purposes, we have included <strong>manually annotated coreferences</strong> in this R package. Thus, to reproduce the analyses presented here on new texts, one would need to annotate coreferences manually, for the time being.</em></p>
 <p>When characters are speaking on stage, they are actively present. But they can also be passively present, if other characters refer to them. Both levels of presence can be extracted with the <code>presence()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load Emilia Galotti</span>
 <span class="kw">data</span>(rksp<span class="fl">.0</span>)
 
-pres &lt;-<span class="st"> </span><span class="kw">presence</span>(rksp<span class="fl">.0</span>)
-pres</code></pre>
+<span class="kw">presence</span>(rksp<span class="fl">.0</span>)</code></pre>
 <pre><code>##    corpus  drama        character scenes actives passives    presence
 ## 1    test rksp.0           angelo     43       2        2  0.00000000
-## 2    test rksp.0          appiani     43       5        5  0.00000000
-## 3    test rksp.0         battista     43       4        3  0.02325581
-## 4    test rksp.0     camillo_rota     43       1        1  0.00000000
+## 2    test rksp.0          appiani     43       5       25 -0.46511628
+## 3    test rksp.0         battista     43       4       11 -0.16279070
+## 4    test rksp.0     camillo_rota     43       1        2 -0.02325581
 ## 5    test rksp.0  claudia_galotti     43      13       12  0.02325581
-## 6    test rksp.0            conti     43       1        2 -0.02325581
-## 7    test rksp.0 der_kammerdiener     43       1        0  0.02325581
-## 8    test rksp.0        der_prinz     43      14       13  0.02325581
-## 9    test rksp.0           emilia     43       7        7  0.00000000
-## 10   test rksp.0        marinelli     43      19       15  0.09302326
-## 11   test rksp.0          odoardo     43      12       11  0.02325581
-## 12   test rksp.0           orsina     43       6        5  0.02325581
-## 13   test rksp.0            pirro     43       4        3  0.02325581</code></pre>
-<p>As we can see, each character has a few numbers associated: The column <code>actives</code> shows the number of scenes in which the character is actively present. This is equivalent to the information in the configuration matrix. The column <code>passives</code> shows the number of scenes in which a character is mentioned. By default, this excludes the scenes in which they are present themselves (this behaviour can be changed by adding the parameter <code>passiveOnlyWhenNotActive = TRUE</code> to the call of the <code>presence</code> function).</p>
+## 6    test rksp.0            conti     43       1        4 -0.06976744
+## 7    test rksp.0 der_kammerdiener     43       1        2 -0.02325581
+## 8    test rksp.0        der_prinz     43      14       26 -0.27906977
+## 9    test rksp.0           emilia     43       7       34 -0.62790698
+## 10   test rksp.0        marinelli     43      19       23 -0.09302326
+## 11   test rksp.0          odoardo     43      12       20 -0.18604651
+## 12   test rksp.0           orsina     43       6       16 -0.23255814
+## 13   test rksp.0            pirro     43       4        5 -0.02325581</code></pre>
+<p>As we can see, each character has a few numbers associated: The column <code>actives</code> shows the number of scenes in which the character is actively present. This is equivalent to the information in the configuration matrix. The column <code>passives</code> shows the number of scenes in which a character is mentioned. By default, this excludes the scenes in which they are present themselves, because they can be assumed to be addresses to the character (this behaviour can be changed by adding the parameter <code>passiveOnlyWhenNotActive = TRUE</code> to the call of the <code>presence</code> function).</p>
 <p>A simple visualisation that shows the characters active and passive presence in one plot can be generated like this: The first line (<code>plot()</code>) is responsible for the plotting of the symbols, the second line (<code>text()</code>) adds the character names or ids numbers.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x=</span>pres<span class="op">$</span>active<span class="op">/</span>pres<span class="op">$</span>scenes, 
+<pre class="sourceCode r"><code class="sourceCode r">pres &lt;-<span class="st"> </span><span class="kw">presence</span>(rksp<span class="fl">.0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">format</span>(rksp<span class="fl">.0</span>)
+
+<span class="kw">plot</span>(<span class="dt">x=</span>pres<span class="op">$</span>active<span class="op">/</span>pres<span class="op">$</span>scenes, 
      <span class="dt">y=</span>pres<span class="op">$</span>passive<span class="op">/</span>pres<span class="op">$</span>scenes, 
      <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), 
      <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), 
      <span class="dt">xlab=</span><span class="st">&quot;Active&quot;</span>, 
      <span class="dt">ylab=</span><span class="st">&quot;Passive&quot;</span>,
+     <span class="dt">sub=</span><span class="kw">dramaNames</span>(rksp<span class="fl">.0</span>),
      <span class="dt">main=</span><span class="st">&quot;Character Presence&quot;</span>)
 <span class="kw">text</span>(<span class="dt">x=</span>pres<span class="op">$</span>actives<span class="op">/</span>pres<span class="op">$</span>scenes, 
      <span class="dt">y=</span>pres<span class="op">$</span>passives<span class="op">/</span>pres<span class="op">$</span>scenes, 
      <span class="dt">labels=</span><span class="kw">substr</span>(pres<span class="op">$</span>character,<span class="dv">0</span>,<span class="dv">20</span>), 
-     <span class="dt">pos=</span><span class="dv">3</span>)</code></pre>
+     <span class="dt">pos=</span><span class="dv">3</span>,
+     <span class="dt">cex=</span><span class="fl">0.8</span>)
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="fl">0.1</span>),<span class="kw">seq</span>(<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="fl">0.1</span>), <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">0</span>,<span class="dt">y=</span><span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre>
 <p><img src="DramaAnalysis_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p>In addition to the characters and their position, the plot shows a dashed and a dotted line. The dashed line indicates the maximum for one character. As one scene is either counted towards the active <em>or</em> passive presence, a character cannot have a presence in the top right triangle. The dotted line divides the characters in those that have more active scenes from those that have more passive scenes. As we can see here, almost all characters are placed in the left triangle, which means that their passive presence is higher than their active one. I.e., for each character, there are more scenes in which they are mentioned than scenes in which they speak.</p>
+<p>The three characters marinelli, emilia, der_prinz are all relatively close the dashed line. This indicates that they are the most present characters of the play.</p>
 
 
 </div>

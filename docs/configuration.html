@@ -24,7 +24,7 @@
 <meta name="author" content="Nils Reiter" />
 
 
-<meta name="date" content="2019-06-14" />
+<meta name="date" content="2019-06-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -129,22 +129,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#classes"><i class="fa fa-check"></i><b>1.1</b> Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
-<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>2.1</b> Origin: TEI-XML</a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>2.2</b> Preprocessed data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>2.2.1</b> Sample data</a></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics</a><ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>2.1</b> R Basics</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="basics.html"><a href="basics.html#variable-assignment"><i class="fa fa-check"></i><b>2.1.1</b> Variable assignment</a></li>
+<li class="chapter" data-level="2.1.2" data-path="basics.html"><a href="basics.html#function-calls"><i class="fa fa-check"></i><b>2.1.2</b> Function calls</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>2.3</b> Installing corpora</a></li>
-<li class="chapter" data-level="2.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>2.4</b> Collection data</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>2.4.1</b> Defining collections</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>2.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
+<li class="part"><span><b>I DramaAnalysis</b></span></li>
+<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#origin-tei-xml"><i class="fa fa-check"></i><b>3.1</b> Origin: TEI-XML</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#preprocessed-data"><i class="fa fa-check"></i><b>3.2</b> Preprocessed data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#sample-data"><i class="fa fa-check"></i><b>3.2.1</b> Sample data</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>3</b> Basics</a><ul>
-<li class="chapter" data-level="3.1" data-path="basics.html"><a href="basics.html#r-basics"><i class="fa fa-check"></i><b>3.1</b> R Basics</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="basics.html"><a href="basics.html#variable-assignment"><i class="fa fa-check"></i><b>3.1.1</b> Variable assignment</a></li>
-<li class="chapter" data-level="3.1.2" data-path="basics.html"><a href="basics.html#function-calls"><i class="fa fa-check"></i><b>3.1.2</b> Function calls</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#installing-corpora"><i class="fa fa-check"></i><b>3.3</b> Installing corpora</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#collection-data"><i class="fa fa-check"></i><b>3.4</b> Collection data</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data.html"><a href="data.html#defining-collections"><i class="fa fa-check"></i><b>3.4.1</b> Defining collections</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="basics.html"><a href="basics.html#magrittr"><i class="fa fa-check"></i><b>3.2</b> magrittr Pipes / <code>%&gt;%</code></a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="who-how-much.html"><a href="who-how-much.html"><i class="fa fa-check"></i><b>4</b> Who’s talking how much?</a><ul>
 <li class="chapter" data-level="4.1" data-path="who-how-much.html"><a href="who-how-much.html#format"><i class="fa fa-check"></i><b>4.1</b> Character names instead of identifiers</a></li>
@@ -222,19 +223,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Configuration matrices can be extracted with the function <code>configuration()</code>. As usual, entering <code>?configuration</code> provies more detailed information about the options the function provides. This function can only deal with a single play at a time, but using <code>lappy()</code>, we can call it for many plays quickly (this the same we did with the function <code>utteranceStatistics()</code> <a href="who-how-often.html#who-how-often-collection">above</a>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">configuration</span>(rksp<span class="fl">.0</span>)</code></pre>
 <pre><code>##    corpus  drama        character    1    2    3    4    5
-## 1    test rksp.0        der_prinz 2740    0  945  803  815
+## 1    test rksp.0        der_prinz 2947    0  965  809  832
 ## 2    test rksp.0 der_kammerdiener   42    0    0    0    0
 ## 3    test rksp.0            conti  764    0    0    0    0
-## 4    test rksp.0        marinelli 1038  527 1814 1358  830
+## 4    test rksp.0        marinelli 1062  527 1857 1377  837
 ## 5    test rksp.0     camillo_rota  106    0    0    0    0
-## 6    test rksp.0  claudia_galotti    0 1252  614  232    0
-## 7    test rksp.0            pirro    0  343    0    0    0
-## 8    test rksp.0          odoardo    0  611    0  706 1931
-## 9    test rksp.0           angelo    0  385  250    0    0
-## 10   test rksp.0           emilia    0 1166  413    0  696
-## 11   test rksp.0          appiani    0 1112    0    0    0
-## 16   test rksp.0         battista    0    0  187    8    0
-## 22   test rksp.0           orsina    0    0    0 2832    0</code></pre>
+## 6    test rksp.0  claudia_galotti    0 1264  641  232    0
+## 7    test rksp.0            pirro    0  366    0    0    0
+## 8    test rksp.0          odoardo    0  622    0  765 2011
+## 9    test rksp.0           angelo    0  416  262    0    0
+## 10   test rksp.0           emilia    0 1189  417    0  757
+## 11   test rksp.0          appiani    0 1133    0    0    0
+## 16   test rksp.0         battista    0    0  195    8    0
+## 22   test rksp.0           orsina    0    0    0 2962    0</code></pre>
 <p>This creates a basic configuration matrix, but instead of just containing the presence or absence of a figure, it contains the number of spoken tokens for each act for each character. This information is in fact similar to what we can extract with <code>characterStatistics(rksp.0, segment="Act")</code>, but in a different form and structure. The above table contains a lot of information that can be visualised.</p>
 <p>We first need to extract the numeric content from the above table. This can easily be done with the function <code>as.matrix()</code> (this will, in detail, be rerouted to the function <code>as.matrix.QDConfiguration()</code>, which knows what part of the table needs to be in the matrix). A matrix containing only numbers can easily be plotted using the regular <code>barplot()</code> function, as shown below.</p>
 <pre class="sourceCode r"><code class="sourceCode r">c &lt;-<span class="st"> </span><span class="kw">configuration</span>(rksp<span class="fl">.0</span>)
