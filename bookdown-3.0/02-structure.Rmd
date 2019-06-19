@@ -23,8 +23,8 @@ We're assuming here that we have loaded some texts using `loadDrama()`, and that
 \node (characterstatistics) at (2,-1) [function] {characterStatistics()};
 \node (dramaNames) at (5,-1) [function] {dramaNames()};
 \node (plotqdcharacterstatistics) at (2,-3) [function] {barplot.QDCharacterStatistics()};
-\node (filter) at (-2,-1.5) [function] {filter()};
-\node (format) at (-2,-2.5) [function] {format()};
+\node (filter) at (-2,-1.5) [function] {filterCharacters()};
+\node (format) at (-2,-2.5) [function] {characterNames()};
 
 \node (qddrama) at (2,0) [class] {QDDrama};
 \node (qdcharacterstatistics) at (2,-2) [class] {QDCharacterStatistics\\QDHasCharacter};
@@ -61,7 +61,7 @@ This already gives us a lot of information about the characters. In particular, 
 - the character position of the start of the first utterance (`firstBegin`), and
 - the character position of the end of the last utterance (`lastEnd`).
 
-The function `characterStatistics()` provides a number of options to control its exact behaviour. Entering `?characterStatistics` in the R console opens the documentation for the function with a description of all the options. We'll describe some frequently used options here as well:
+The function `characterStatistics()` provides a number of options to control its exact behaviour. Entering [`?characterStatistics`](https://quadrama.github.io/DramaAnalysis/`r v`/reference/characterStatistics.html) in the R console opens the documentation for the function with a description of all the options. We'll describe some frequently used options here as well:
 
 - Punctuation: By default, all punctuation marks are counted as tokens. This behaviour can be changed by setting `filterPunctuation=TRUE`.
 
@@ -89,12 +89,12 @@ barplot(charStats$tokens,  # these are the values to be plotted
 
 ## Character names instead of identifiers {#format}
 
-By default, all our functions identify characters using technical ids, which may or may not be human-readable. Even if they are, it's usually a good idea to replace them with nice to read labels before publication. We therefore provide the function `format()`, which can be applied to any table that contains a column with character ids (i.e., any object of type `QDHasCharacter`).
+By default, all our functions identify characters using technical ids, which may or may not be human-readable. Even if they are, it's usually a good idea to replace them with nice to read labels before publication. We therefore provide the function [`characterNames()`](https://quadrama.github.io/DramaAnalysis/`r v`/reference/characterNames.html), which can be applied to any table that contains a column with character ids (i.e., any object of type `QDHasCharacter`).
 
 ```{r}
 charStats <- characterStatistics(text, normalize=FALSE)
 
-charStats <- format(charStats, text) # Replace ids with names
+charStats <- characterNames(charStats, text) # Replace ids with names
 
 par(mar=c(9,3,2,2)) # increase plot margins, so that the labels can be plotted
 
@@ -104,7 +104,7 @@ barplot(charStats$tokens,  # these are the values to be plotted
 )
 ```
 
-As can be seen above `format()` requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function `loadDrama()`). 
+As can be seen above `characterNames()` requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function `loadDrama()`). 
 
 ## Stacked bar plot
 
@@ -113,7 +113,7 @@ The plot shown above is quite wide, and some aspects (like the ranking in terms 
 
 ```{r results="hide"}
 characterStatistics(text, normalize=FALSE) %>%
-  format(text) %>%
+  characterNames(text) %>%
   barplot(names.arg=dramaNames(text, "%T"))
 
 ```
@@ -122,7 +122,7 @@ By default, the `barplot.QDCharacterStatistics()` function visualises the number
 
 ```{r results="hide"}
 characterStatistics(text, normalize=FALSE) %>%
-  format(text) %>%
+  characterNames(text) %>%
   barplot(names.arg=dramaNames(text, "%T"), 
           column = "utteranceLengthMean") # show mean utterance length
 
@@ -150,7 +150,7 @@ sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
 
 par(mar=c(30,4,1,1))
 characterStatistics(sturm_und_drang.plays, normalize=TRUE) %>%
-  format(sturm_und_drang.plays) %>%
+  characterNames(sturm_und_drang.plays) %>%
   barplot(las=2, names.arg = dramaNames(sturm_und_drang.plays, 
                                         formatString = "%A: %T"))
 
@@ -162,7 +162,7 @@ While readability can certainly be improved upon, we can directly see that the r
 
 So far, we have counted words for characters. Now we will turn to utterances, and their properties.
 
-First, we will use the function `utteranceStatistics()` to extract quantitative information about utterances:
+First, we will use the function [`utteranceStatistics()`](https://quadrama.github.io/DramaAnalysis/`r v`/reference/utteranceStatistics.html) to extract quantitative information about utterances:
 
 ```{r results="hide"}
 utteranceStatistics(rksp.0)
@@ -176,7 +176,7 @@ This creates a table that is very long, which is why we only show the first 10 r
 
 ```{r}
 ustat <- utteranceStatistics(rksp.0) %>%
-  format(rksp.0)   # use names instead of character ids (see above)
+  characterNames(rksp.0)   # use names instead of character ids (see above)
   
 par(mar=c(9,4,2,2)) # increase margin
 
@@ -197,12 +197,12 @@ While the above displays the *length* of utterances, we can also display the pos
 par(mar=c(2,7,2,2))
 
 utteranceStatistics(rjmw.0) %>%
-  format(rjmw.0) %>%    # character names instead of ids
+  characterNames(rjmw.0) %>%    # character names instead of ids
   plot(main=dramaNames(rjmw.0))                # calling plot.QDUtteranceStatistics()
 
 ```
 
-Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function `format()` to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type `QDHasCharacter`. Secondly, the call to the function `plot()` gets rerouted to the function `plot.QDUtteranceStatistics()`, because the object we supply as argument is of the type `QDUtteranceStatistics`. Information about this function can be retrieved by entering `?plot.QDUtteranceStatistics`. 
+Each dot in this plot represents one utterance, the x-axis is measured in character positions. This is not really intuitive, but the flow from left to right represents the flow of the text. More technically, we again apply the function `characterNames()` to display character names instead of character ids. This is the same function as above, just applied to a different table. It can be applied to any table of the type `QDHasCharacter`. Secondly, the call to the function `plot()` gets rerouted to the function `plot.QDUtteranceStatistics()`, because the object we supply as argument is of the type `QDUtteranceStatistics`. Information about this function can be retrieved by entering `?plot.QDUtteranceStatistics`. 
 
 ## Adding act boundaries
 
@@ -211,7 +211,7 @@ Now it would be useful to include information on act/scene boundaries in this pl
 ```{r}
 par(mar=c(2,8,2,2))
 utteranceStatistics(rksp.0) %>%
-  format(rksp.0) %>%
+  characterNames(rksp.0) %>%
   plot(rksp.0, # adding the `QDDrama` object here creates the act boundaries.
        main=dramaNames(rksp.0)) 
 ```
@@ -248,7 +248,7 @@ par(mfrow=c(length(sturm_und_drang.plays),1), mar=c(2,15,2,2))
 lapply(sturm_und_drang.plays, 
        function(x) {
          utteranceStatistics(x) %>%
-           format(x) %>%
+           characterNames(x) %>%
            plot(x, main=dramaNames(x))
        }
 )

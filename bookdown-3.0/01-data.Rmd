@@ -31,8 +31,8 @@ d <- loadDrama("test:rksp.0")
 
 d %>%
   dictionaryStatistics() %>%
-  filter(d) %>%
-  format(d) %>%
+  filterCharacters(d) %>%
+  characterNames(d) %>%
   barplot() 
 ```
 
@@ -42,8 +42,8 @@ Again, this is equivalent to a version with variables:
 d <- loadDrama("test:rksp.0")
 
 ds <- dictionaryStatistics(d)
-dsf <- filter(ds, d)
-dsff <- format(dsf, d)
+dsf <- filterCharacters(ds, d)
+dsff <- characterNames(dsf, d)
 barplot(dsff)
 ```
 

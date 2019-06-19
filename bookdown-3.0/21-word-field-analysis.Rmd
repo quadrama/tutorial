@@ -35,9 +35,9 @@ We can visualise these counts in a simple bar chart:
 
 # retrieve counts and replace character ids by names
 dstat <- dictionaryStatisticsSingle(rksp.0, wordfield = wf_love) %>% 
-  format(rksp.0)
+  characterNames(rksp.0)
 
-# remove figures not using these words at all
+# remove characters not using these words at all
 dstat <- dstat[dstat$x>0,]
 
 # create a bar plot
@@ -49,12 +49,12 @@ barplot(dstat$x,                      # what to plot
 
 Apparently, the prince and Marinelli are mentioning these words a lot more than the other characters. 
 
-When comparing characters, it often (but not always) makes sense to normalize the counts according to the total number of spoken words by a character. This can be enabled by setting the argument `normalizeByFigure=TRUE`. This will divide the number of words in this field by the total number of words a character speaks.
+When comparing characters, it often (but not always) makes sense to normalize the counts according to the total number of spoken words by a character. This can be enabled by setting the argument `normalizeByCharacter=TRUE`. This will divide the number of words in this field by the total number of words a character speaks.
 
 ```{r}
 dstat <- dictionaryStatisticsSingle(rksp.0, wordfield=wf_love,
-  normalizeByFigure = TRUE   # apply normalization
-) %>% format(rksp.0)         # reformat character names
+  normalizeByCharacter = TRUE   # apply normalization
+) %>% characterNames(rksp.0)         # reformat character names
 
 # remove figures not using these words at all
 dstat <- dstat[dstat$x>0,]
@@ -88,13 +88,13 @@ dstat <- dictionaryStatistics(
   rksp.0,  # the text
   fieldnames = # fields we want to measure (from base_dictionary)
     c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
-  normalizeByFigure = TRUE,   # normalization by figure
+  normalizeByCharacter = TRUE,   # normalization by figure
   normalizeByField = TRUE     # normalization by field
 )
 dstat
 ```
 
-The variable `dstat` now contains multiple columns, one for each word field. We have been using the option `normalizeByFigure` before. When comparing multiple fields, it often happens that they have a different size (i.e., different number of words). In this case, it makes sense to *also* normalize with the number of words in the word field. This is achieved by `normalizeByField=TRUE`. This makes the numbers very small, but they should be used in comparison anyway.
+The variable `dstat` now contains multiple columns, one for each word field. We have been using the option `normalizeByCharacter` before. When comparing multiple fields, it often happens that they have a different size (i.e., different number of words). In this case, it makes sense to *also* normalize with the number of words in the word field. This is achieved by `normalizeByField=TRUE`. This makes the numbers very small, but they should be used in comparison anyway.
 
 ### Bar plot by character
 
@@ -120,10 +120,10 @@ dstat <- dictionaryStatistics(
   rksp.0,  # the text
   fieldnames = # fields we want to measure (from base_dictionary)
     c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
-  normalizeByFigure = TRUE,   # normalization by figure
+  normalizeByCharacter = TRUE,   # normalization by figure
   normalizeByField = TRUE     # normalization by field
 ) %>% 
-  format(rksp.0)
+  characterNames(rksp.0)
   
 mat <- as.matrix(dstat)
 
@@ -147,7 +147,7 @@ The matrix doesn't have row names by default. The snippet below can be used to a
 
 ds <- dictionaryStatistics(rksp.0, 
                             fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
-                            normalizeByFigure=TRUE)
+                            normalizeByCharacter=TRUE)
 m <- as.matrix(ds)
 rownames(m) <- ds$character
 m
@@ -203,7 +203,7 @@ We can now plot the theme progress over the course of the play. This can be done
 ```{r}
 dsl <- dictionaryStatistics(rksp.0, 
                             fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
-                            normalizeByFigure=TRUE,
+                            normalizeByCharacter=TRUE,
                             segment="Act")
 
 mat <- as.matrix(dsl[dsl$character=="marinelli",])
@@ -219,7 +219,7 @@ Depending on the use case, it might be easier to interpret if the numbers are cu
 ```{r}
 dsl <- dictionaryStatistics(rksp.0, 
                             fieldnames=c("Liebe", "Familie", "Ratio", "Krieg", "Religion"),
-                            normalizeByFigure=TRUE,
+                            normalizeByCharacter=TRUE,
                             segment="Act") 
 
 mat <- as.matrix(dsl[dsl$character=="marinelli",])
@@ -242,11 +242,11 @@ Simultaneously to the setting above, we now want to compare the development of s
 ```{r}
 dsl <- dictionaryStatistics(rksp.0, 
                             fieldnames=c("Liebe"),
-                            normalizeByFigure=TRUE,
+                            normalizeByCharacter=TRUE,
                             segment="Act") %>% 
-  filter(rksp.0,
+  filterCharacters(rksp.0,
          n = 6) %>%
-  format(rksp.0)
+  characterNames(rksp.0)
 
 dsl <- reshape(dsl, direction = "wide",  # the table becomes wider
                timevar = "Number.Act",   # the column that specifies multiple readings
@@ -293,7 +293,7 @@ Counting word frequencies on a corpus works exactly as on a single text.
 ```{r}
 dictionaryStatistics(sturm_und_drang.plays, 
                      fieldnames=names(base_dictionary), 
-                     byFigure = FALSE)
+                     byCharacter = FALSE)
 
 ```
 
@@ -307,8 +307,8 @@ After that, the table is ordered by this reference date, and the plotting itself
 # count the words (as before)
 dstat <- dictionaryStatistics(sturm_und_drang.plays, 
                      fieldnames=names(base_dictionary), 
-                     byFigure = FALSE, 
-                     normalizeByFigure = TRUE)
+                     byCharacter = FALSE, 
+                     normalizeByCharacter = TRUE)
 
 # merge them with the meta object
 dstat <- merge(dstat, sturm_und_drang.plays$meta)
@@ -349,4 +349,15 @@ text(x = dstat.filtered$Date.Ref+1,
      cex=0.7)
 ```
 
+## Enriching the word fields distributionally
 
+TODO: Write text
+
+```{r eval=FALSE}
+r <- base_dictionary
+for (f in 1:length(dictionary)) {
+  fn <- names(dictionary)[[f]]
+  sims <- wordVectors::closest_to(model,dictionary[[f]],n=top,fancy_names = FALSE)
+  r[[fn]] <- c(r[[fn]],sims[sims$similarity>=minimalSimilarity,1])
+}
+```

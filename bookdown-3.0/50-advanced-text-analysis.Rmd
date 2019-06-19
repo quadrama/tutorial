@@ -22,7 +22,7 @@ A simple visualisation that shows the characters active and passive presence in 
 
 ```{r}
 pres <- presence(rksp.0) %>%
-  format(rksp.0)
+  characterNames(rksp.0)
 
 plot(x=pres$active/pres$scenes, 
      y=pres$passive/pres$scenes, 
@@ -51,11 +51,14 @@ pt3 <- pres[order(((pres$actives/pres$scenes) + (pres$passives/pres$scenes)), de
 
 The three characters `r stringi::stri_join(pt3$character)` are all relatively close the dashed line. This indicates that they are the most present characters of the play. 
 
+## Who mentions whom?
 
+The above analysis shows mentions of characters by all (other) characters. To uncover the social relations in a play, it is of grave interest who talks about whom, i.e., who produces the mentions of Emilia, for instance.
 
+There are multiple ways to represent this visually, of course. To get a general overview of the play, a directed network might be suitable. This will be created in the following.
 
+```{r}
 
-
-
+```
 
 
