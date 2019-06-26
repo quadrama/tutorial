@@ -13,6 +13,7 @@ external.packages:
     tokenizers
     magick
     pdftools
+    bookdown
 local.repos: 
 load.external.packages.on.startup: TRUE
 ignored.packages: 

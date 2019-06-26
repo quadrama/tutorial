@@ -4,10 +4,10 @@ bookdown::gitbook:
   config:
     toolbar:
       position: static
-    download: ["pdf", "epub"]
     toc:
       collapse: section
       scroll_highlight: yes
+    search: yes
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
