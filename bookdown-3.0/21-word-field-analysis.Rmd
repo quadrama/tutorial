@@ -349,11 +349,13 @@ text(x = dstat.filtered$Date.Ref+1,
      cex=0.7)
 ```
 
+For publication, one might want to replace the ids with actual names. This can be done with the function `dramaNames()` (not shown here).
+
 ## Enriching the word fields distributionally
 
-TODO: Write text
+*(coming soon)*
 
-```{r eval=FALSE}
+```{r eval=FALSE,echo=FALSE}
 r <- base_dictionary
 for (f in 1:length(dictionary)) {
   fn <- names(dictionary)[[f]]

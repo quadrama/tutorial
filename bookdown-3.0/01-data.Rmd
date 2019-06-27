@@ -47,7 +47,29 @@ dsff <- characterNames(dsf, d)
 barplot(dsff)
 ```
 
-Pipes are much faster to write and more transparent, that's why they are used in this tutorial.
+Pipes are much faster to write and more transparent, that's why they are used in this tutorial. In order to re-create the steps in the tutorial, you will need to load the library like this:
+
+```{r eval=FALSE}
+# download/update the library from CRAN
+install.packages("magrittr")
+
+# load it into the active environment
+library(magrittr)
+```
+
+# Quick Start
+
+The following code installs *all* packages used in this tutorial, so that you can directly get started.
+
+```{r eval=FALSE}
+
+install.packages(c("DramaAnalysis", "magrittr", "igraph", "highcharter", "rmarkdown", "fmsb", "knitr"))
+
+library(DramaAnalysis)
+library(magrittr)
+library(igraph)
+
+```
 
 
 # (PART)  DramaAnalysis {-} 
@@ -110,6 +132,11 @@ installData("qd")
 ```
 
 Corpora do not necessarily have to be provided by us, however. If a compatible set of CSV files is available from another source, the function `installData()` allows finer control to install data from anywhere, as long as it's a git repository and can be cloned. See `?installData` for details on the options.
+
+### Data sources and credits
+
+The `qd` corpus that you have downloaded above, is the result of many hours of work and fruit of labor by different people and projects. Originally, the files have been assembled and XMLified in the [TextGrid project](https://textgrid.de). As the XML contained a number of issues and was not error-free, [Peer Trilcke](https://www.uni-potsdam.de/lit-19-jhd/peertrilcke.html), [Frank Fischer](https://www.hse.ru/en/org/persons/182492735) and [Dario Kampkaspar](https://www.oeaw.ac.at/acdh/team/current-team/dario-kampkaspar/) have cleaned, converted and generally enhanced the files in order to do network analysis [@Trilcke:2015aa]. We in [QuaDramA](https://quadrama.github.io) built on top of that, and re-added several translations to the corpus. For several plays, we also added coreference annotation (not yet released/published properly), which is available as part of the `test` corpus. In addition, we added automatically produced linguistic annotation (parts of speech and lemma).
+
 
 ## Collection data
 
