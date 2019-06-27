@@ -3,7 +3,7 @@ bookdown::gitbook:
   split_by: chapter
   config:
     toolbar:
-      position: static
+      position: fixed
     toc:
       collapse: section
       scroll_highlight: yes

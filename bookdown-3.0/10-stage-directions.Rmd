@@ -17,17 +17,50 @@ sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
 
 First of all, we check the overall number, which already reveals large differences.
 
-```{r fig.height=12}
+```{r fig.height=8}
 
 sd <- sturm_und_drang.plays$stageDirections[, 
                                             .(l=length(unique(utteranceBegin))),
                                             .(corpus,drama)]
 par(mar=c(15,3,1,1))
 barplot(sd$l, 
-        names.arg = dramaNames(sturm_und_drang.plays, "%T"), 
+        names.arg = dramaNames(sturm_und_drang.plays, formatString = "%T"), 
         las=2,
         col=qd.colors)
 
 ```
+
+Next, we will turn to the temporal distribution of stage directions over the plays. Since the plays have different lengths, we will need to normalize the position of the stage directions, so that they are given in percentage values.
+
+The table that contains the stage directions (`sturm_und_drang.plays$stageDirections`) also contains a column called `utteranceBegin`. They are not strictly utterances, but the column name is the same as in other tables so that it's easier to re-use code. We will use this column to visualize the temporal distribution of the stage directions. To normalize the temporal distribution, we first add a new column that gives us the maximal value. In the second step, we divide by this value.
+
+```{r}
+
+sturm_und_drang.plays$stageDirections[,m:=max(utteranceBegin),.(corpus,drama)]
+
+par(mar=c(3,14,2,2))
+stripchart(utteranceBegin/m ~ drama, 
+           data = sturm_und_drang.plays$stageDirections,
+           las = 1,
+           pch=20,
+           col=qd.colors,
+           cex.axis=0.7,
+           group.names = dramaNames(sturm_und_drang.plays, formatString = "%T"))
+
+```
+
+This plot shows each stage direction at its relative position in the play. There is no clear pattern to discern here, except that they are not equally distributed in the plays (but we already knew that, see above).
+
+Of course, we can also look at the length of stage directions, and their variances. This is very similar to what we did for character utterances. Please note that the length here is measured in *character numbers*. A single word direction like *smiles* has a length of 6 characters.  
+
+```{r}
+par(mar=c(12,3,1,1))
+boxplot(utteranceEnd - utteranceBegin ~ drama, 
+        data=sturm_und_drang.plays$stageDirections,
+        las=2,cex.axis=0.7,
+        names=dramaNames(sturm_und_drang.plays, formatString = "%T"),
+        xlab=NULL, ylab=NULL)
+```
+
 
 

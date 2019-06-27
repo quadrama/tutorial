@@ -63,7 +63,10 @@ The following code installs *all* packages used in this tutorial, so that you ca
 
 ```{r eval=FALSE}
 
-install.packages(c("DramaAnalysis", "magrittr", "igraph", "highcharter", "rmarkdown", "fmsb", "knitr"))
+install.packages(c("DramaAnalysis", "magrittr", 
+                   "igraph", "highcharter", 
+                   "rmarkdown", "fmsb", 
+                   "knitr"))
 
 library(DramaAnalysis)
 library(magrittr)

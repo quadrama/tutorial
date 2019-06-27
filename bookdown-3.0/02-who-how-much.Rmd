@@ -10,6 +10,14 @@ We're assuming here that we have loaded some texts using `loadDrama()`, and that
 First, we calculate summary statistics over all characters.
 
 ```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+# Load Miß Sara Sampson
+data(rjmw.0)
+
+text <- combine(rksp.0, rjmw.0)
+
 characterStatistics(text)
 ```
 
@@ -76,7 +84,7 @@ The plot shown above is quite wide, and some aspects (like the ranking in terms 
 ```{r results="hide"}
 characterStatistics(text, normalize=FALSE) %>%
   characterNames(text) %>%
-  barplot(names.arg=dramaNames(text, "%T"))
+  barplot(names.arg=dramaNames(text, formatString = "%T"))
 
 ```
 
@@ -85,7 +93,7 @@ By default, the `barplot.QDCharacterStatistics()` function visualises the number
 ```{r results="hide"}
 characterStatistics(text, normalize=FALSE) %>%
   characterNames(text) %>%
-  barplot(names.arg=dramaNames(text, "%T"), 
+  barplot(names.arg=dramaNames(text, formatString = "%T"), 
           column = "utteranceLengthMean") # show mean utterance length
 
 ```

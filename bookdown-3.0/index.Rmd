@@ -25,11 +25,15 @@ v <- packageVersion("DramaAnalysis")
 
 *This tutorial is in beta stadium and not entirely finished. It pertains to version 3.0 of the DramaAnalysis package. In case you find mistakes or have questions in/about the tutorial, feel free to open an issue on GitHub [here](https://github.com/quadrama/tutorial/issues/new). If you believe you found a bug in the R-Package itself, please do the same [here](https://github.com/quadrama/DramaAnalysis/issues/new). Writing an [e-mail](mailto:nils.reiter@ims.uni-stuttgart.de) is also fine.*  
 
-## License {-}
+**License**
 
 [![CC-BY-SA](CC-BY-SA_icon.svg.png){ width=3cm }](https://creativecommons.org/licenses/by-sa/4.0/) 
 
 This tutorial is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/). The `DramaAnalysis` R-Package is licensed under [GNU General Public License, v3](https://www.gnu.org/licenses/gpl-3.0.html).
+
+**Acknowledgements**
+
+The R package has been developed in the context of the [QuaDramA](https://quadrama.github.io) project, which is funded by the [Volkswagen foundation](https://www.volkswagenstiftung.de).
 
 # Introduction
 
@@ -183,4 +187,12 @@ remotes::install_github("quadrama/DramaAnalysis",
 
 ```
 
+To reproduce everything from this tutorial, you will also need the packages `magrittr` and `igraph`, but their installation is simple:
 
+```{r eval=FALSE}
+install.packages(c("magrittr", "igraph"))
+
+# loads them into your environment
+library(magrittr)
+library(igraph)
+```

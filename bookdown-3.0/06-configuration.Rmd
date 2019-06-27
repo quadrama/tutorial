@@ -55,7 +55,7 @@ Of course, the speech of characters that do not speak often is now removed, leav
 
 ### Normalization
 
-Since each act has a different length, it is often useful to normalize each block, according to the total number of spoken tokens. This way, we can display the relative active presence of each character in each act. In combination with the filtering we did before, however, we need to be careful: If the scale with the filtered matrix, a certain portion of the character speech gets lost. The following snippet shows how to scale using the original matrix, but still only include the top eight characters into the matrix.
+Since each act has a different length, it is often useful to normalize each block, according to the total number of spoken tokens. This way, we can display the relative active presence of each character in each act. In combination with the filtering we did before, however, we need to be careful: If we scale with the filtered matrix, the resulting values do not reflect the portion of the speech in the scene, but only to the top 8 characters. This way, one would get the impression that the filtered characters' speeches add up to 100% of a segment, which is not the case. The following snippet shows how to scale using the original matrix, but still only include the top eight characters into the matrix.
 
 ```{r}
 
