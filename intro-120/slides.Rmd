@@ -9,18 +9,165 @@ output:
     keep_tex: true
     latex_engine: xelatex
     colortheme: seahorse
-    fonttheme: serif
+    fonttheme: default
     includes:
       in_header: header.tex
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval = FALSE, tidy = FALSE)
+library(DramaAnalysis)
+library(magrittr)
 ```
+
+# What you really need to know about R
+
+### R Basics
+
+- R is a programming language 
+  - Mostly used for statistical data analysis ("data science")
+  - First version: 1993
+  - Current stable release: 3.6
+  - [Website](https://www.r-project.org/)
+- Three important concepts we need to talk about
+  - Objects/Types
+  - Variables
+  - Functions
+
+### R Basics
+\framesubtitle{Objects and Types}
+
+- Objects live in the computer memory (or on disk)
+- Objects represent the things we want to analyse (e.g., dramatic texts, words, or numbers)
+- An object has one or more types
+- The type of an object determines what we can do with it
+  - E.g., a knife allows other operations than a fork
+\pause
+- Types: Numbers, strings, lists, tables, ...
+  - Numbers allow arithmetic operations
+    - E.g., summation: `sum(3,5)` (evaluates to `8`, equivalent to `3+5`)
+  - Strings allow character-based operations
+    - E.g., conversion to lower case: `tolower("ABC")` (evaluates to `"abc"`)
+\pause
+- "evalutes to": result of the operation
+
+### R Basics
+\framesubtitle{Objects and Types}
+
+\small
+| Type | Example | Description |
+| ---- | ------- | ----------- |
+| Numeric | `5` | A numeric value |
+| Character | `"Heidelberg"` | A sequence of characters |
+|           |                | (note the double quotes!) |
+| Logical | `TRUE`/`FALSE` | A truth value |
+| Vector | `c(5,4,1)` | Sequence of objects *of the same type* |
+| List | `list(5,"Hd",TRUE)` | Sequence of objects |
+| Matrix | | Table of objects *of the same type* |
+| Data frame | | Table of objects |
+
+
+### R Basics
+\framesubtitle{Objects and Types}
+
+In R, everything is a vector!
+
+- Entering `5` creates a numeric vector of length 1
+- Entering `"Bla"` creates a character vector of length 1
+
+(In this way, R is different from other programming languages)
+
+```{r}
+5
+# Creates a vector consisting of the numbers 1 to 50
+1:50
+```
+
+
+### R Basics
+\framesubtitle{Variables}
+
+- We usually do not interact with the objects directly
+  - Because they are not known in advance (but loaded from files)
+- Variables
+  - A way to *name* objects
+  - Used as a placeholder for objects
+  - The actual operation takes place on the objects (R takes care of this)
+- Creating a variable `a`: `a <- 3` (think of this as an arrow)
+
+```r
+> a <- 3
+> b <- 5
+> a + b
+[1] 8
+>
+```
+
+### R Basics
+\framesubtitle{Functions}
+
+- "Mini programs": A collection of instructions that you can use as a single instruction
+- Input: Functions take *arguments* as input
+- Output: Functions return an object (that stores the result of the instructions)
+\pause
+- Functions have a name (typically lower case) and can be reognized by the round parentheses \
+`function(argument1, argument2, argument3, ...)`
+- The return value of a function can be stored in a variable \
+`variable <- function(arg1, arg2, ...)`
+\pause
+- Some functions not only return a value, but also do something (e.g., display a plot)
+
+### R Basics
+\framesubtitle{Functions}
+
+```{r}
+sum(5,1)         # 5 + 1 is only an abbreviation
+s <- sum(5,1)    # stores the result in a 
+                 # variable, no output
+s                # prints the value of the variable
+s <- 7           # overwrites the previous value of 
+                 # the variable
+s <- sum(s,3)    # overwrites the value of the 
+                 # variable
+```
+
+What is the value of `s` now?
+
+## RStudio
+
+
+### RStudio
+
+- An integrated development environment (IDE) for R
+- Capable workbench for data analysis
+
+![](rstudio-300x260.png) {height=0.3\\textheight}
+
+### RStudio
+\framesubtitle{Four Panes}
+
+- Console: Where you enter R code and get the result immediately
+- Environment: Shows the objects currently in memory
+- Plots: Shows plots
+- Editor/Code: Allows editing R code and inspecting tables
+
+We will focus on the console and plot area
+
+# DramaAnalysis
+
+### Outline
+
+- Introduction/Installation and Overview
+- Three areas for you to play with
+  1. General character statistics
+  2. Word fields
+  3. Copresence and network analysis
 
 ### Introduction
 
 - https://quadrama.github.io/DramaAnalysis/tutorial/3/
+
+
 
 ## Installation
 
@@ -30,6 +177,8 @@ knitr::opts_chunk$set(eval = FALSE)
 ```{r, eval=FALSE}
 install.packages("DramaAnalysis")
 library(DramaAnalysis)  # no quotes
+
+library(magrittr) # additional package
 ```
 
 ### Installation
@@ -78,17 +227,44 @@ myId <- "shakedracor:romeo-and-juliet"
 play <- loadDrama(myId)
 ```
 
+## What can we do?
 
-### What can we analyse?
+### Function overview
 
-- Global character statistics (speech proportion, mean utterance length/variance, \dots)
-- Temporal distribution of utterances
-- Co-presence of characters on stage
-  - Network analysis
-- Character exchange
-- Word field analysis
+![](workflow.pdf)
+
+## 1. Global character statistics
 
 ### Global character statistics
 
+Two functions:
 
+- `characterStatistics()`: Characters in focus
+- `utteranceStatistics()`: Utterances in focus
 
+### Function `characterStatistics`
+
+```{r}
+cs <- characterStatistics(play)
+```
+
+Returns a table with 
+
+- `drama`: The play id
+- `character`: the character id
+- `tokens`: Number of tokens (for this character)
+- `types`: Number of different tokens (for this character)
+- `utterances`: Number of utterances (for this character)
+- `utteranceLengthMean`: Mean utterance length 
+- `utteranceLengthSd`: Utterance length standard deviation
+- `firstBegin`: Starting position of the first utterance
+- `lastEnd`: End position of the last utterance
+
+### Function `characterStatistics`
+\framesubtitle{Plotting}
+
+```{r eval=TRUE,fig.width=3,fig.height=4, out.height="0.6\\textheight", dev='tikz', results='hide', tidy=FALSE}
+characterStatistics(rksp.0) %>%
+  characterNames(rksp.0) %>%
+  barplot()
+```
