@@ -1,0 +1,188 @@
+\documentclass[landscape,a4]{scrartcl}
+\usepackage{amsmath}
+\usepackage{outlines}
+\usepackage{mathspec}
+\setmainfont{Cambria}
+\setsansfont{Candara}
+% \setmathrm{Garamond}
+\setmathfont{Cambria}
+\usepackage{booktabs}
+\usepackage{fontawesome}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,
+        showstringspaces=false,
+        keywordstyle=\color{blue},
+        emphstyle=\color{olive},
+		backgroundcolor=\color{gray!10},
+		emph={self},
+		xleftmargin=2em,
+        stringstyle=\color{red},
+        tabsize=4,
+        language=python,
+        morestring=[b]",
+		commentstyle=\color{gray},
+        morecomment=[l]{\#},numbers = left, numberstyle=\tiny}
+
+\usepackage{multimedia}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{decorations}
+\usetikzlibrary{calc,shadows}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{math}
+
+\begin{document}
+	\thispagestyle{empty}
+\begin{figure}
+	
+\begin{tikzpicture}[remember picture,overlay,
+  every node/.style={font=\tiny},
+  class/.style={draw,font=\ttfamily\tiny},
+  function/.style={font=\ttfamily\itshape\tiny},
+  plot/.style={font=\tiny},
+  external/.style={font=\tiny\scshape},
+  deprecated/.style={color=red}
+]
+\tikzmath{
+\characterStatisticsAngle = -35;
+\dictionaryStatisticsAngle = 0;
+\dictionaryStatisticsAngleA = -10;
+\dictionaryStatisticsAngleB = 10;
+\dictionaryStatisticsSingleAngle = 15;
+\utteranceStatisticsAngle = -70;
+\utteranceStatisticsAngleA = -75;
+\utteranceStatisticsAngleB = -65;
+\configurationAngle = -135;
+\configurationAngleA = -130;
+\configurationAngleB = -140;
+\hammingAngle = 130;
+\scenicDifferenceAngle = 140;
+\frequencyTableAngle=90;
+\frequencyTableAngleA=100;
+\frequencyTableAngleB=110;
+\frequencyTableAngleC=80;
+}
+
+
+\node (loadDrama) at ($(current page.center)+(2,-1)$) [function] {loadDrama()};
+\node (loadFields) at ($(current page.center)+(-7,5)$) [function] {loadFields()};
+
+\node (qddrama) at (current page.center) [class] {QDDrama};
+
+
+\node (qddrama4) at ($(qddrama)+(4,0)$) {};
+
+\node (characterstatistics) at ($(qddrama)!4cm!\characterStatisticsAngle:(current page.north)$) [function] {characterStatistics()};
+\node (dictionarystatistics) at ($(qddrama)!4cm!\dictionaryStatisticsAngle:(current page.north)$) [function] {dictionaryStatistics()};
+\node (utteranceStatistics) at ($(qddrama)!4cm!\utteranceStatisticsAngle:(current page.north)$) [function] {utteranceStatistics()};
+
+\node (hamming) at ($(qddrama)!4cm!\hammingAngle:(current page.north)$) [function] {hamming()};
+\node (scenicDifference) at ($(qddrama)!4cm!\scenicDifferenceAngle:(current page.north)$) [function] {scenicDifference()};
+
+
+\node (qdcharacterstatistics) at ($(qddrama)!5cm!\characterStatisticsAngle:(current page.north)$) [class] {QDCharacterStatistics};
+\node (qddictionarystatistics) at ($(qddrama)!5cm!\dictionaryStatisticsAngle:(current page.north)$) [class] {QDDictionaryStatistics};
+\node (QDUtteranceStatistics) at ($(qddrama)!6cm!\utteranceStatisticsAngle:(current page.north)$) [class] {QDUtteranceStatistics};
+
+\node (plotqdcharacterstatistics) at ($(qddrama)!6cm!\characterStatisticsAngle:(current page.north)$) [function] {barplot()};
+\node (plot_QDUtteranceStatistics) at ($(qddrama)!8cm!\utteranceStatisticsAngle:(current page.north)$) [function] {plot()};
+
+\node (plotSpiderWebs) at ($(qddrama)!7cm!\dictionaryStatisticsAngleA:(current page.north)$) [function] {plotSpiderWebs()};
+\node (as_matrix_QDDictionaryStatistics) at ($(qddrama)!7cm!\dictionaryStatisticsAngleB:(current page.north)$) [function] {as.matrix()};
+
+
+\node (dictionaryStatisticsSingle) at ($(qddrama)!3cm!\dictionaryStatisticsSingleAngle:(current page.north)$) [function] {dictionaryStatisticsSingle()};
+\node (enrichDictionary) at ($(current page.center)+(-9,3)$) [function] {enrichDictionary()};
+\node (configuration) at ($(qddrama)!4cm!\configurationAngle:(current page.north)$) [function] {configuration()};
+\node (aslistqdconfiguration) at ($(qddrama)!6cm!\configurationAngle:(current page.north)$) [function] {as.matrix()};
+\node (frequencyTable) at ($(qddrama)!4cm!\frequencyTableAngle:(current page.north)$) [function] {frequencytable()};
+\node (keyness) at ($(qddrama)!8cm!\frequencyTableAngle:(current page.north)$) [function] {keyness()};
+\node (filterByDictionary) at ($(qddrama)!7cm!\frequencyTableAngleC:(current page.north)$) [function] {filterByDictionary()};
+\node (correlationAnalysis) at ($(qddrama)!8cm!\frequencyTableAngleB:(current page.north)$) [function] {correlationAnalysis()};
+\node (presence) at ($(qddrama)!4cm!180:(current page.north)$) [function] {presence()};
+\node (filter) at ($(qddrama)!6cm!-20:(current page.north)$) [function] {filterCharacters()};
+
+
+\node (qdfields) at ($(current page.center)+(-7,3)$) [class] {list};
+\node (QDConfiguration) at ($(qddrama)!5cm!\configurationAngle:(current page.north)$) [class] {QDConfiguration};
+\node (qdconfigurationlist) at ($(qddrama)!7cm!\configurationAngle:(current page.north)$) [class] {matrix};
+\node (frequencytablematrix) at ($(qddrama)!6cm!\frequencyTableAngle:(current page.north)$) [class] {matrix};
+\node (keynesslist) at ($(qddrama)!10cm!\frequencyTableAngleC:(current page.north)$) [class] {list};
+\node (presencedataframe) at ($(qddrama)!5cm!180:(current page.north)$) [class] {data.frame};
+\node (hamminglist) at ($(qddrama)!6cm!\hammingAngle:(current page.north)$) [class] {list};
+\node (scenicdifferencelist) at ($(qddrama)!6cm!\scenicDifferenceAngle:(current page.north)$) [class] {list};
+\node (dictionarystatisticsmatrix) at ($(qddrama)!8cm!\dictionaryStatisticsAngleB:(current page.north)$) [class] {matrix};
+
+
+
+\node (plotstackedcharactermatrix) at ($(qddrama)!7cm!\characterStatisticsAngle:(current page.north)$) [plot] {basic character plot};
+\node (spiderweb) at ($(qddrama)!8cm!\dictionaryStatisticsAngleA:(current page.north)$) [plot] {spider web};
+
+\node (stylo) at ($(qddrama)!8cm!\frequencyTableAngleA:(current page.north)$) [external] {stylo};
+\node (igraph) at ($(qddrama)!8cm!\configurationAngle:(current page.north)$) [external] {igraph};
+
+\draw [->] (loadDrama) -- (qddrama);
+\draw [->] (qddrama) -- (characterstatistics);
+\draw [->] (characterstatistics) -- (qdcharacterstatistics);
+\draw [->] (qdcharacterstatistics) -- (plotqdcharacterstatistics);
+\draw [->] (plotqdcharacterstatistics) -- (plotstackedcharactermatrix);
+\draw [<->] (qdcharacterstatistics) -- (filter);
+
+\draw [->] (qddrama) -- (dictionarystatistics);
+\draw [->] (qddrama) -- (dictionaryStatisticsSingle);
+\draw [->] (loadFields) -- (qdfields);
+\draw [->] (dictionarystatistics) -- (qddictionarystatistics);
+\draw [->] (qdfields) -- (dictionarystatistics);
+\draw [->] (qdfields) -- (dictionaryStatisticsSingle);
+\draw [<->] (qdfields) -- (enrichDictionary);
+\draw [->] (qddictionarystatistics) -- (plotSpiderWebs);
+\draw [->] (qddictionarystatistics) -- (as_matrix_QDDictionaryStatistics);
+\draw [->] (plotSpiderWebs) -- (spiderweb);
+\draw [->] (as_matrix_QDDictionaryStatistics) -- (dictionarystatisticsmatrix);
+\draw [<->] (qddictionarystatistics) -- (filter);
+
+
+\draw [->] (qddrama) -- (configuration);
+\draw [->] (configuration) -- (QDConfiguration);
+\draw [->] (QDConfiguration) -- (aslistqdconfiguration);
+\draw [->] (aslistqdconfiguration) -- (qdconfigurationlist);
+\draw [->] (qdconfigurationlist) -- (igraph);
+
+\draw [->] (qddrama) -- (frequencyTable);
+\draw [->] (frequencyTable) -- (frequencytablematrix);
+\draw [->] (frequencytablematrix) -- (stylo);
+\draw [->] (frequencytablematrix) -- (keyness);
+\draw [->] (frequencytablematrix) -- (correlationAnalysis);
+\draw [<->] (frequencytablematrix) -- (filterByDictionary);
+\draw [->] (keyness) -- (keynesslist);
+\draw [->] (qdfields) -- (filterByDictionary);
+
+\draw [->] (qddrama) -- (presence);
+\draw [->] (presence) -- (presencedataframe);
+
+\draw [->] (qddrama) -- (utteranceStatistics);
+\draw [->] (utteranceStatistics) -- (QDUtteranceStatistics);
+\draw [->] (QDUtteranceStatistics) -- (plot_QDUtteranceStatistics);
+\draw [->] (qddrama) -- (hamming);
+\draw [->] (hamming) -- (hamminglist);
+\draw [->] (qddrama) -- (scenicDifference);
+\draw [->] (scenicDifference) -- (scenicdifferencelist);
+
+\node (legend) at (-5,6) [anchor=west,font=\bfseries] {Legend};
+\node [above=0.5 of legend.west,font=\large,anchor=west] {DramaAnalysis 3.0};
+\node [below=0.5 of legend.west,function, anchor=west] {function()};
+\node [below=1 of legend.west,class,xshift=2, anchor=west] {class};
+\node [below=1.5 of legend.west,external,anchor=west] {external component};
+\node [below=2 of legend.west,plot,anchor=west] {plot type};
+
+\end{tikzpicture}
+\end{figure}
+
+\end{document}

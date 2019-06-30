@@ -1,0 +1,94 @@
+---
+title: "Quantitative Drama Analytics"
+subtitle: "Part 2: lab session"
+author: "Nils Reiter"
+date: "July 15, 2019"
+output:
+  beamer_presentation:
+    slide_level: 3
+    keep_tex: true
+    latex_engine: xelatex
+    colortheme: seahorse
+    fonttheme: serif
+    includes:
+      in_header: header.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+### Introduction
+
+- https://quadrama.github.io/DramaAnalysis/tutorial/3/
+
+## Installation
+
+### Installation
+\framesubtitle{Code}
+
+```{r, eval=FALSE}
+install.packages("DramaAnalysis")
+library(DramaAnalysis)  # no quotes
+```
+
+### Installation
+\framesubtitle{Data}
+
+- Dramatic texts are initially stored as TEI/XML files
+- Language processing (e.g., detection of parts of speech) takes place in a UIMA pipeline
+- The output of the pipeline are several CSV files for each play (meta data, character data, \dots)
+- CSV files are then analysed in R
+
+\pause
+
+Two corpora today:
+
+```{r}
+installData("qd") # German literary canon
+# or
+installData("shakedracor") # English Shakespeare plays
+```
+
+### Installation
+\framesubtitle{Data}
+
+The function `installData()`
+
+- Clones a git repository from `github.com/quadrama` into a local directory
+- Allows easy update of data files
+- German literary canon (`qd`)
+  - TextGrid, GerDraCor, QuaDramA
+- English Shakespeare plays (`shakedracor`)
+  - Folger, DraCor, QuaDramA
+
+
+
+### Loading a play 
+
+- We first have to load plays into the environment
+- Each play has an associated id
+- Select one and create a variable to store the id (less typing in the future)
+
+\pause
+
+```{r}
+myId <- "shakedracor:romeo-and-juliet"
+
+play <- loadDrama(myId)
+```
+
+
+### What can we analyse?
+
+- Global character statistics (speech proportion, mean utterance length/variance, \dots)
+- Temporal distribution of utterances
+- Co-presence of characters on stage
+  - Network analysis
+- Character exchange
+- Word field analysis
+
+### Global character statistics
+
+
+
