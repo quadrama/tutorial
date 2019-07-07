@@ -282,6 +282,7 @@ cs <- characterStatistics(play)
 
 Returns a table (in R: `data.frame`) with 
 
+- `corpus`: The collection id
 - `drama`: The play id
 - `character`: the character id
 - `tokens`: Number of tokens (for this character)
@@ -305,4 +306,35 @@ characterStatistics(rksp.0) %>%
   characterNames(rksp.0) %>%
   # plot them stacked
   barplot()
+```
+
+### Function `utteranceStatistics`
+
+```{r}
+us <- utteranceStatistics(play)
+```
+
+Returns a table with one row for each utterance
+
+- `corpus`: The collection id
+- `drama`: The play id
+- `character`: the character id
+- `utteranceBegin`: Character position of the first character
+- `utteranceLength`: Portion of this utterance with the total play
+
+(The function `View()` can be used to get browsable table in RStudio.)
+
+### Function `utteranceStatistics`
+
+```{r eval=TRUE}
+us <- utteranceStatistics(play) %>%
+  filterCharacters(play) %>%
+  characterNames(play)
+
+
+stripchart(utteranceLength ~ character, 
+        data = us,
+        las=1,
+        pch=20,
+        method="jitter")
 ```

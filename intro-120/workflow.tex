@@ -87,9 +87,9 @@
 \node (scenicDifference) at ($(qddrama)!4cm!\scenicDifferenceAngle:(current page.north)$) [function] {scenicDifference()};
 
 
-\node (qdcharacterstatistics) at ($(qddrama)!5cm!\characterStatisticsAngle:(current page.north)$) [class] {QDCharacterStatistics};
-\node (qddictionarystatistics) at ($(qddrama)!5cm!\dictionaryStatisticsAngle:(current page.north)$) [class] {QDDictionaryStatistics};
-\node (QDUtteranceStatistics) at ($(qddrama)!6cm!\utteranceStatisticsAngle:(current page.north)$) [class] {QDUtteranceStatistics};
+\node (qdcharacterstatistics) at ($(qddrama)!5cm!\characterStatisticsAngle:(current page.north)$) [class] {QDCharacterStatistics\textsuperscript{1}};
+\node (qddictionarystatistics) at ($(qddrama)!5cm!\dictionaryStatisticsAngle:(current page.north)$) [class] {QDDictionaryStatistics\textsuperscript{1}};
+\node (QDUtteranceStatistics) at ($(qddrama)!6cm!\utteranceStatisticsAngle:(current page.north)$) [class] {QDUtteranceStatistics\textsuperscript{1}};
 
 \node (plotqdcharacterstatistics) at ($(qddrama)!6cm!\characterStatisticsAngle:(current page.north)$) [function] {barplot()};
 \node (plot_QDUtteranceStatistics) at ($(qddrama)!8cm!\utteranceStatisticsAngle:(current page.north)$) [function] {plot()};
@@ -107,11 +107,10 @@
 \node (filterByDictionary) at ($(qddrama)!7cm!\frequencyTableAngleC:(current page.north)$) [function] {filterByDictionary()};
 \node (correlationAnalysis) at ($(qddrama)!8cm!\frequencyTableAngleB:(current page.north)$) [function] {correlationAnalysis()};
 \node (presence) at ($(qddrama)!4cm!180:(current page.north)$) [function] {presence()};
-\node (filter) at ($(qddrama)!6cm!-20:(current page.north)$) [function] {filterCharacters()};
 
 
 \node (qdfields) at ($(current page.center)+(-7,3)$) [class] {list};
-\node (QDConfiguration) at ($(qddrama)!5cm!\configurationAngle:(current page.north)$) [class] {QDConfiguration};
+\node (QDConfiguration) at ($(qddrama)!5cm!\configurationAngle:(current page.north)$) [class] {QDConfiguration\textsuperscript{1}};
 \node (qdconfigurationlist) at ($(qddrama)!7cm!\configurationAngle:(current page.north)$) [class] {matrix};
 \node (frequencytablematrix) at ($(qddrama)!6cm!\frequencyTableAngle:(current page.north)$) [class] {matrix};
 \node (keynesslist) at ($(qddrama)!10cm!\frequencyTableAngleC:(current page.north)$) [class] {list};
@@ -128,12 +127,19 @@
 \node (stylo) at ($(qddrama)!8cm!\frequencyTableAngleA:(current page.north)$) [external] {stylo};
 \node (igraph) at ($(qddrama)!8cm!\configurationAngle:(current page.north)$) [external] {igraph};
 
+\node (qdhascharacter) at (13,-1) [class] {1: QDHasCharacter};
+\node (filter) at ($(qdhascharacter)!2cm!150:(qdhascharacter.north)$) [function] {filterCharacters()};
+\node (characterNames) at ($(qdhascharacter)!2cm!210:(qdhascharacter.north)$) [function] {\vphantom{f}characterNames()};
+
+\draw [<->] (qdhascharacter) -- (filter);
+\draw [<->] (qdhascharacter) -- (characterNames);
+
+
 \draw [->] (loadDrama) -- (qddrama);
 \draw [->] (qddrama) -- (characterstatistics);
 \draw [->] (characterstatistics) -- (qdcharacterstatistics);
 \draw [->] (qdcharacterstatistics) -- (plotqdcharacterstatistics);
 \draw [->] (plotqdcharacterstatistics) -- (plotstackedcharactermatrix);
-\draw [<->] (qdcharacterstatistics) -- (filter);
 
 \draw [->] (qddrama) -- (dictionarystatistics);
 \draw [->] (qddrama) -- (dictionaryStatisticsSingle);
@@ -146,7 +152,6 @@
 \draw [->] (qddictionarystatistics) -- (as_matrix_QDDictionaryStatistics);
 \draw [->] (plotSpiderWebs) -- (spiderweb);
 \draw [->] (as_matrix_QDDictionaryStatistics) -- (dictionarystatisticsmatrix);
-\draw [<->] (qddictionarystatistics) -- (filter);
 
 
 \draw [->] (qddrama) -- (configuration);
@@ -181,6 +186,8 @@
 \node [below=1 of legend.west,class,xshift=2, anchor=west] {class};
 \node [below=1.5 of legend.west,external,anchor=west] {external component};
 \node [below=2 of legend.west,plot,anchor=west] {plot type};
+
+
 
 \end{tikzpicture}
 \end{figure}
