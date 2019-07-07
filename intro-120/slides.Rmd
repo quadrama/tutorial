@@ -1,15 +1,12 @@
 ---
 title: "Quantitative Drama Analytics"
 subtitle: "Part 2: lab session"
-author: "Nils Reiter"
 date: "July 15, 2019"
 output:
   beamer_presentation:
     slide_level: 3
     keep_tex: true
     latex_engine: xelatex
-    colortheme: seahorse
-    fonttheme: default
     includes:
       in_header: header.tex
 ---
@@ -17,6 +14,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE, tidy = FALSE)
 library(DramaAnalysis)
+setDataDirectory(dataDirectory = file.path(path.expand("~"), "QuaDramA", "Data-tutorial"))
+installData("shakedracor")
 library(magrittr)
 ```
 
@@ -165,14 +164,19 @@ We will focus on the console and plot area
 
 ### Introduction
 
-- https://quadrama.github.io/DramaAnalysis/tutorial/3/
-
+- R Package: A collection of functions and/or data sets
+- Function: Mini program
+- DramaAnalysis: Functions for drama analysis (surprise!)
+  - Today: Third iteration, extensive rewrite
+- Written Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/
 
 
 ## Installation
 
 ### Installation
 \framesubtitle{Code}
+
+\alert{TODO: Adapt this slide}
 
 ```{r, eval=FALSE}
 install.packages("DramaAnalysis")
@@ -185,9 +189,10 @@ library(magrittr) # additional package
 \framesubtitle{Data}
 
 - Dramatic texts are initially stored as TEI/XML files
-- Language processing (e.g., detection of parts of speech) takes place in a UIMA pipeline
-- The output of the pipeline are several CSV files for each play (meta data, character data, \dots)
-- CSV files are then analysed in R
+- Language processing (e.g., identification of parts of speech) takes place in a UIMA pipeline
+  - https://github.com/quadrama/DramaNLP
+- Output of the pipeline: Several CSV files for each play (meta data, character data, \dots)
+- CSV files analysed in R
 
 \pause
 
@@ -207,11 +212,25 @@ The function `installData()`
 - Clones a git repository from `github.com/quadrama` into a local directory
 - Allows easy update of data files
 - German literary canon (`qd`)
-  - TextGrid, GerDraCor, QuaDramA
+  - TextGrid $\rightarrow$ GerDraCor $\rightarrow$ QuaDramA
 - English Shakespeare plays (`shakedracor`)
-  - Folger, DraCor, QuaDramA
+  - Folger $\rightarrow$ DraCor $\rightarrow$ QuaDramA
 
+### Inspecting data
 
+```{r}
+# Collect all play ids into a vector
+loadAllInstalledIds() %>% 
+  # Extract metadata for each play, 
+  # put it into a table
+  loadMeta()          %>% 
+  # Have RStudio display a nice table
+  View()           
+```
+
+\pause
+
+![Metadata table in RStudio](metadata.png)
 
 ### Loading a play 
 
