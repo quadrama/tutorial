@@ -241,16 +241,29 @@ loadAllInstalledIds() %>%
 \pause
 
 ```{r}
-myId <- "shakedracor:romeo-and-juliet"
+# General form: collection colon play
+# (allows comparison across collections)
+myId <- "shakedracor:Rom"
 
 play <- loadDrama(myId)
 ```
+
+### Online help
+
+- Each function is documented
+- Entering question mark followed by the function name opens the help view
+  - `?loadDrama`
+- Documentation
+  - What does the function do?
+  - What arguments does it expect, which default values are defined?
+  - What does it return?
+  - Usage example
 
 ## What can we do?
 
 ### Function overview
 
-![](workflow.pdf)
+![Possible workflows in DramaAnalysis](workflow.pdf)
 
 ## 1. Global character statistics
 
@@ -267,7 +280,7 @@ Two functions:
 cs <- characterStatistics(play)
 ```
 
-Returns a table with 
+Returns a table (in R: `data.frame`) with 
 
 - `drama`: The play id
 - `character`: the character id
@@ -279,11 +292,17 @@ Returns a table with
 - `firstBegin`: Starting position of the first utterance
 - `lastEnd`: End position of the last utterance
 
+(The function `View()` can be used to get browsable table in RStudio.)
+
+
 ### Function `characterStatistics`
 \framesubtitle{Plotting}
 
-```{r eval=TRUE,fig.width=3,fig.height=4, out.height="0.6\\textheight", dev='tikz', results='hide', tidy=FALSE}
+```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.5\\textheight", dev='tikz', results='hide', tidy=FALSE}
+# call the function
 characterStatistics(rksp.0) %>%
+  # replace character ids by character names
   characterNames(rksp.0) %>%
+  # plot them stacked
   barplot()
 ```
