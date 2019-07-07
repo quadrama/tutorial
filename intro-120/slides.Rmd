@@ -296,7 +296,7 @@ Returns a table (in R: `data.frame`) with
 (The function `View()` can be used to get browsable table in RStudio.)
 
 
-### Function `characterStatistics`
+### Function `characterStatistics` {.allowframebreaks}
 \framesubtitle{Plotting}
 
 ```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.5\\textheight", dev='tikz', results='hide', tidy=FALSE}
@@ -324,13 +324,14 @@ Returns a table with one row for each utterance
 
 (The function `View()` can be used to get browsable table in RStudio.)
 
-### Function `utteranceStatistics`
+### Function `utteranceStatistics`  {.allowframebreaks}
+
+
 
 ```{r eval=TRUE}
-us <- utteranceStatistics(play) %>%
-  filterCharacters(play) %>%
-  characterNames(play)
-
+us <- utteranceStatistics(rksp.0) %>%
+  filterCharacters(rksp.0) %>%
+  characterNames(rksp.0)
 
 stripchart(utteranceLength ~ character, 
         data = us,
