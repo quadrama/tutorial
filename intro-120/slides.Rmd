@@ -14,7 +14,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE, tidy = FALSE)
 library(DramaAnalysis)
-setDataDirectory(dataDirectory = file.path(path.expand("~"), "QuaDramA", "Data-tutorial"))
+setDataDirectory(dataDirectory = file.path(getwd(), "Data"))
 installData("shakedracor")
 library(magrittr)
 ```
