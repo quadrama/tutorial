@@ -12,7 +12,11 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE, tidy = FALSE)
+knitr::opts_chunk$set(eval = FALSE, tidy = FALSE, message = FALSE, warning = FALSE)
+options(tikzDefaultEngine = 'xetex')
+
+#options(tikzXelatexPackages = c(getOption("tikzXelatexPackages"), "\\setmainfont{Helvetica Neue}"))
+
 library(DramaAnalysis)
 setDataDirectory(dataDirectory = file.path(getwd(), "Data"))
 installData("shakedracor")
@@ -158,7 +162,7 @@ We will focus on the console and plot area
 
 - Introduction/Installation and Overview
 - Three areas for you to play with
-  1. General character statistics
+  1. Global character statistics
   2. Word fields
   3. Copresence and network analysis
 
@@ -168,22 +172,27 @@ We will focus on the console and plot area
 - Function: Mini program
 - DramaAnalysis: Functions for drama analysis (surprise!)
   - Today: Third iteration, extensive rewrite
-- Written Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/
-
+- Philosophy: Construction kit
 
 ## Installation
 
 ### Installation
 \framesubtitle{Code}
 
-\alert{TODO: Adapt this slide}
-
 ```{r, eval=FALSE}
 install.packages("DramaAnalysis")
 library(DramaAnalysis)  # no quotes
 
-library(magrittr) # additional package
+ # additional package
+library(magrittr)
 ```
+
+\pause
+
+
+\vspace{-3cm}
+
+![René Magritte: The Treachery of Images](MagrittePipe.jpg){ width=50% }
 
 ### Installation
 \framesubtitle{Data}
@@ -259,13 +268,20 @@ play <- loadDrama(myId)
   - What does it return?
   - Usage example
 
+\pause
+
+Package documentation: https://quadrama.github.io/DramaAnalysis/3.0.0
+
+Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html
+
+
 ## What can we do?
 
 ### Function overview
 
 ![Possible workflows in DramaAnalysis](workflow.pdf)
 
-## 1. Global character statistics
+## 1. Global character statistics (Who and when are they?)
 
 ### Global character statistics
 
@@ -299,11 +315,14 @@ Returns a table (in R: `data.frame`) with
 ### Function `characterStatistics` {.allowframebreaks}
 \framesubtitle{Plotting}
 
-```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.5\\textheight", dev='tikz', results='hide', tidy=FALSE}
+```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.5\\textheight", dev='tikz', results='hide', tidy=FALSE, message=FALSE}
+# load a play
+play <- loadDrama("shakedracor:Rom")
+
 # call the function
-characterStatistics(rksp.0) %>%
+characterStatistics(play) %>%
   # replace character ids by character names
-  characterNames(rksp.0) %>%
+  characterNames(play) %>%
   # plot them stacked
   barplot()
 ```
@@ -325,17 +344,185 @@ Returns a table with one row for each utterance
 (The function `View()` can be used to get browsable table in RStudio.)
 
 ### Function `utteranceStatistics`  {.allowframebreaks}
+\framesubtitle{Plotting}
 
+\small
+```{r eval=TRUE, message=FALSE, warning=FALSE, dev="tikz"}
+play <- loadDrama("shakedracor:Rom")
 
+# get utterance statistics
+us <- utteranceStatistics(play) %>%
+  # remove uninteresting characters
+  filterCharacters(play) %>%
+  # replace ids by names
+  characterNames(play)
 
-```{r eval=TRUE}
-us <- utteranceStatistics(rksp.0) %>%
-  filterCharacters(rksp.0) %>%
-  characterNames(rksp.0)
-
+# plot boundaries
+par(mar=c(2,7,1,1))
+# plot the utterances
 stripchart(utteranceLength ~ character, 
         data = us,
         las=1,
         pch=20,
         method="jitter")
+```
+
+
+## 2. Word fields (What are they actually talking about?)
+
+### Word fields
+
+Word fields: Semantically related words
+
+- Represented as a vector of strings in R
+- E.g., `r c("love", "heart")` is a word field related to love
+
+Work steps
+
+1. Define a word field: base R, `loadFields()`
+2. Apply it to text(s): `dictionaryStatistics()`
+
+### Word Fields
+\framesubtitle{Define a word field}
+
+Definition of a word field manually on the fly
+
+```{r}
+fields <- list(
+  # words related to family
+  Family=c("marriage", "parents", "ancestors", ...),
+  # words related to love
+  Love=c("love", "heart", "kiss", ...))
+```
+
+```{r echo=FALSE, eval=TRUE}
+fields <- list(
+  # words related to family
+  Family=c("marriage", "parents", "ancestors"),
+  # words related to love
+  Love=c("love", "heart", "kiss"))
+```
+
+Creates a named list of lists
+
+
+### Word Fields
+\framesubtitle{Define a word field: Function `loadFields()`}
+
+- Function to load word fields from URLs or files
+- Load pre-defined (German) word lists
+
+```{r}
+fields <- loadFields(fieldnames=c("Liebe", "Familie"))
+```
+
+Returns a named list of lists
+
+### Word Fields
+\framesubtitle{Other sources}
+
+- Defining word fields manually is not trivial (historic language(s), bias, ...)
+- Existing dictionaries can be used as sources
+- Enriching fields with distributionally similar words
+
+
+### Word Fields
+\framesubtitle{Application: `dictionaryStatistics()`}
+
+```{r message=FALSE, eval=TRUE}
+play <- loadDrama("shakedracor:Rom")
+ds <- dictionaryStatistics(play, fields)
+```
+
+Returns a table with columns
+
+- `corpus`, `drama`: See above
+- `character`: The character id
+- one column for each field
+
+\pause
+
+```{r eval=TRUE,echo=FALSE}
+ds[1:3,]
+```
+
+### Word Fields
+\framesubtitle{Normalization}
+
+- Different characters have different portions of speech in the play
+- Word fields may be differently large
+\pause
+- Normalization is important
+  - No one fits all mechanic
+  - It depends on the research question
+
+\pause
+
+Two parameters (both can be set to TRUE/FALSE)
+
+- `normalizeByCharacter`
+- `normalizeByField`
+
+\pause
+
+Normalized numbers tend to be very small, but that does not hinder their meaningfulness
+
+### Word Fields {.allowframebreaks}
+\framesubtitle{Plotting}
+
+```{r eval=TRUE}
+ds <- dictionaryStatistics(play, fields) %>%
+  filterCharacters(play) %>%
+  characterNames(play)
+
+dsm <- as.matrix(ds)
+
+par(mar=c(10,2,1,1))
+barplot(t(dsm), 
+        beside=TRUE, 
+        names.arg = ds$character,
+        legend.text = colnames(dsm),
+        las=2)
+```
+
+## 3. Character Relations (With whom are they interacting?)
+
+### Character Relations
+
+- Configuration: A matrix showing who is on stage when
+
+Functions
+
+- `configuration()`
+- `presence()`
+
+Package `igraph`
+
+### Character Relations {.allwoframebreaks}
+\framesubtitle{Function `configuration()`}
+
+```{r eval=TRUE}
+play <- loadDrama("shakedracor:Rom")
+conf <- configuration(play)
+```
+
+Table with columns
+
+- `corpus`, `drama`, `character`
+- One column per segment, filled with the number of words spoken by a character 
+
+
+### Character Relations {.allowframebreaks}
+\framesubtitle{Plotting}
+
+```{r eval=TRUE,out.height="0.8\\textheight"} 
+c <- configuration(play) %>%
+  filterCharacters(play, n=5) %>%
+  characterNames(play)
+
+mat <- as.matrix(c)
+par(mar=c(2,2,2,10))
+
+barplot(mat, 
+        legend.text = c$character)
 ```
