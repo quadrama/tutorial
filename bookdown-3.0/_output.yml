@@ -8,6 +8,7 @@ bookdown::gitbook:
       collapse: section
       scroll_highlight: yes
     search: yes
+    download: epub
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
