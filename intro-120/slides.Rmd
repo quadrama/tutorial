@@ -224,6 +224,9 @@ The function `installData()`
   - TextGrid $\rightarrow$ GerDraCor $\rightarrow$ QuaDramA
 - English Shakespeare plays (`shakedracor`)
   - Folger $\rightarrow$ DraCor $\rightarrow$ QuaDramA
+- Two demo plays included in the package
+  - Including manual coreference annotation
+  - Lessing's *Emilia Galotti* and *Miss Sara Sampson* (German)
 
 ### Inspecting data
 
@@ -498,7 +501,7 @@ Functions
 
 Package `igraph`
 
-### Character Relations {.allwoframebreaks}
+### Configuration {.allwoframebreaks}
 \framesubtitle{Function `configuration()`}
 
 ```{r eval=TRUE}
@@ -512,7 +515,7 @@ Table with columns
 - One column per segment, filled with the number of words spoken by a character 
 
 
-### Character Relations {.allowframebreaks}
+### Configuration {.allowframebreaks}
 \framesubtitle{Plotting}
 
 ```{r eval=TRUE,out.height="0.8\\textheight"} 
@@ -526,3 +529,91 @@ par(mar=c(2,2,2,10))
 barplot(mat, 
         legend.text = c$character)
 ```
+
+
+### Character Network
+\framesubtitle{Step 1: Create an adjacency matrix}
+
+
+```{r eval=TRUE}
+
+c <- configuration(play, 
+                   onlyPresence = TRUE, 
+                   segment = "Scene") %>%
+  filterCharacters(play) %>%
+  characterNames(play)
+mat <- as.matrix(c)
+
+# multiply the matrix with its inverse
+# this creates the adjacency matrix
+adjMatrix <- mat %*% t(mat) 
+
+# add character names
+rownames(adjMatrix) <- c$character
+colnames(adjMatrix) <- c$character
+```
+
+### Character Network
+\framesubtitle{Step 2: Create graph and plot it}
+
+Using the library `igraph`:
+
+```{r}
+library(igraph)
+# convert the adjacency matrix to a graph object
+g <- graph_from_adjacency_matrix(copresence, 
+                                 weighted=TRUE,
+                                 mode="undirected",
+                                 diag=FALSE)
+
+# plot it
+plot.igraph(g, 
+     layout=layout_in_circle,
+     main="Copresence Network: Romeo & Juliet",
+     edge.width=E(g)$weight)  
+
+```
+
+### Character Presence {.allowframebreaks}
+
+This (currently) only works for manually annotated plays
+
+\scriptsize
+```{r eval=TRUE}
+data(rksp.0) # load Emilia Galotti
+
+# calculate presence
+pres <- presence(rksp.0) %>%
+  characterNames(rksp.0)
+
+# plot points
+plot(x=pres$active/pres$scenes, 
+     y=pres$passive/pres$scenes, 
+     xlim=c(0,1), 
+     ylim=c(0,1))
+# add labels
+text(x=pres$actives/pres$scenes, 
+     y=pres$passives/pres$scenes, 
+     labels=substr(pres$character,0,20), 
+     pos=3,
+     cex=0.8)
+# add lines
+lines(x=seq(0,0.5,0.1),seq(0,0.5,0.1), lty=3)
+lines(x=1:0,y=0:1, lty=2)
+
+```
+
+## Lab session
+
+### Lab session
+
+... and now, it's your turn!
+
+Pick one or more plays, and do one of the analyses, or follow your own ideas!
+
+(don't be afraid, you can't break anything)
+
+
+
+
+
