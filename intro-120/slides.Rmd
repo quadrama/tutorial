@@ -613,7 +613,10 @@ Pick one or more plays, and do one of the analyses, or follow your own ideas!
 
 (don't be afraid, you can't break anything)
 
+#### Getting help
 
-
-
+- question mark plus function name: `?presence`
+- Package documentation: https://quadrama.github.io/DramaAnalysis/3.0.0/
+- Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/
+- ... and we're here for you too!
 
