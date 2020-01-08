@@ -1,7 +1,7 @@
 ---
 title: "Quantitative Drama Analytics"
 subtitle: "Part 2: lab session"
-date: "July 15, 2019"
+date: "January 7, 2020"
 output:
   beamer_presentation:
     slide_level: 3
@@ -15,13 +15,24 @@ output:
 knitr::opts_chunk$set(eval = FALSE, tidy = FALSE, message = FALSE, warning = FALSE)
 options(tikzDefaultEngine = 'xetex')
 
-#options(tikzXelatexPackages = c(getOption("tikzXelatexPackages"), "\\setmainfont{Helvetica Neue}"))
-
 library(DramaAnalysis)
 setDataDirectory(dataDirectory = file.path(getwd(), "Data"))
-installData("shakedracor")
+#installData("shakedracor")
 library(magrittr)
 ```
+
+### Your setup
+
+- https://quadrama.github.io/rstudio \
+  Virtuelle Maschine, die bei Microsoft Azure läuft
+- Logins: \
+  capulet romeo juliet montague balthasar \
+  peter tybalt mercutio ophelia hamlet \
+  horatio francisco laertes solanio arragon \
+  nerissa lorenzo antonio bianca katherine  
+  oliver corin dennis celia phoebe  \
+  lysander helena hermia oberon theseus  \
+  volumnia brutus virgilia valeria sicinius
 
 # What you really need to know about R
 
@@ -29,9 +40,9 @@ library(magrittr)
 
 - R is a programming language 
   - Mostly used for statistical data analysis ("data science")
-  - First version: 1993
-  - Current stable release: 3.6
+  - First version: 1993, current stable release: 3.6
   - [Website](https://www.r-project.org/)
+  - Open source
 - Three important concepts we need to talk about
   - Objects/Types
   - Variables
@@ -43,16 +54,17 @@ library(magrittr)
 - Objects live in the computer memory (or on disk)
 - Objects represent the things we want to analyse (e.g., dramatic texts, words, or numbers)
 - An object has one or more types
+\pause
 - The type of an object determines what we can do with it
   - E.g., a knife allows other operations than a fork
 \pause
-- Types: Numbers, strings, lists, tables, ...
+- Types: Numbers, character sequences (`strings'), lists, tables, ...
   - Numbers allow arithmetic operations
     - E.g., summation: `sum(3,5)` (evaluates to `8`, equivalent to `3+5`)
-  - Strings allow character-based operations
+  - Character sequences allow character-based operations
     - E.g., conversion to lower case: `tolower("ABC")` (evaluates to `"abc"`)
 \pause
-- "evalutes to": result of the operation
+- "evalutes to": result of the operation/function
 
 ### R Basics
 \framesubtitle{Objects and Types}
@@ -119,6 +131,7 @@ In R, everything is a vector!
 `variable <- function(arg1, arg2, ...)`
 \pause
 - Some functions not only return a value, but also do something (e.g., display a plot)
+- Pipeline: Multiple functions operating in succession
 
 ### R Basics
 \framesubtitle{Functions}
@@ -155,6 +168,8 @@ What is the value of `s` now?
 - Editor/Code: Allows editing R code and inspecting tables
 
 We will focus on the console and plot area
+
+
 
 # DramaAnalysis
 
@@ -284,7 +299,13 @@ Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html
 
 ![Possible workflows in DramaAnalysis](workflow.pdf)
 
-## 1. Global character statistics (Who and when are they?)
+### Three parts
+
+1. Global character/utterance statistics
+2. Word fields
+3. Character relations 
+
+## 1. Global character statistics
 
 ### Global character statistics
 
@@ -371,7 +392,7 @@ stripchart(utteranceLength ~ character,
 ```
 
 
-## 2. Word fields (What are they actually talking about?)
+## 2. Word fields
 
 ### Word fields
 
@@ -488,7 +509,7 @@ barplot(t(dsm),
         las=2)
 ```
 
-## 3. Character Relations (With whom are they interacting?)
+## 3. Character Relations
 
 ### Character Relations
 
