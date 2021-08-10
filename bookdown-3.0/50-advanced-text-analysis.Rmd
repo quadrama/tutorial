@@ -58,7 +58,39 @@ The above analysis shows mentions of characters by all (other) characters. To un
 There are multiple ways to represent this visually, of course. To get a general overview of the play, a directed network might be suitable. This will be created in the following.
 
 ```{r}
-
+# Get counts of speakers addressing other characters
+mc <- aggregate.data.frame(
+  rksp.0$mentions[, "corpus", with = FALSE], 
+  by = rksp.0$mentions[, c("utteranceSpeakerId", "entityId"), 
+                       with = FALSE], 
+  FUN=length)
+# Get top 7 characters based on the amount of tokens they utter
+top_chars <- filterCharacters(
+  dictionaryStatistics(rksp.0), 
+  rksp.0, n = 7)$character
+# Only keep top 7 speaking chars
+mc <- mc[mc$utteranceSpeakerId %in% top_chars,]
+# Only keep mentions of top 7 chars
+mc <- mc[mc$entityId %in% top_chars,]
+names(mc)[names(mc)=="corpus"] <- "N"
+am <- acast(mc, utteranceSpeakerId~entityId, 
+      value.var = "N", fill = 0, drop = FALSE)
+rownames(am) <- stringr::str_to_title(gsub("_", " ", rownames(am)))
+colnames(am) <- stringr::str_to_title(gsub("_", " ", colnames(am)))
+# Plot in a directed graph
+g <- graph.adjacency(am, mode = "directed", 
+                     weighted = TRUE, diag = FALSE)
+plot(g,
+     main="Mention Network",
+     sub=dramaNames(rksp.0),
+     vertex.size= degree(g)*3,
+     edge.width = E(g)$weight*0.02, 
+     edge.arrow.size = 0.4, 
+     edge.curved = 0.2,
+     vertex.color=qd.colors[6],
+     vertex.label.color="black",
+     layout = layout.circle)
 ```
 
-
+The graph shows how often the displayed characters refer to each other. The wider the edge of an arrow, the more often the character mentions the character the arrow is pointing to. Larger nodes indicate that the character is often mentioned by others.
+Emilia is often mentioned by her mother and father, Der Prinz and Marinelli. Der Prinz and Marinelli refer to each other more than any other character in the play.
