@@ -1,15 +1,22 @@
 ---
 title: "Quantitative Drama Analytics"
-subtitle: "Part 2: lab session"
-date: "January 7, 2020"
+subtitle: "Lab Session #1"
+date: "December 17, 2021"
+author: "Benjamin Krautter/Nils Reiter"
 output:
   beamer_presentation:
     slide_level: 3
+    fonttheme: professionalfonts
     keep_tex: true
+    keep_md: true
     latex_engine: xelatex
+    pandoc_args: [
+      "-V", "aspectratio=169"
+    ]
     includes:
       in_header: header.tex
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE, tidy = FALSE, message = FALSE, warning = FALSE)
@@ -17,22 +24,9 @@ options(tikzDefaultEngine = 'xetex')
 
 library(DramaAnalysis)
 setDataDirectory(dataDirectory = file.path(getwd(), "Data"))
-#installData("shakedracor")
+installData("shakedracor")
 library(magrittr)
 ```
-
-### Your setup
-
-- https://quadrama.github.io/rstudio \
-  Virtuelle Maschine, die bei Microsoft Azure läuft
-- Logins: \
-  capulet romeo juliet montague balthasar \
-  peter tybalt mercutio ophelia hamlet \
-  horatio francisco laertes solanio arragon \
-  nerissa lorenzo antonio bianca katherine  
-  oliver corin dennis celia phoebe  \
-  lysander helena hermia oberon theseus  \
-  volumnia brutus virgilia valeria sicinius
 
 # What you really need to know about R
 
@@ -40,7 +34,7 @@ library(magrittr)
 
 - R is a programming language 
   - Mostly used for statistical data analysis ("data science")
-  - First version: 1993, current stable release: 3.6
+  - First version: 1993, current stable release: 4.1
   - [Website](https://www.r-project.org/)
   - Open source
 - Three important concepts we need to talk about
@@ -53,6 +47,7 @@ library(magrittr)
 
 - Objects live in the computer memory (or on disk)
 - Objects represent the things we want to analyse (e.g., dramatic texts, words, or numbers)
+- Variables are used to operate on objects (similar to Python)
 - An object has one or more types
 \pause
 - The type of an object determines what we can do with it
@@ -73,11 +68,11 @@ library(magrittr)
 | Type | Example | Description |
 | ---- | ------- | ----------- |
 | Numeric | `5` | A numeric value |
-| Character | `"Heidelberg"` | A sequence of characters |
+| Character | `"Bochum"` | A sequence of characters |
 |           |                | (note the double quotes!) |
 | Logical | `TRUE`/`FALSE` | A truth value |
 | Vector | `c(5,4,1)` | Sequence of objects *of the same type* |
-| List | `list(5,"Hd",TRUE)` | Sequence of objects |
+| List | `list(5,"Hd",TRUE)` | Sequence of objects (Python list/dictionary) |
 | Matrix | | Table of objects *of the same type* |
 | Data frame | | Table of objects |
 
@@ -85,7 +80,7 @@ library(magrittr)
 ### R Basics
 \framesubtitle{Objects and Types}
 
-In R, everything is a vector!
+In R, there are no single-value variables: Everything is a vector!
 
 - Entering `5` creates a numeric vector of length 1
 - Entering `"Bla"` creates a character vector of length 1
@@ -125,7 +120,7 @@ In R, everything is a vector!
 - Input: Functions take *arguments* as input
 - Output: Functions return an object (that stores the result of the instructions)
 \pause
-- Functions have a name (typically lower case) and can be reognized by the round parentheses \
+- Functions have a name (typically lower case) and can be recognized by the round parentheses \
 `function(argument1, argument2, argument3, ...)`
 - The return value of a function can be stored in a variable \
 `variable <- function(arg1, arg2, ...)`
@@ -133,21 +128,6 @@ In R, everything is a vector!
 - Some functions not only return a value, but also do something (e.g., display a plot)
 - Pipeline: Multiple functions operating in succession
 
-### R Basics
-\framesubtitle{Functions}
-
-```{r}
-sum(5,1)         # 5 + 1 is only an abbreviation
-s <- sum(5,1)    # stores the result in a 
-                 # variable, no output
-s                # prints the value of the variable
-s <- 7           # overwrites the previous value of 
-                 # the variable
-s <- sum(s,3)    # overwrites the value of the 
-                 # variable
-```
-
-What is the value of `s` now?
 
 ## RStudio
 
@@ -184,10 +164,12 @@ We will focus on the console and plot area
 ### Introduction
 
 - R Package: A collection of functions and/or data sets
+  - Similar to libraries in Python
 - Function: Mini program
 - DramaAnalysis: Functions for drama analysis (surprise!)
   - Today: Third iteration, extensive rewrite
-- Philosophy: Construction kit
+- Philosophy: Construction kit with building blocks
+  - No graphical user interface, but interactive use through console
 
 ## Installation
 
@@ -204,15 +186,16 @@ library(magrittr)
 
 \pause
 
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.east) [anchor=east] {\includegraphics[width=0.4\paperwidth]{MagrittePipe.jpg}};
+\end{tikzpicture}
 
-\vspace{-3cm}
-
-![René Magritte: The Treachery of Images](MagrittePipe.jpg){ width=50% }
 
 ### Installation
 \framesubtitle{Data}
 
 - Dramatic texts are initially stored as TEI/XML files
+  - From https://dracor.org
 - Language processing (e.g., identification of parts of speech) takes place in a UIMA pipeline
   - https://github.com/quadrama/DramaNLP
 - Output of the pipeline: Several CSV files for each play (meta data, character data, \dots)
@@ -295,30 +278,22 @@ Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/index.html
 
 ## What can we do?
 
-### Function overview
+### Function overview{.plain}
 
 ![Possible workflows in DramaAnalysis](workflow.pdf)
 
-### Three parts
+### Use-Cases
 
-1. Global character/utterance statistics
-2. Word fields
-3. Character relations 
+0. Basics
+1. Stage presence and character networks
+2. Passive presence
 
-## 1. Global character statistics
 
-### Global character statistics
 
-Two functions:
+## 0. Basics
 
-- `characterStatistics()`: Characters in focus
-- `utteranceStatistics()`: Utterances in focus
 
-### Function `characterStatistics`
-
-```{r}
-cs <- characterStatistics(play)
-```
+### Function `characterStatistics` {.allowframebreaks}
 
 Returns a table (in R: `data.frame`) with 
 
@@ -333,13 +308,18 @@ Returns a table (in R: `data.frame`) with
 - `firstBegin`: Starting position of the first utterance
 - `lastEnd`: End position of the last utterance
 
-(The function `View()` can be used to get browsable table in RStudio.)
+The function `View()` can be used to get browsable table in RStudio:
+
+```{r}
+cs <- characterStatistics(play)
+View(cs)
+```
 
 
 ### Function `characterStatistics` {.allowframebreaks}
 \framesubtitle{Plotting}
 
-```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.5\\textheight", dev='tikz', results='hide', tidy=FALSE, message=FALSE}
+```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.8\\textheight", dev='tikz', results='hide', tidy=FALSE, message=FALSE}
 # load a play
 play <- loadDrama("shakedracor:Rom")
 
@@ -351,45 +331,9 @@ characterStatistics(play) %>%
   barplot()
 ```
 
-### Function `utteranceStatistics`
 
-```{r}
-us <- utteranceStatistics(play)
-```
+## 1. Stage presence and character networks
 
-Returns a table with one row for each utterance
-
-- `corpus`: The collection id
-- `drama`: The play id
-- `character`: the character id
-- `utteranceBegin`: Character position of the first character
-- `utteranceLength`: Portion of this utterance with the total play
-
-(The function `View()` can be used to get browsable table in RStudio.)
-
-### Function `utteranceStatistics`  {.allowframebreaks}
-\framesubtitle{Plotting}
-
-\small
-```{r eval=TRUE, message=FALSE, warning=FALSE, dev="tikz"}
-play <- loadDrama("shakedracor:Rom")
-
-# get utterance statistics
-us <- utteranceStatistics(play) %>%
-  # remove uninteresting characters
-  filterCharacters(play) %>%
-  # replace ids by names
-  characterNames(play)
-
-# plot boundaries
-par(mar=c(2,7,1,1))
-# plot the utterances
-stripchart(utteranceLength ~ character, 
-        data = us,
-        las=1,
-        pch=20,
-        method="jitter")
-```
 
 
 ## 2. Word fields
@@ -640,4 +584,49 @@ Pick one or more plays, and do one of the analyses, or follow your own ideas!
 - Package documentation: https://quadrama.github.io/DramaAnalysis/3.0.0/
 - Tutorial: https://quadrama.github.io/DramaAnalysis/tutorial/3/
 - ... and we're here for you too!
+
+
+\appendix
+
+## Appendix
+
+### Function `utteranceStatistics`
+
+```{r}
+us <- utteranceStatistics(play)
+```
+
+Returns a table with one row for each utterance
+
+- `corpus`: The collection id
+- `drama`: The play id
+- `character`: the character id
+- `utteranceBegin`: Character position of the first character
+- `utteranceLength`: Portion of this utterance with the total play
+
+(The function `View()` can be used to get browsable table in RStudio.)
+
+### Function `utteranceStatistics`  {.allowframebreaks}
+\framesubtitle{Plotting}
+
+\small
+```{r eval=TRUE, message=FALSE, warning=FALSE, dev="tikz"}
+play <- loadDrama("shakedracor:Rom")
+
+# get utterance statistics
+us <- utteranceStatistics(play) %>%
+  # remove uninteresting characters
+  filterCharacters(play) %>%
+  # replace ids by names
+  characterNames(play)
+
+# plot boundaries
+par(mar=c(2,7,1,1))
+# plot the utterances
+stripchart(utteranceLength ~ character, 
+        data = us,
+        las=1,
+        pch=20,
+        method="jitter")
+```
 
