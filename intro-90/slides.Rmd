@@ -11,12 +11,6 @@ output:
     self_contained: true
     transition: slide
     css: styles.css
-  slidy_presentation:
-    font_adjustment: -1
-    highlight: pygments
-    smart: true
-  ioslides_presentation:
-    transition: faster
 ---
 
 ```{r setup, include=FALSE}
@@ -38,8 +32,10 @@ knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 - Once RStudio is running:\
   type `install.packages("devtools")` in the **Console**
 
-``` 
-> install.packages("devtools")
+```r
+install.packages("devtools")
+```
+```
 trying URL 'https://cran.rstudio.com/bin/macosx/el-capitan/contrib/3.5/devtools_1.13.5.tgz'
 Content type 'application/x-gzip' length 702722 bytes (686 KB)
 ==================================================
@@ -55,8 +51,10 @@ The downloaded binary packages are in
 
 Type `devtools::install_github("quadrama/DramaAnalysis")` in the console
 
+```r
+devtools::install_github("quadrama/DramaAnalysis")
 ```
-> devtools::install_github("quadrama/DramaAnalysis")
+```
 Downloading GitHub repo quadrama/DramaAnalysis@master
 from URL https://api.github.com/repos/quadrama/DramaAnalysis/zipball/master
 Installing DramaAnalysis
@@ -163,6 +161,13 @@ s <- sum(s,3)    # overwrites the value of the variable
 ```
 
 What's the value of `s` now?
+
+## R Basics -- Function Evaluation
+
+- Expressions are evaluated in a specified order
+- Assignments (`<-`): right to left
+- Function calls: Controlled by parentheses `( )`
+  - `function(arg1)` vs. `(1+5)*7`
 
 ## RStudio
 
