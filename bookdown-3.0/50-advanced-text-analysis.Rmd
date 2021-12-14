@@ -1,0 +1,96 @@
+# Advanced Text Analysis 
+
+This chapter contains analyis steps that are advanced. Concretely, this means that they are not as easy to reproduce as the others.
+
+## When are characters mentioned?
+
+*The identification of character mentions is not done within the R package, but in the NLP pipeline [DramaNLP](https://github.com/quadrama/DramaNLP), and is still in development (the NLP name for this task is coreference resolution. For demo purposes, we have included __manually annotated coreferences__ in this R package. Thus, to reproduce the analyses presented here on new texts, one would need to annotate coreferences manually, for the time being.*
+
+When characters are speaking on stage, they are actively present. But they can also be passively present, if other characters refer to them. Both levels of presence can be extracted with the `presence()` function:
+
+
+```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+presence(rksp.0)
+```
+
+As we can see, each character has a few numbers associated: The column `actives` shows the number of scenes in which the character is actively present. This is equivalent to the information in the configuration matrix. The column `passives` shows the number of scenes in which a character is mentioned. By default, this excludes the scenes in which they are present themselves, because they can be assumed to be addresses to the character (this behaviour can be changed by adding the parameter `passiveOnlyWhenNotActive = TRUE` to the call of the `presence` function). 
+
+A simple visualisation that shows the characters active and passive presence in one plot can be generated like this: The first line (`plot()`) is responsible for the plotting of the symbols, the second line (`text()`) adds the character names or ids numbers.
+
+```{r}
+pres <- presence(rksp.0) %>%
+  characterNames(rksp.0)
+
+plot(x=pres$active/pres$scenes, 
+     y=pres$passive/pres$scenes, 
+     xlim=c(0,1), 
+     ylim=c(0,1), 
+     xlab="Active", 
+     ylab="Passive",
+     sub=dramaNames(rksp.0),
+     main="Character Presence")
+text(x=pres$actives/pres$scenes, 
+     y=pres$passives/pres$scenes, 
+     labels=substr(pres$character,0,20), 
+     pos=3,
+     cex=0.8)
+lines(x=seq(0,0.5,0.1),seq(0,0.5,0.1), lty=3)
+lines(x=1:0,y=0:1, lty=2)
+```
+
+
+
+In addition to the characters and their position, the plot shows a dashed and a dotted line. The dashed line indicates the maximum for one character. As one scene is either counted towards the active *or* passive presence, a character cannot have a presence in the top right triangle. The dotted line divides the characters in those that have more active scenes from those that have more passive scenes. As we can see here, almost all characters are placed in the left triangle, which means that their passive presence is higher than their active one. I.e., for each character, there are more scenes in which they are mentioned than scenes in which they speak. 
+
+```{r echo=FALSE}
+pt3 <- pres[order(((pres$actives/pres$scenes) + (pres$passives/pres$scenes)), decreasing=TRUE),][1:3,]
+```
+
+The three characters `r stringi::stri_join(pt3$character)` are all relatively close the dashed line. This indicates that they are the most present characters of the play. 
+
+## Who mentions whom?
+
+The above analysis shows mentions of characters by all (other) characters. To uncover the social relations in a play, it is of grave interest who talks about whom, i.e., who produces the mentions of Emilia, for instance.
+
+There are multiple ways to represent this visually, of course. To get a general overview of the play, a directed network might be suitable. This will be created in the following.
+
+```{r}
+# Get counts of speakers addressing other characters
+mc <- aggregate.data.frame(
+  rksp.0$mentions[, "corpus", with = FALSE], 
+  by = rksp.0$mentions[, c("utteranceSpeakerId", "entityId"), 
+                       with = FALSE], 
+  FUN=length)
+# Get top 7 characters based on the amount of tokens they utter
+top_chars <- filterCharacters(
+  dictionaryStatistics(rksp.0), 
+  rksp.0, n = 7)$character
+# Only keep top 7 speaking chars
+mc <- mc[mc$utteranceSpeakerId %in% top_chars,]
+# Only keep mentions of top 7 chars
+mc <- mc[mc$entityId %in% top_chars,]
+names(mc)[names(mc)=="corpus"] <- "N"
+am <- acast(mc, utteranceSpeakerId~entityId, 
+      value.var = "N", fill = 0, drop = FALSE)
+rownames(am) <- stringr::str_to_title(gsub("_", " ", rownames(am)))
+colnames(am) <- stringr::str_to_title(gsub("_", " ", colnames(am)))
+# Plot in a directed graph
+g <- graph.adjacency(am, mode = "directed", 
+                     weighted = TRUE, diag = FALSE)
+plot(g,
+     main="Mention Network",
+     sub=dramaNames(rksp.0),
+     vertex.size= degree(g)*3,
+     edge.width = E(g)$weight*0.02, 
+     edge.arrow.size = 0.4, 
+     edge.curved = 0.2,
+     vertex.color=qd.colors[6],
+     vertex.label.color="black",
+     layout = layout.circle)
+```
+
+The graph shows how often the displayed characters refer to each other. The wider the edge of an arrow, the more often the character mentions the character the arrow is pointing to. Larger nodes indicate that the character is often mentioned by others.
+Emilia is often mentioned by her mother and father, Der Prinz and Marinelli. Der Prinz and Marinelli refer to each other more than any other character in the play.

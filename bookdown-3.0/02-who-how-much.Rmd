@@ -1,0 +1,132 @@
+
+
+
+# Who's talking how much? {#who-how-much}
+
+We're assuming here that we have loaded some texts using `loadDrama()`, and that this text is stored as a `QDDrama`-object in the variable `text`. For demo purposes, we will use the two plays that are included in the R-package, Lessing's *Emilia Galotti* and *Miss Sara Sampson*. Both have been preprocessed by the [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline.
+
+
+
+First, we calculate summary statistics over all characters.
+
+```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+# Load Miß Sara Sampson
+data(rjmw.0)
+
+text <- combine(rksp.0, rjmw.0)
+
+characterStatistics(text)
+```
+
+This already gives us a lot of information about the characters. In particular, the function `characterStatistics()` returns a table (of the types `QDCharacterStatistics`, `QDHasCharacter` and `data.frame`) with information about:
+
+- the number of tokens a character speaks (`tokens`),
+- the number of different tokens a character speaks (`types`),
+- the number of utterances (`utterances`),
+- the average length of the utterances (`utteranceLengthMean`),
+- their standard deviation (`utteranceLengthSd`),
+- the character position of the start of the first utterance (`firstBegin`), and
+- the character position of the end of the last utterance (`lastEnd`).
+
+The function `characterStatistics()` provides a number of options to control its exact behaviour. Entering [`?characterStatistics`](https://quadrama.github.io/DramaAnalysis/`r v`/reference/characterStatistics.html) in the R console opens the documentation for the function with a description of all the options. We'll describe some frequently used options here as well:
+
+- Punctuation: By default, all punctuation marks are counted as tokens. This behaviour can be changed by setting `filterPunctuation=TRUE`.
+
+- Normalization: The values in the table above are all absolute values. When comparing to other texts, one is often interested in normalized values. If the option `normalize` is set to `TRUE`, all values will be normalised (if applicable).
+
+- Segmentation: By default, the function extracts values for the entire play. With the option `segment`, it is possible to extract statistics by act or scene, as shown in the example below. Except for the additional column `Act`, the columns in the table are the same as before.
+
+```{r}
+characterStatistics(rksp.0, 
+                    segment="Act")
+```
+
+Of course, the values in the above table can be directly plotted:
+
+```{r}
+charStats <- characterStatistics(text, normalize=FALSE)
+
+par(mar=c(9,3,2,2)) # increase plot margins, so that the labels can be plotted
+
+barplot(charStats$tokens,  # these are the values to be plotted
+        names.arg = charStats$character, # the labels on the x-axis
+        las=2 # rotate the labels on both axes
+) 
+```
+
+## Character names instead of identifiers {#format}
+
+By default, all our functions identify characters using technical ids, which may or may not be human-readable. Even if they are, it's usually a good idea to replace them with nice to read labels before publication. We therefore provide the function [`characterNames()`](https://quadrama.github.io/DramaAnalysis/`r v`/reference/characterNames.html), which can be applied to any table that contains a column with character ids (i.e., any object of type `QDHasCharacter`).
+
+```{r}
+charStats <- characterStatistics(text, normalize=FALSE)
+
+charStats <- characterNames(charStats, text) # Replace ids with names
+
+par(mar=c(9,3,2,2)) # increase plot margins, so that the labels can be plotted
+
+barplot(charStats$tokens,  # these are the values to be plotted
+        names.arg = charStats$character, # the labels on the x-axis
+        las=2 # rotate the labels on both axes
+)
+```
+
+As can be seen above `characterNames()` requires two arguments: The table in which we want to replace ids by characters, and the original drama object (that we got from calling the function `loadDrama()`). 
+
+## Stacked bar plot
+
+The plot shown above is quite wide, and some aspects (like the ranking in terms of spoken tokens), is hard to see. We often use another way of visualizing this, which can be used if you supply the `QDCharacterStatistics` directly into the `barplot()` function. In combination with the `magrittr` pipes (see \@ref(magrittr)), we can call it like this (enter `?barplot.QDCharacterStatistics` for details on the special barplot function):
+
+
+```{r results="hide"}
+characterStatistics(text, normalize=FALSE) %>%
+  characterNames(text) %>%
+  barplot(names.arg=dramaNames(text, formatString = "%T"))
+
+```
+
+By default, the `barplot.QDCharacterStatistics()` function visualises the number of tokens spoken by the characters (and ranks the characters accordingly). This can be changed by supplying the option `column`, and specifying another value. 
+
+```{r results="hide"}
+characterStatistics(text, normalize=FALSE) %>%
+  characterNames(text) %>%
+  barplot(names.arg=dramaNames(text, formatString = "%T"), 
+          column = "utteranceLengthMean") # show mean utterance length
+
+```
+
+This picture looks quite different! Other interesting columns to experiment with are `types` and `utteranceLengthSd`.
+
+Another function that we used above is called `dramaNames()`. It can be used to extract 
+
+## Collection analysis
+
+As we have already seen above, the `characterStatistics()` function works well with multiple texts. This means, we can also use it to analyze all *Sturm und Drang* plays at once:
+
+```{r fig.height=20, warning=FALSE, results='hide'}
+# this list can also be loaded using loadSet()
+sturm_und_drang.ids <- c("qd:11f81.0", "qd:11g1d.0", "qd:11g9w.0", 
+                         "qd:11hdv.0", "qd:nds0.0", "qd:r12k.0", 
+                         "qd:r12v.0", "qd:r134.0",  "qd:r13g.0", 
+                         "qd:rfxf.0",  "qd:rhtz.0", "qd:rhzq.0", 
+                         "qd:rj22.0", "qd:tx4z.0", "qd:tz39.0", 
+                         "qd:tzgk.0", "qd:v0fv.0", "qd:wznj.0", 
+                         "qd:tx4z.0", "qd:rfxf.0")
+
+sturm_und_drang.plays <- loadDrama(sturm_und_drang.ids)
+
+par(mar=c(30,4,1,1))
+characterStatistics(sturm_und_drang.plays, normalize=TRUE) %>%
+  characterNames(sturm_und_drang.plays) %>%
+  barplot(las=2, names.arg = dramaNames(sturm_und_drang.plays, 
+                                        formatString = "%A: %T"))
+
+```
+
+While readability can certainly be improved upon, we can directly see that the relative active presence of the characters is distributed very differently in different plays. The most "talkative" character in Klinger's *Zwillinge*, for instance, speaks almost one half of the words in the play, while Wenzelslaus in Lenz' *Hofmeister* speaks much less, even in relative terms.
+
+
+

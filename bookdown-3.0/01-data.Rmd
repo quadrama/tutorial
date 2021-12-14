@@ -1,0 +1,160 @@
+# Basics
+
+This is not really an R tutorial. If you're looking for a full-fledged R tutorial, we recommend [@Arnold:2015aa], because it is very practical, and also deals with text analysis. However, this chapter introduces some concepts related to R.
+
+## R Basics
+
+### Variable assignment
+
+Assigning variables is one of the things you do most frequently in most programming languages. In R, this is done with the arrow operator: `a <- 5`. This creates a new variable `a` that has the value 5. Conceptually, variables are aliases for values. The same value can be assigned to multiple names, but one variable only can point to one value. 
+
+### Function calls
+
+The R package for drama analysis defines a number of functions. Functions are mini programs that can be executed anytime by a user. Function calls (i.e., the execution of a function) can be recognized by round parentheses: `sessionInfo()` is a function call. If you enter this in the R console and press enter, the function gets executed and its return value is printed on the console. The function [`sessionInfo()`](https://www.rdocumentation.org/packages/utils/versions/3.6.0/topics/sessionInfo) can be used to get information about your R session and installation. The function does not take any arguments, which is why the round parentheses are empty. The function `sum`, on the other hand, takes arguments: The values it should add. Thus, calling `sum(1,1)` prints 2 on the console. 
+
+
+## magrittr Pipes / `%>%` {#magrittr}
+
+In the tutorial, we make heavy use of `magrittr`-pipes. These are provided by the R package [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html). The core idea behind pipes is to use the output of one function directly as input for the next function -- to create a pipeline of functions (if you're familiar with the unix command line you probably have used this before).
+
+The pipeline is represented by `%>%`. The semantics of `%>%` is to use the output of whatever comes before as *first argument* for whatever comes after. Thus, if we write `runif(5) %>% barplot`, the result of `runif(5)` (which is a vector with five random numbers) is used as the first argument for the function `barplot()`. This is eqivalent to:
+
+```{r eval=FALSE}
+r <- runif(5)
+barplot(r)
+```
+
+The nice thing about magrittr is that you can create pipes that are much longer:
+
+```{r eval=FALSE}
+d <- loadDrama("test:rksp.0")
+
+d %>%
+  dictionaryStatistics() %>%
+  filterCharacters(d) %>%
+  characterNames(d) %>%
+  barplot() 
+```
+
+Again, this is equivalent to a version with variables:
+
+```{r eval=FALSE}
+d <- loadDrama("test:rksp.0")
+
+ds <- dictionaryStatistics(d)
+dsf <- filterCharacters(ds, d)
+dsff <- characterNames(dsf, d)
+barplot(dsff)
+```
+
+Pipes are much faster to write and more transparent, that's why they are used in this tutorial. In order to re-create the steps in the tutorial, you will need to load the library like this:
+
+```{r eval=FALSE}
+# download/update the library from CRAN
+install.packages("magrittr")
+
+# load it into the active environment
+library(magrittr)
+```
+
+# Quick Start
+
+The following code installs *all* packages used in this tutorial, so that you can directly get started.
+
+```{r eval=FALSE}
+
+install.packages(c("DramaAnalysis", "magrittr", 
+                   "igraph", "highcharter", 
+                   "rmarkdown", "fmsb", 
+                   "knitr"))
+
+library(DramaAnalysis)
+library(magrittr)
+library(igraph)
+
+```
+
+
+# (PART)  DramaAnalysis {-} 
+
+# Data
+
+Before analysing any data, it needs to be imported, and converted into the proper structure. In QuaDramA, we process dramatic texts in multiple stages, described below.
+
+## Origin: TEI-XML
+
+The base format that we use (and in which we put all our annotations) is an XML format known as [TEI](https://tei-c.org). This format is used by most researchers doing quantitatitve drama analysis. An excellent source for dramas in the proper format is [DraCor](https://github.com/dracor-org/), maintained by [Frank Fischer](https://www.hse.ru/en/org/persons/182492735).
+
+While we are using GerDraCor as a basis, we have added linguistic annotations to a number of plays, and integrated more plays (e.g., translations) into the corpus. This corpus can be found [here](https://github.com/quadrama/Corpus).
+
+## Preprocessed data
+
+As a first step, we process all dramatic texts using our [DramaNLP](https://github.com/quadrama/DramaNLP) pipeline. The result of this processing is a set of CSV files for each play that contains the information in the play in a format suitable for analysis with R. [This repository](https://github.com/quadrama/data_test) contains two plays in the format.
+
+| File | Description |
+| ------------------- | ------------------------------------------------- |
+| *ID*.Metadata.csv   | Meta data for the play (author, title, language, ...) |
+| *ID*.Characters.csv | Characters of the play, with some character specific information |
+| *ID*.Entities.csv   | All discourse entities (including characters, but also all other coreference chains) |
+| *ID*.Mentions.csv   | Mentions associated with characters |
+| *ID*.StageDirections.csv | The stage directions of the play |
+| *ID*.UtterancesWithTokens.csv | All character utterances of the play |
+| *ID*.Segments.csv | Information about acts and scenes |
+: Different CSV files used in the analysis. *ID* is a placeholder for a unique identifier for the play
+
+Next to the above mentioned `test`-corpus, we are providing others as well. They are all stored in git repositories in the [quadrama organization on GitHub](https://github.com/quadrama). Repositories that start with `data_` are corpora.
+
+The part after the underscore (`test` in the above example) is considered to be the corpus prefix. Within a corpus, a play is identified by a unique id. Thus, `test:rksp.0` is a full identified containing the corpus prefix and play id.
+
+### Sample data
+
+For demo and test purposes, the `DramaAnalysis` r package contains the two plays of the `test` corpus. For technical reasons, the plays that are included in the package do not contain umlauts (äöüß etc.), but are restricted to ASCII characters. In these versions, all non-ASCII characters have been replaced by ASCII characters.
+
+```{r}
+# Load Emilia Galotti
+data(rksp.0)
+
+# Load Miß Sara Sampson
+data(rjmw.0)
+
+text <- combine(rksp.0, rjmw.0)
+
+```
+
+## Installing corpora
+
+Installing a corpus that is available on [github.com/quadrama](http://github.com/quadrama) is straightforward and can be done by entering the command `installData()` into the R console. 
+
+```{r eval=FALSE}
+
+# installation of the test corpus
+installData("test")
+
+# installation of the quadrama corpus
+installData("qd")
+```
+
+Corpora do not necessarily have to be provided by us, however. If a compatible set of CSV files is available from another source, the function `installData()` allows finer control to install data from anywhere, as long as it's a git repository and can be cloned. See `?installData` for details on the options.
+
+### Data sources and credits
+
+The `qd` corpus that you have downloaded above, is the result of many hours of work and fruit of labor by different people and projects. Originally, the files have been assembled and XMLified in the [TextGrid project](https://textgrid.de). As the XML contained a number of issues and was not error-free, [Peer Trilcke](https://www.uni-potsdam.de/lit-19-jhd/peertrilcke.html), [Frank Fischer](https://www.hse.ru/en/org/persons/182492735) and [Dario Kampkaspar](https://www.oeaw.ac.at/acdh/team/current-team/dario-kampkaspar/) have cleaned, converted and generally enhanced the files in order to do network analysis [@Trilcke:2015aa]. We in [QuaDramA](https://quadrama.github.io) built on top of that, and re-added several translations to the corpus. For several plays, we also added coreference annotation (not yet released/published properly), which is available as part of the `test` corpus. In addition, we added automatically produced linguistic annotation (parts of speech and lemma).
+
+
+## Collection data
+
+In addition to the above introduced corpora, we also support smaller groups of plays called collections. A collection is just a set of texts, and can include texts from multiple corpora. Typically, these sets have names, such as "comedies", but it does not technically matter why texts are in a collection. Technically, these collections are just vectors of ids.
+
+Pre-defined collections can be downloaded with the function `installCollectionData()`. This function clones a git repository ([this one](https://github.com/quadrama/metadata)), which contains a number of plain text files that in turn contain drama ids. As before, users can feed in other sources for the collection data, enter `?installCollectionData` in the R console to get more information about options and parameters.
+
+```{r eval=FALSE}
+installCollectionData()
+```
+
+Once collection (i.e., a vector with ids) has been defined, it can be passed as an argument to the function `loadDrama()`. The returning `QDDrama` object contains all loadable plays. Many functions work similarly for single texts or text collections, but some will not. The descriptions below contain information about this.
+
+### Defining collections
+
+Before processing, it's necessary to define a collection of texts, by assembling their ids in a list. These are considered to be sets of plays without internal structure (e.g., no play is marked as prototypical). 
+
+

@@ -1,0 +1,198 @@
+---
+title: "DramaAnalysis"
+author: "Nils Reiter"
+documentclass: book
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+bibliography: [bibliography.bib]
+biblio-style: apalike
+---
+
+```{r setup, include=FALSE}
+source("packrat/init.R")
+
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+require(DramaAnalysis)
+require(data.table)
+require(magrittr)
+require(igraph)
+
+v <- packageVersion("DramaAnalysis")
+```
+
+# Preface {-}
+
+*This tutorial is in beta stadium and not entirely finished. It pertains to version 3.0 of the DramaAnalysis package. In case you find mistakes or have questions in/about the tutorial, feel free to open an issue on GitHub [here](https://github.com/quadrama/tutorial/issues/new). If you believe you found a bug in the R-Package itself, please do the same [here](https://github.com/quadrama/DramaAnalysis/issues/new). Writing an [e-mail](mailto:nils.reiter@ims.uni-stuttgart.de) is also fine.*  
+
+**License**
+
+[![CC-BY-SA](CC-BY-SA_icon.svg.png){ width=3cm }](https://creativecommons.org/licenses/by-sa/4.0/) 
+
+This tutorial is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/). The `DramaAnalysis` R-Package is licensed under [GNU General Public License, v3](https://www.gnu.org/licenses/gpl-3.0.html).
+
+**Acknowledgements**
+
+The R package has been developed in the context of the [QuaDramA](https://quadrama.github.io) project, which is funded by the [Volkswagen foundation](https://www.volkswagenstiftung.de).
+
+# Introduction
+
+```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Function workflow in this package.'}
+
+\begin{tikzpicture}[every node/.style={font=\scriptsize},
+  class/.style={draw,font=\ttfamily\scriptsize},
+  function/.style={font=\ttfamily\itshape\scriptsize},
+  plot/.style={font=\scriptsize},
+  external/.style={font=\scriptsize\scshape},
+  deprecated/.style={color=red},
+  new/.style={color=olive}
+]
+\node at (0,6) [font=\large,anchor=west] {DramaAnalysis 3.0};
+%\node at (-2,5.5) [anchor=west] {Represents the May 3 state of branch develop/3.x};
+
+% \draw (-3,5) -- (2,5) -- (2,2) -- (-3,2) -- (-3,5);
+% \node at (-3,4.5) [anchor=west,font=\large] {Legend};
+% \node at (-3,3.5) [function, anchor=west] {function()};
+% \node at (-2.9,4) [class, anchor=west] {class};
+% \node at (-3,3.2) [external,anchor=west] {external component};
+% \node at (-3,2.9) [plot,anchor=west] {plot type};
+%\node at (-3,2.6) [deprecated,anchor=west] {deprecated/removed component};
+%\node at (-3,2.3) [new,function,anchor=west] {new in 3.0};
+
+\node (loadDrama) at (0,0) [function] {loadDrama()};
+\node (loadFields) at (0,-2) [function] {loadFields()};
+\node (characterstatistics) at (5,1) [function] {characterStatistics()};
+\node (plotqdcharacterstatistics) at (12.5,1) [new,function] {plot.QDCharacterStatistics()};
+\node (dictionarystatistics) at (5,-4) [function] {dictionaryStatistics()};
+\node (dictionaryStatisticsSingle) at (5,-4.5) [function] {dictionaryStatisticsSingle()};
+\node (enrichDictionary) at (5,-5) [function] {enrichDictionary()};
+\node (plotSpiderWebs) at (13,-4) [function] {plotSpiderWebs()};
+\node (regroup) at (13,-4.5) [function,deprecated] {regroup()};
+\node (as_matrix_QDDictionaryStatistics) at (12,-5) [function,new] {as.matrix.QDDictionaryStatistics()};
+\node (configuration) at (5,0) [function] {configuration()};
+\node (aslistqdconfiguration) at (11,0) [function,new] {as.list.QDConfiguration()};
+\node (frequencyTable) at (5,-0.5) [function] {frequencytable()};
+\node (keyness) at (10,-1) [function] {keyness()};
+\node (filterByDictionary) at (10,-2) [function] {filterByDictionary()};
+\node (correlationAnalysis) at (10,-1.5) [function] {correlationAnalysis()};
+\node (presence) at (5,3) [function] {presence()};
+\node (utteranceStatistics) at (5,2) [function] {utteranceStatistics()};
+\node (plot_QDUtteranceStatistics) at (13,2) [function,new] {plot.QDUtteranceStatistics()};
+\node (hamming) at (5,4) [function] {hamming()};
+\node (scenicDifference) at (5,4.5) [function] {scenicDifference()};
+\node (filter) at (13,1.5) [function,new] {filterCharacters()};
+
+\node (qddrama) at (2,0) [class] {QDDrama};
+\node (qdcharacterstatistics) at (8.5,1) [class] {QDCharacterStatistics};
+\node (qddictionarystatistics) at (8.5,-4) [class] {QDDictionaryStatistics};
+\node (QDHasCharacter2) at (8.5,-3.5) [class] {QDHasCharacter};
+\node (qdfields) at (2,-2) [class] {list};
+\node (QDConfiguration) at (8,0) [class] {QDConfiguration};
+\node (qdconfigurationlist) at (14,0) [class] {list};
+\node (frequencytablematrix) at (8,-0.5) [class] {matrix};
+\node (keynesslist) at (14,-1) [class] {list};
+\node (presencedataframe) at (8,3) [class] {data.frame};
+\node (QDUtteranceStatistics) at (8.5,2) [class] {QDUtteranceStatistics};
+\node (QDHasCharacter1) at (8.5,1.5) [class] {QDHasCharacter};
+\node (hamminglist) at (8,4) [class] {list};
+\node (scenicdifferencelist) at (8,4.5) [class] {list};
+\node (dictionarystatisticsmatrix) at (16,-5) [class] {matrix};
+
+
+
+\node (plotstackedcharactermatrix) at (16,1) [plot] {basic character plot};
+\node (spiderweb) at (16,-4) [plot] {spider web};
+
+\node (stylo) at (10,-0.5) [external] {stylo};
+\node (igraph) at (16,0) [external] {igraph};
+
+\draw [->] (loadDrama) -- (qddrama);
+\draw [->] (qddrama) -- (characterstatistics);
+\draw [->] (characterstatistics) -- (qdcharacterstatistics);
+\draw [->] (characterstatistics) -- (QDHasCharacter1);
+\draw [->] (qdcharacterstatistics) -- (plotqdcharacterstatistics);
+\draw [->] (plotqdcharacterstatistics) -- (plotstackedcharactermatrix);
+
+\draw [->] (qddrama) -- (dictionarystatistics);
+\draw [->] (qddrama) -- (dictionaryStatisticsSingle);
+\draw [->] (loadFields) -- (qdfields);
+\draw [->] (dictionarystatistics) -- (qddictionarystatistics);
+\draw [->] (dictionarystatistics) -- (QDHasCharacter2);
+\draw [->] (qdfields) -- (dictionarystatistics);
+\draw [<->] (qdfields) -- (enrichDictionary);
+\draw [->] (qddictionarystatistics) -- (plotSpiderWebs);
+\draw [->] (qddictionarystatistics) -- (regroup);
+\draw [->] (qddictionarystatistics) -- (as_matrix_QDDictionaryStatistics);
+\draw [->] (plotSpiderWebs) -- (spiderweb);
+\draw [->] (as_matrix_QDDictionaryStatistics) -- (dictionarystatisticsmatrix);
+
+
+\draw [->] (qddrama) -- (configuration);
+\draw [->] (configuration) -- (QDConfiguration);
+\draw [->] (QDConfiguration) -- (aslistqdconfiguration);
+\draw [->] (aslistqdconfiguration) -- (qdconfigurationlist);
+\draw [->] (qdconfigurationlist) -- (igraph);
+
+\draw [->] (qddrama) -- (frequencyTable);
+\draw [->] (frequencyTable) -- (frequencytablematrix);
+\draw [->] (frequencytablematrix) -- (stylo);
+\draw [->] (frequencytablematrix) -- (keyness);
+\draw [->] (frequencytablematrix) -- (correlationAnalysis);
+\draw [<->] (frequencytablematrix) -- (filterByDictionary);
+\draw [->] (keyness) -- (keynesslist);
+\draw [->] (qdfields) .. controls +(0,1) and +(-2,0) .. (filterByDictionary);
+
+\draw [->] (qddrama) -- (presence);
+\draw [->] (presence) -- (presencedataframe);
+
+\draw [->] (qddrama) -- (utteranceStatistics);
+\draw [->] (utteranceStatistics) -- (QDUtteranceStatistics);
+\draw [->] (utteranceStatistics) -- (QDHasCharacter1);
+\draw [->] (QDUtteranceStatistics) -- (plot_QDUtteranceStatistics);
+\draw [->] (qddrama) -- (hamming);
+\draw [->] (hamming) -- (hamminglist);
+\draw [->] (qddrama) -- (scenicDifference);
+\draw [->] (scenicDifference) -- (scenicdifferencelist);
+
+
+\draw [<->] (QDHasCharacter1) -- (filter);
+
+\end{tikzpicture}
+
+```
+
+# Installation
+
+There are two ways to install the R package. As of version 3.0, the R package DramaAnalysis is published in the Comprehensive R Archive Network (CRAN). This makes the installation straightforward, and also takes care of all dependencies. Depending on your installation (R version, operating system etc.), downloading (and sometimes compiling) dependencies might take a while.
+
+```{r eval=FALSE}
+install.packages("DramaAnalysis")
+```
+
+The package version in CRAN is updated once in a while, but potentially not every time there is a feature added or bug removed. If you want to install the version we are currently developing, you should install the package "remotes" first. Then, you can install the DramaAnalysis package directly from GitHub. The following code does both, and should also install all dependencies.
+
+```{r eval=FALSE}
+install.packages("remotes")
+
+remotes::install_github("quadrama/DramaAnalysis", 
+                        dependencies = TRUE)
+```
+
+On GitHub, we distinguish between different branch for development. The most recent stable version is in the master branch, and this will be installed by the above snippet. If you want to use the "bleeding edge" code, you may want to install the `develop/3.x` branch. This can be done by adding the argument `ref=develop/3.x` to the `install_github` call:
+
+```{r eval=FALSE}
+remotes::install_github("quadrama/DramaAnalysis", 
+                        dependencies = TRUE,
+                        ref = "develop/3.x")
+
+```
+
+To reproduce everything from this tutorial, you will also need the packages `magrittr` and `igraph`, but their installation is simple:
+
+```{r eval=FALSE}
+install.packages(c("magrittr", "igraph"))
+
+# loads them into your environment
+library(magrittr)
+library(igraph)
+```
