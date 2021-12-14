@@ -319,7 +319,7 @@ View(cs)
 ### Function `characterStatistics` {.allowframebreaks}
 \framesubtitle{Plotting}
 
-```{r eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.8\\textheight", dev='tikz', results='hide', tidy=FALSE, message=FALSE}
+```{r characterstatistics-barplot,eval=TRUE,fig.width=2.5,fig.height=3, out.height="0.8\\textheight", dev='tikz', results='hide', tidy=FALSE, message=FALSE}
 # load a play
 play <- loadDrama("shakedracor:Rom")
 
