@@ -1,6 +1,8 @@
 ---
 title: "DramaAnalysis"
-author: "Nils Reiter"
+author: 
+  - "Nils Reiter"
+  - "Janis Pagel"
 documentclass: book
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -17,6 +19,7 @@ require(DramaAnalysis)
 require(data.table)
 require(magrittr)
 require(igraph)
+require(reshape2)
 
 v <- packageVersion("DramaAnalysis")
 ```
